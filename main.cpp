@@ -1,11 +1,14 @@
-#include "SDL2/SDL.h"
-
 #include <windows.h>
 #include <stdlib.h>
 #include <iostream>
 #include <string>
 
+//For use of SDL
 #include "display.h"
+
+//Aircraft systems
+#include "fmgs.h"
+
 
 #define TICK_INTERVAL 5
 
@@ -26,15 +29,26 @@ Uint32 time_left()
 
 int main(int argc, char* argv[])
 {
+    //Initialize FMGS
+    FMGS* A330_FMGS = new FMGS();
 
     //Create an instance of display
-    Char_Display* MCDU_L = new Char_Display("MCDU LEFT", 50, 50, 400, 350, 0, 24, 14);
+    Display* Display_System = new Display("A330 SYSTEM", 50, 50, 700, 600, 0);
+
+
+    std::string origin = "";
+
+    A330_FMGS->FMGC1->FM.set_fpln_origin("YPAD", 1);
+    A330_FMGS->FMGC1->FM.get_fpln_origin(origin, 1);
+
+
+    std::cout << origin << std::endl;
 
     //Main refresh loop
-    while(MCDU_L->running())
+    while(Display_System->running())
     {
-        MCDU_L->HandleEvents();
-        MCDU_L->Render();
+        Display_System->HandleEvents();
+        Display_System->Render();
 
         //MCDU_L->RenderConsole();
 
@@ -43,7 +57,7 @@ int main(int argc, char* argv[])
 
     }
 
-    MCDU_L->Clean();
+    Display_System->Clean();
 
     return 0;
 }

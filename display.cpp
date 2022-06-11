@@ -2,23 +2,8 @@
 #include <windows.h>
 #include "display.h"
 
-Char_Display::Char_Display(const char *title, int x, int y, int w, int h, int flags, int charW, int charH)
+Display::Display(const char *title, int x, int y, int w, int h, int flags)
 {
-    dimX = charW;
-    dimY = charH;
-
-    defaultChar = '0';
-
-    //Initialize vector matrix with default values with speciied dimensions
-    displayMatrix.resize(dimX, std::vector<char>(dimY, defaultChar));
-
-    if(displayMatrix.size() != 0)
-    {
-        std::cout << "Char Matrix creation Success!" << std::endl;
-    } else {
-        std::cerr << "Failed to create char matrix!" << std::endl;
-    }
-    
     //Initialize SDL
     if(SDL_Init(SDL_INIT_EVERYTHING) == 0)
     {
@@ -49,29 +34,12 @@ Char_Display::Char_Display(const char *title, int x, int y, int w, int h, int fl
     }
 }
 
-Char_Display::~Char_Display()
+Display::~Display()
 {
 
 }
 
-void Char_Display::RenderConsole()
-{
-    //Refresh console
-    system("cls");
-
-    //Iterate through each character in matrix and print it to screen
-    for(int i = 0; i < dimY; ++i)
-    {
-        for(int j = 0; j < dimX; ++j)
-        {
-            std::cout << displayMatrix[i][j];
-        }
-
-        std::cout << '\n';
-    }
-}
-
-void Char_Display::HandleEvents()
+void Display::HandleEvents()
 {
     //Continuous keys
     const Uint8* keystate = SDL_GetKeyboardState(NULL);
@@ -94,7 +62,7 @@ void Char_Display::HandleEvents()
         }
 }
 
-void Char_Display::Render()
+void Display::Render()
 {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
@@ -105,7 +73,7 @@ void Char_Display::Render()
         
 }
 
-void Char_Display::Clean()
+void Display::Clean()
 {
     SDL_Quit();
     SDL_DestroyRenderer(renderer);
