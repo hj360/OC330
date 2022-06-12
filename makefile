@@ -1,2 +1,6 @@
-all:
-	g++ -Isrc/include -Lsrc/lib -o A330_SYSTEM *.cpp FMGC/*.cpp MCDU/*.cpp -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf
+all: compile link
+
+compile:
+	g++ -Isrc/include -c *.cpp FMGC/*.cpp MCDU/*.cpp src/include/imgui/*.cpp
+link:
+	g++ *.o -o main -Lsrc/lib -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lwinmm -lgdi32

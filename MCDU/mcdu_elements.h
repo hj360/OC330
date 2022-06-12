@@ -7,6 +7,7 @@ class Element
 {
     public:
         Element();
+        Element(std::string text_, int row_, int offset_, int color_);
         ~Element();
 
         void getElement(std::string &text_, int &row_, int &offset_, int &color_);

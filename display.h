@@ -1,45 +1,38 @@
-#include <vector>
-#include "SDL2/SDL.h"
-#include <SDL2/SDL_ttf.h>
-#include "MCDU/mcdu.h"
-
 #ifndef DISPLAY_H
 #define DISPLAY_H
+
+#include <iostream>
+
+#include <imgui.h>
+#include <imgui-SFML.h>
+
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+
+#include "fmgs.h"
 
 class Display
 {
     public:
-        Display(const char *title, int x, int y, int w, int h, int flags);
+        Display();
+        Display(FMGS* FMGS_);
         ~Display();
 
-        void HandleEvents();
-        void Update();
-        void Render();
-        void Clean();
+        sf::RenderWindow* sfWindow;
 
-        bool running()
-        {
-            return isRunning;
-        }
+        void Display_Render();
+        void imgui_INIT();
+        void imgui_DESTROY();
 
-        //MCDU
-        void HandleMcduEvents(MCDU* mcdu_);
-
-        //Font
-        TTF_Font* DisplayFont = nullptr;
-        SDL_Renderer* renderer;
+        void handleEvents();
 
     private:
-        bool isRunning;
-        SDL_Window* window;
-        int mouse_x;
-        int mouse_y;
 
+        FMGS* A330_FMGS;
         
 
 };
-
-
 
 
 #endif

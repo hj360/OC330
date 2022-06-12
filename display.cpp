@@ -1,215 +1,188 @@
-#include <iostream>
-#include <windows.h>
 #include "display.h"
 
-Display::Display(const char *title, int x, int y, int w, int h, int flags)
+Display::Display()
 {
-    //Initialize SDL
-    if(SDL_Init(SDL_INIT_EVERYTHING) == 0)
-    {
-        std::cout << "SDL has been initialized!" << std::endl;
-        //Create an SDL window
-        window = SDL_CreateWindow(title, x, y, w, h, flags);
-        if(window)
-        {
-            std::cout << "SDL Window created!" << std::endl;
-        } else {
-            std::cerr << "SDL Window creation failed! Error: " << SDL_GetError() << std::endl;
-        }
-        //Create an SDL renderer
-        renderer = SDL_CreateRenderer(window, -1, 0);
-        
-        if(renderer)
-        {
-            std::cout << "SDL Renderer created!" << std::endl;
-        } else {
-            std::cerr << "SDL Renderer creation failed! Error: " << SDL_GetError() << std::endl;
-        }
-
-        isRunning = true;
-
-    } else {
-        std::cerr << "SDL initilization has failed! Error: " << SDL_GetError() << std::endl;
-        isRunning = false;
-    }
-
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1" );
-
-    //Initialize SDL TTF for font rendering
-    if(TTF_Init() == -1)
-    {
-        std::cerr << "Error! TTF Failed to init!" << std::endl;
-        exit(-1);
-    } else {
-        std::cout << "TTF Initialized!" << std::endl;
-    }
-
-    //Loads fonts for display
-    DisplayFont = TTF_OpenFont("res/fonts/B612Mono-Regular.ttf", 25);
-
-    //Check display font is loaded
-    if(DisplayFont != nullptr)
-    {
-        std::cout << "Fonts loaded!" << std::endl;
-    } else {
-        std::cerr << "Fonts failed to load!" << std::endl;
-    }   
-
+    sfWindow = new sf::RenderWindow(sf::VideoMode(400, 440), "A330");
 }
 
-Display::~Display()
+Display::Display(FMGS* FMGS_)
 {
-
+    A330_FMGS = FMGS_;
+    sfWindow = new sf::RenderWindow(sf::VideoMode(400, 440), "A330");
 }
 
-void Display::HandleEvents()
-{
-    //Continuous keys
-    const Uint8* keystate = SDL_GetKeyboardState(NULL);
 
-    SDL_Event event;
-    while(SDL_PollEvent(&event) != 0)
+Display::~Display() {}
+
+void Display::Display_Render()
+{
+    sfWindow->clear();
+
+    A330_FMGS->MCDU1->DrawMCDU(sfWindow);
+
+    //Render imGUI
+    ImGui::SFML::Render(*sfWindow);
+    sfWindow->display();
+}
+
+void Display::imgui_INIT()
+{
+    std::cout << "Starting ImGUI..." << std::endl;
+    ImGui::SFML::Init(*sfWindow);
+}
+
+void Display::imgui_DESTROY()
+{
+    std::cout << "Shutting down ImGUI..." << std::endl;
+    ImGui::SFML::Shutdown();
+}
+
+void Display::handleEvents()
+{
+    sf::Event event;
+        while (sfWindow->pollEvent(event))
         {
-            switch(event.type) {
-                case SDL_KEYDOWN:
-                    switch(event.key.keysym.sym) {
-                        case SDLK_ESCAPE:
-                            isRunning = false;
-                            break;
-                        default:
-                            break;
+            ImGui::SFML::ProcessEvent(event);
+            switch (event.type)
+            {
+                // window closed
+                case sf::Event::Closed:
+                    sfWindow->close();
+                    break;
+                // key pressed
+                case sf::Event::KeyPressed:
+                    switch (event.key.code)
+                    {
+                    case sf::Keyboard::Space:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad(" ");
+                        break;
+                    case sf::Keyboard::BackSpace:
+                        A330_FMGS->MCDU1->pad->CLRScratchpad();
+                        break;
+                    case sf::Keyboard::A:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("A");
+                        break;
+                    case sf::Keyboard::B:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("B");
+                        break;
+                    case sf::Keyboard::C:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("C");
+                        break;
+                    case sf::Keyboard::D:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("D");
+                        break;
+                    case sf::Keyboard::E:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("E");
+                        break;
+                    case sf::Keyboard::F:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("F");
+                        break;
+                    case sf::Keyboard::G:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("G");
+                        break;
+                    case sf::Keyboard::H:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("H");
+                        break;
+                    case sf::Keyboard::I:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("I");
+                        break;
+                    case sf::Keyboard::J:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("J");
+                        break;
+                    case sf::Keyboard::K:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("K");
+                        break;
+                    case sf::Keyboard::L:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("L");
+                        break;
+                    case sf::Keyboard::M:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("M");
+                        break;
+                    case sf::Keyboard::N:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("N");
+                        break;
+                    case sf::Keyboard::O:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("O");
+                        break;
+                    case sf::Keyboard::P:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("P");
+                        break;
+                    case sf::Keyboard::Q:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("Q");
+                        break;
+                    case sf::Keyboard::R:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("R");
+                        break;
+                    case sf::Keyboard::S:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("S");
+                        break;
+                    case sf::Keyboard::T:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("T");
+                        break;
+                    case sf::Keyboard::U:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("U");
+                        break;
+                    case sf::Keyboard::V:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("V");
+                        break;
+                    case sf::Keyboard::W:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("W");
+                        break;
+                    case sf::Keyboard::X:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("X");
+                        break;
+                    case sf::Keyboard::Y:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("Y");
+                        break;
+                    case sf::Keyboard::Z:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("Z");
+                        break;
+                    case sf::Keyboard::Num0:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("0");
+                        break;
+                    case sf::Keyboard::Num1:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("1");
+                        break;
+                    case sf::Keyboard::Num2:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("2");
+                        break;
+                    case sf::Keyboard::Num3:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("3");
+                        break;
+                    case sf::Keyboard::Num4:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("4");
+                        break;
+                    case sf::Keyboard::Num5:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("5");
+                        break;
+                    case sf::Keyboard::Num6:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("6");
+                        break;
+                    case sf::Keyboard::Num7:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("7");
+                        break;
+                    case sf::Keyboard::Num8:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("8");
+                        break;
+                    case sf::Keyboard::Num9:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("9");
+                        break;
+                    case sf::Keyboard::Slash:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad("/");
+                        break;
+                    case sf::Keyboard::Period:
+                        A330_FMGS->MCDU1->pad->AddToScratchpad(".");
+                        break;
+
+                    default:
+                        break;
                     }
+                    
+
+                // we don't process other types of events
                 default:
                     break;
             }
+
         }
-}
-
-void Display::HandleMcduEvents(MCDU* mcdu_)
-{
-     //Continuous keys
-    const Uint8* keystate = SDL_GetKeyboardState(NULL);
-
-    SDL_Event event;
-    while(SDL_PollEvent(&event) != 0)
-        {
-            switch(event.type) {
-                case SDL_KEYDOWN:
-                    switch(event.key.keysym.sym) {
-                        case SDLK_ESCAPE:
-                            isRunning = false;
-                            break;
-                        case SDLK_BACKSPACE:
-                            mcdu_->pad->CLRScratchpad();
-                            break;
-                        case SDLK_SPACE:
-                            mcdu_->pad->AddToScratchpad(" ");
-                            break;
-                        case SDLK_a:
-                            mcdu_->pad->AddToScratchpad("A");
-                            break;
-                        case SDLK_b:
-                            mcdu_->pad->AddToScratchpad("B");
-                            break;
-                        case SDLK_c:
-                            mcdu_->pad->AddToScratchpad("C");
-                            break;
-                        case SDLK_d:
-                            mcdu_->pad->AddToScratchpad("D");
-                            break;
-                        case SDLK_e:
-                            mcdu_->pad->AddToScratchpad("E");
-                            break;
-                        case SDLK_f:
-                            mcdu_->pad->AddToScratchpad("F");
-                            break;
-                        case SDLK_g:
-                            mcdu_->pad->AddToScratchpad("G");
-                            break;
-                        case SDLK_h:
-                            mcdu_->pad->AddToScratchpad("H");
-                            break;
-                        case SDLK_i:
-                            mcdu_->pad->AddToScratchpad("I");
-                            break;
-                        case SDLK_j:
-                            mcdu_->pad->AddToScratchpad("J");
-                            break;
-                        case SDLK_k:
-                            mcdu_->pad->AddToScratchpad("K");
-                            break;
-                        case SDLK_l:
-                            mcdu_->pad->AddToScratchpad("L");
-                            break;
-                        case SDLK_m:
-                            mcdu_->pad->AddToScratchpad("M");
-                            break;
-                        case SDLK_n:
-                            mcdu_->pad->AddToScratchpad("N");
-                            break;
-                        case SDLK_o:
-                            mcdu_->pad->AddToScratchpad("O");
-                            break;
-                        case SDLK_p:
-                            mcdu_->pad->AddToScratchpad("P");
-                            break;
-                        case SDLK_q:
-                            mcdu_->pad->AddToScratchpad("Q");
-                            break;
-                        case SDLK_r:
-                            mcdu_->pad->AddToScratchpad("R");
-                            break;
-                        case SDLK_s:
-                            mcdu_->pad->AddToScratchpad("S");
-                            break;
-                        case SDLK_t:
-                            mcdu_->pad->AddToScratchpad("T");
-                            break;
-                        case SDLK_u:
-                            mcdu_->pad->AddToScratchpad("U");
-                            break;
-                        case SDLK_v:
-                            mcdu_->pad->AddToScratchpad("V");
-                            break;
-                        case SDLK_w:
-                            mcdu_->pad->AddToScratchpad("W");
-                            break;
-                        case SDLK_x:
-                            mcdu_->pad->AddToScratchpad("X");
-                            break;
-                        case SDLK_y:
-                            mcdu_->pad->AddToScratchpad("Y");
-                            break;
-                        case SDLK_z:
-                            mcdu_->pad->AddToScratchpad("Z");
-                            break;
-                        default:
-                            break;
-                    }
-                default:
-                    break;
-            }
-        }
-}
-
-void Display::Render()
-{
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-
-        SDL_RenderClear(renderer);
-
-
-        SDL_RenderPresent(renderer);
-
-        
-}
-
-void Display::Clean()
-{
-    TTF_CloseFont(DisplayFont);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    std::cout << "Quitting SDL..." << std::endl;
-    TTF_Quit();
-    SDL_Quit();
 }

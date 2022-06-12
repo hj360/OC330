@@ -19,6 +19,9 @@ MCDU::MCDU(int id_, int w_, int h_)
     //Create a scratchpad
     pad = new Scratchpad(dimX);
 
+    //Load font
+    mcduFont.loadFromFile("res/fonts/B612Mono-Regular.ttf");
+
     //MCDU is online
     avail = 1;
     
@@ -29,6 +32,10 @@ MCDU::MCDU(int id_, int w_, int h_)
     } else {
         std::cerr << "MCDU " << id << " Fail." << std::endl;
     }
+
+    InitPages();
+
+    ActivePage = P_DATA_INDEX_1;
 }
 
 MCDU::~MCDU()
@@ -36,30 +43,41 @@ MCDU::~MCDU()
 
 }
 
-void MCDU::RenderSDLMCDU(SDL_Renderer* renderer, TTF_Font* DisplayFont)
+void MCDU::InitPages()
 {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
+    P_DATA_INDEX_1 = new Page();
+}
 
+void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)
+{
     //Render scratchpad
     pad->GetScratchPad(scratchpad_buff);
-    length = scratchpad_buff.length();
-    const char* c = scratchpad_buff.c_str();
-    
-    SDL_Surface* textSurf = TTF_RenderText_Solid(DisplayFont, c, {255, 255, 255});
-    delete c;
-    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurf);
-    //Add scratchpad rect to bottom of display
-    textRect = {0, (charH * 13), (charW * length), (charH)};
-    SDL_FreeSurface(textSurf);
-    SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
 
-    SDL_DestroyTexture(textTexture);
-    
+    sf::Text text;
 
-    
+    text.setFont(mcduFont);
+    text.setCharacterSize(24);
+    text.setFillColor(sf::Color::White);
+    text.setString(scratchpad_buff);
+    text.setPosition(0, (charH * 13));
 
-    SDL_RenderPresent(renderer);
+    sfWindow->draw(text);
 
+    std::vector<Element> pageElements = ActivePage->getElements();
 
+    std::string tempString;
+    int tempRow;
+    int tempOffset;
+    int tempColor;
+
+    //Render all page elements on current page
+    for(int i = 0; i < pageElements.size(); ++i)
+    {
+        pageElements[i].getElement(tempString, tempRow, tempOffset, tempColor);
+
+        text.setString(tempString);
+        text.setPosition(charW * tempOffset, charH * tempRow);
+
+        sfWindow->draw(text);
+    }
 }

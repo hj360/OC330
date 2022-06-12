@@ -8,6 +8,14 @@ Element::Element()
     color = 0;
 }
 
+Element::Element(std::string text_, int row_, int offset_, int color_)
+{
+    text = text_;
+    row = row_;
+    offset = offset_;
+    color = color_;
+}
+
 Element::~Element()
 {
 

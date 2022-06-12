@@ -1,8 +1,7 @@
 #include <vector>
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_ttf.h"
 #include "mcdu_scratchpad.h"
 #include "mcdu_pages.h"
+#include <SFML/Graphics.hpp>
 
 #ifndef MCDU_H
 #define MCDU_H
@@ -15,9 +14,8 @@ class MCDU
         ~MCDU();
 
         void selectLsk(int lsk);
-
-        void RenderSDLMCDU(SDL_Renderer* renderer, TTF_Font* DisplayFont);
-
+        void InitPages();
+        void DrawMCDU(sf::RenderWindow* sfWindow);
         //Pointer to MCDU scratchpad
         Scratchpad* pad;
 
@@ -42,18 +40,12 @@ class MCDU
         //Pointer to the active page
         Page* ActivePage;
         //MCDU Pages
-        Page* P_MCDU_MENU;
+        Page* P_DATA_INDEX_1;
 
         //Line select keys
         std::vector<bool> lsk[6];
 
-
-
-
-        //_________SDL____________
-        SDL_Rect textRect;
-        int length;
-        
+        sf::Font mcduFont;
 
 };
 
