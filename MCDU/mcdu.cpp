@@ -2,7 +2,7 @@
 
 #include "mcdu.h"
 
-MCDU::MCDU(int id_)
+MCDU::MCDU(int id_, int w_, int h_)
 {
     //Initialize class vars with constructor vars
     id = id_;
@@ -10,12 +10,14 @@ MCDU::MCDU(int id_)
     dimX = 24;
     dimY = 14;
 
-    defaultChar = '0';
+    w = w_;
+    h = h_;
 
-    //Initialize vector matrix with default values with speciied dimensions
-    display_matrix.resize(dimX, std::vector<char>(dimY, defaultChar));
+    charW = w/dimX;
+    charH = h/dimY;
 
-
+    //Create a scratchpad
+    pad = new Scratchpad(dimX);
 
     //MCDU is online
     avail = 1;
@@ -31,5 +33,33 @@ MCDU::MCDU(int id_)
 
 MCDU::~MCDU()
 {
+
+}
+
+void MCDU::RenderSDLMCDU(SDL_Renderer* renderer, TTF_Font* DisplayFont)
+{
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+
+    //Render scratchpad
+    pad->GetScratchPad(scratchpad_buff);
+    length = scratchpad_buff.length();
+    const char* c = scratchpad_buff.c_str();
+    
+    SDL_Surface* textSurf = TTF_RenderText_Solid(DisplayFont, c, {255, 255, 255});
+    delete c;
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurf);
+    //Add scratchpad rect to bottom of display
+    textRect = {0, (charH * 13), (charW * length), (charH)};
+    SDL_FreeSurface(textSurf);
+    SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+
+    SDL_DestroyTexture(textTexture);
+    
+
+    
+
+    SDL_RenderPresent(renderer);
+
 
 }

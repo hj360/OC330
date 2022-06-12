@@ -10,7 +10,7 @@
 #include "fmgs.h"
 
 
-#define TICK_INTERVAL 5
+#define TICK_INTERVAL 100
 
 static Uint32 next_time;
 
@@ -33,25 +33,19 @@ int main(int argc, char* argv[])
     FMGS* A330_FMGS = new FMGS();
 
     //Create an instance of display
-    Display* Display_System = new Display("A330 SYSTEM", 50, 50, 700, 600, 0);
+    Display* Display_System = new Display("A330 SYSTEM", 50, 50, 400, 440, SDL_RENDERER_ACCELERATED);
 
 
-    std::string origin = "";
-
-    A330_FMGS->FMGC1->FM.set_fpln_origin("YPAD", 1);
-    A330_FMGS->FMGC1->FM.get_fpln_origin(origin, 1);
-
-
-    std::cout << origin << std::endl;
+    A330_FMGS->MCDU1->pad->AddToScratchpad("YPAD");
 
     //Main refresh loop
     while(Display_System->running())
     {
-        Display_System->HandleEvents();
-        Display_System->Render();
-
+        //Display_System->HandleEvents();
+        Display_System->HandleMcduEvents(A330_FMGS->MCDU1);
+        //Display_System->Render();
         //MCDU_L->RenderConsole();
-
+        A330_FMGS->MCDU1->RenderSDLMCDU(Display_System->renderer, Display_System->DisplayFont);
         SDL_Delay(time_left());
         next_time += TICK_INTERVAL;
 

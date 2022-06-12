@@ -8,9 +8,9 @@ FMGS::FMGS()
     FMGC2 = new FMGC(2);
     
     //Initialize display units
-    MCDU1 = new MCDU(1);
-    MCDU2 = new MCDU(2);
-    MCDU3 = new MCDU(3);
+    MCDU1 = new MCDU(1, 400, 440);
+    MCDU2 = new MCDU(2, 400, 440);
+    MCDU3 = new MCDU(3, 400, 440);
     
 }
 

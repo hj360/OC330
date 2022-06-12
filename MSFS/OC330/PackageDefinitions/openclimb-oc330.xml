@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AssetPackage Version="0.1.0">
+	<ItemSettings>
+		<ContentType>AIRCRAFT</ContentType>
+		<Title>OpemClimb A330</Title>
+		<Manufacturer>Airbus</Manufacturer>
+		<Creator>Henri Jury</Creator>
+	</ItemSettings>
+	<Flags>
+		<VisibleInStore>false</VisibleInStore>
+		<CanBeReferenced>false</CanBeReferenced>
+	</Flags>
+	<AssetGroups>
+		<AssetGroup Name="A330">
+			<Type>SimObject</Type>
+			<Flags>
+				<FSXCompatibility>false</FSXCompatibility>
+			</Flags>
+			<AssetDir>PackageSources\SimObjects\Airplanes\A330\</AssetDir>
+			<OutputDir>SimObjects\Airplanes\A330\</OutputDir>
+		</AssetGroup>
+		<AssetGroup Name="ContentInfo">
+			<Type>ContentInfo</Type>
+			<Flags>
+				<FSXCompatibility>false</FSXCompatibility>
+			</Flags>
+			<AssetDir>PackageDefinitions\openclimb-oc330\ContentInfo</AssetDir>
+			<OutputDir>ContentInfo\openclimb-oc330</OutputDir>
+		</AssetGroup>
+	</AssetGroups>
+</AssetPackage>
+
