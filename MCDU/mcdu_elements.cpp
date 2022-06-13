@@ -6,6 +6,8 @@ Element::Element()
     row = 0;
     offset = 0;
     color = 0;
+
+    type = 0;
 }
 
 Element::Element(std::string text_, int row_, int offset_, int color_)
@@ -14,6 +16,16 @@ Element::Element(std::string text_, int row_, int offset_, int color_)
     row = row_;
     offset = offset_;
     color = color_;
+}
+
+void Element::Select(int &linkedPageId_)
+{
+    linkedPageId_ = linkedPageId;
+}
+
+int Element::getType()
+{
+    return type;
 }
 
 //For rendering to a display. Sets reference vars to those of the specific element
@@ -32,10 +44,6 @@ Link::Link(std::string text_, int row_, int offset_, int color_, int linkedPageI
     offset = offset_;
     color = color_;
     linkedPageId = linkedPageId_;
-}
 
-void Link::Select(int &linkedPageId_)
-{
-    linkedPageId_ = linkedPageId;
+    type = 1;
 }
-

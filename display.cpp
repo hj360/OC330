@@ -9,6 +9,9 @@ Display::Display(FMGS* FMGS_)
 {
     A330_FMGS = FMGS_;
     sfWindow = new sf::RenderWindow(sf::VideoMode(384, 420), "A330");
+
+    //Initialize GUI
+    debugGUI = new GUI(sfWindow, A330_FMGS);
 }
 
 
@@ -29,33 +32,6 @@ void Display::Display_CLEAR()
 void Display::Display_DISPLAY()
 {
     sfWindow->display();
-}
-
-void Display::imgui_INIT()
-{
-    std::cout << "Starting ImGUI..." << std::endl;
-    ImGui::SFML::Init(*sfWindow);
-}
-
-void Display::imgui_UPDATE(sf::Clock &deltaClock)
-{
-    ImGui::SFML::Update(*sfWindow, deltaClock.restart());
-}
-
-void Display::imgui_RENDER()
-{
-    ImGui::Begin("Hello");
-    ImGui::Text("Text");
-    ImGui::Button("LSK1");
-    ImGui::End();
-
-    ImGui::SFML::Render(*sfWindow);
-}
-
-void Display::imgui_DESTROY()
-{
-    std::cout << "Shutting down ImGUI..." << std::endl;
-    ImGui::SFML::Shutdown();
 }
 
 void Display::handleEvents()

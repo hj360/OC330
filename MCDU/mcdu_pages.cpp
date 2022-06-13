@@ -21,9 +21,19 @@ std::vector<Element> Page::getElements()
     return pageElements;
 }
 
+std::vector<Element> Page::getLSKElements()
+{
+    return lskElements;
+}
+
 int Page::getPageId()
 {
     return pageID;
+}
+
+Element Page::getLSKElement(int lsk)
+{
+    return lskElements[lsk];
 }
 
 Data_Index_1::Data_Index_1(int id_)
@@ -38,7 +48,7 @@ Data_Index_1::Data_Index_1(int id_)
     pageElements.push_back(Element("IRS", 3, 1, 0));
     pageElements.push_back(Link("<MONITOR", 4, 0, 0, 0));
     pageElements.push_back(Element("GPS", 5, 1, 0));
-    pageElements.push_back(Link("<A/C STATUS", 7, 0, 0, 0));
+    //pageElements.push_back(Link("<A/C STATUS", 7, 0, 0, 1));
     pageElements.push_back(Element("CLOSEST", 8, 1, 0));
     pageElements.push_back(Link("<AIRPORTS", 9, 0, 0, 0));
     pageElements.push_back(Element("PRINT", 8, 18, 0));
@@ -48,7 +58,9 @@ Data_Index_1::Data_Index_1(int id_)
     pageElements.push_back(Element("AOC", 10, 18, 0));
     pageElements.push_back(Link("FUNCTION>", 11, 15, 0, 0));
 
-
+    //Set any lsks
+    //LSK1
+    lskElements.push_back(Link("<A/C STATUS", 7, 0, 0, 1));
 }
 
 Ac_Status::Ac_Status(int id_)

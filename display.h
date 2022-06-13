@@ -10,6 +10,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
+#include "GUI/GUI.h"
+
 #include "fmgs.h"
 
 class Display
@@ -23,12 +25,9 @@ class Display
 
         void Display_RENDER();
         void Display_CLEAR();
-        void Display_DISPLAY();
-        
-        void imgui_INIT();
-        void imgui_UPDATE(sf::Clock &deltaClock);
-        void imgui_RENDER();
-        void imgui_DESTROY();
+        void Display_DISPLAY();        
+
+        GUI* debugGUI;
 
         void handleEvents();
 

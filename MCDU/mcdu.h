@@ -35,16 +35,20 @@ class MCDU
         //Defines the width and height of a character
         int charW;
         int charH;
+
+        //Font size
+        int fontSize;
         
         std::string scratchpad_buff;
         //Pointer to the active page
         Page* ActivePage;
+        int p_Act;;
         //MCDU Pages
         Page* P_DATA_INDEX_1;
         Page* P_AC_STATUS;
 
         //Line select keys
-        std::vector<bool> lsk[6];
+        std::vector<bool> lsk;
 
         sf::Font mcduFont;
 
