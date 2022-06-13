@@ -30,6 +30,7 @@ Link::Link(std::string text_, int row_, int offset_, int color_, int linkedPageI
     text = text_;
     row = row_;
     offset = offset_;
+    color = color_;
     linkedPageId = linkedPageId_;
 }
 

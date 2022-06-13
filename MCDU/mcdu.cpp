@@ -71,12 +71,37 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)
     int tempRow;
     int tempOffset;
     int tempColor;
+    sf::Color elementColor;
 
     //Render all page elements on current page
     for(int i = 0; i < pageElements.size(); ++i)
     {
         pageElements[i].getElement(tempString, tempRow, tempOffset, tempColor);
 
+        //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
+        if(tempColor == 0)
+        {
+            elementColor = sf::Color::White;
+        } else if(tempColor == 1)
+        {
+            elementColor = sf::Color::Green;
+        } else if(tempColor == 2)
+        {
+            elementColor = sf::Color::Cyan;
+        } else if(tempColor == 3)
+        {
+            elementColor = sf::Color::Magenta;
+        } else if(tempColor == 4)
+        {
+            elementColor = sf::Color::Yellow;
+        } else if(tempColor == 5)
+        {
+            elementColor == sf::Color::Red;
+        } else {
+            elementColor == sf::Color::Blue;
+        }
+
+        text.setFillColor(elementColor);
         text.setString(tempString);
         text.setPosition(charW * tempOffset, charH * tempRow);
 
