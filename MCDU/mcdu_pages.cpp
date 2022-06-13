@@ -50,3 +50,26 @@ Data_Index_1::Data_Index_1(int id_)
 
 
 }
+
+Ac_Status::Ac_Status(int id_)
+{
+    pageID = id_;
+
+
+    //Elements for Data index 1
+    pageElements.push_back(Element("A330-300B", 0, 6, 0));
+    pageElements.push_back(Element("ENG", 1, 1, 0));
+    pageElements.push_back(Link("PW4168A", 2, 0, 0, 0));
+    pageElements.push_back(Element("ACTIVE NAV DATA BASE", 3, 1, 0));
+    pageElements.push_back(Element("28MAY-24JUN", 4, 1, 0));
+    pageElements.push_back(Element("AB2388371", 4, 14, 0));
+    pageElements.push_back(Element("SECOND NAV DATA BASE", 5, 1, 0));
+    pageElements.push_back(Link("<28MAY-24JUN", 6, 0, 0, 0));
+    pageElements.push_back(Element("CHG CODE", 9, 0, 0));
+    pageElements.push_back(Link("[]", 10, 0, 0, 0));
+    pageElements.push_back(Element("IDLE/PERF", 11, 0, 0));
+    pageElements.push_back(Element("SOFTWARE", 11, 15, 0));
+    pageElements.push_back(Link("+0.0/+4.4", 12, 0, 0, 0));
+    pageElements.push_back(Link("STATUS/XLOAD>", 12, 11, 0, 0));
+
+}

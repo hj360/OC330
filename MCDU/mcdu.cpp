@@ -20,7 +20,8 @@ MCDU::MCDU(int id_, int w_, int h_)
     pad = new Scratchpad(dimX);
 
     //Load font
-    mcduFont.loadFromFile("res/fonts/B612Mono-Regular.ttf");
+    //mcduFont.loadFromFile("res/fonts/B612Mono-Regular.ttf");
+    mcduFont.loadFromFile("res/fonts/MCDU_M.ttf");
 
     //MCDU is online
     avail = 1;
@@ -35,7 +36,7 @@ MCDU::MCDU(int id_, int w_, int h_)
 
     InitPages();
 
-    ActivePage = P_DATA_INDEX_1;
+    ActivePage = P_AC_STATUS;
 }
 
 MCDU::~MCDU()
@@ -46,6 +47,7 @@ MCDU::~MCDU()
 void MCDU::InitPages()
 {
     P_DATA_INDEX_1 = new Data_Index_1(1);
+    P_AC_STATUS = new Ac_Status(2);
 }
 
 void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)
@@ -56,7 +58,7 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)
     sf::Text text;
 
     text.setFont(mcduFont);
-    text.setCharacterSize(24);
+    text.setCharacterSize(20);
     text.setFillColor(sf::Color::White);
     text.setString(scratchpad_buff);
     text.setPosition(0, (charH * 13));

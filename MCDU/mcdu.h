@@ -41,6 +41,7 @@ class MCDU
         Page* ActivePage;
         //MCDU Pages
         Page* P_DATA_INDEX_1;
+        Page* P_AC_STATUS;
 
         //Line select keys
         std::vector<bool> lsk[6];

@@ -14,8 +14,10 @@ int main(int argc, char* argv[])
 
     //Create a display
     Display* debugDisplay = new Display(A330_FMGS);
+    
     debugDisplay->imgui_INIT();
     debugDisplay->sfWindow->setFramerateLimit(10);
+
 
     //GUI loop
     sf::Clock deltaClock;
@@ -23,8 +25,15 @@ int main(int argc, char* argv[])
     {
         //Update UI
         debugDisplay->handleEvents();
-        ImGui::SFML::Update(*debugDisplay->sfWindow, deltaClock.restart());
-        debugDisplay->Display_Render();
+        debugDisplay->imgui_UPDATE(deltaClock);
+
+        debugDisplay->Display_CLEAR();
+
+        debugDisplay->Display_RENDER();
+        debugDisplay->imgui_RENDER();
+
+        debugDisplay->Display_DISPLAY();
+
     }
 
 

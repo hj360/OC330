@@ -28,4 +28,12 @@ class Data_Index_1 : public Page
 
 };
 
+class Ac_Status : public Page
+{
+    public:
+        Ac_Status(int id_);
+        ~Ac_Status(){};
+
+};
+
 #endif

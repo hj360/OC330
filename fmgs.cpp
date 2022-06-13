@@ -8,9 +8,10 @@ FMGS::FMGS()
     FMGC2 = new FMGC(2);
     
     //Initialize display units
-    MCDU1 = new MCDU(1, 400, 440);
-    MCDU2 = new MCDU(2, 400, 440);
-    MCDU3 = new MCDU(3, 400, 440);
+    //Because the font is .8em width the display resolution needs to be a multiple of 192 8*24 characters
+    MCDU1 = new MCDU(1, 384, 420);
+    MCDU2 = new MCDU(2, 384, 420);
+    MCDU3 = new MCDU(3, 384, 420);
     
 }
 
