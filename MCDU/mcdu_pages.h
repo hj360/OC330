@@ -8,15 +8,24 @@ class Page
 {
     public:
         Page();
-        ~Page();
+        Page(int id_);
+        ~Page(){};
 
         std::vector<Element> getElements();
+        int getPageId();
 
-    private:
+    protected:
         //Page elements
         std::vector<Element> pageElements;
-        
-    
+        int pageID;
+};
+
+class Data_Index_1 : public Page
+{
+    public:
+        Data_Index_1(int id_);
+        ~Data_Index_1(){};
+
 };
 
 #endif

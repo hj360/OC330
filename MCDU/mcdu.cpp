@@ -45,7 +45,7 @@ MCDU::~MCDU()
 
 void MCDU::InitPages()
 {
-    P_DATA_INDEX_1 = new Page();
+    P_DATA_INDEX_1 = new Data_Index_1(1);
 }
 
 void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)

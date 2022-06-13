@@ -16,11 +16,6 @@ Element::Element(std::string text_, int row_, int offset_, int color_)
     color = color_;
 }
 
-Element::~Element()
-{
-
-}
-
 //For rendering to a display. Sets reference vars to those of the specific element
 void Element::getElement(std::string &text_, int &row_, int &offset_, int &color_)
 {
@@ -29,3 +24,17 @@ void Element::getElement(std::string &text_, int &row_, int &offset_, int &color
     offset_ = offset;
     color_ = color;
 }
+
+Link::Link(std::string text_, int row_, int offset_, int color_, int linkedPageId_)
+{
+    text = text_;
+    row = row_;
+    offset = offset_;
+    linkedPageId = linkedPageId_;
+}
+
+void Link::Select(int &linkedPageId_)
+{
+    linkedPageId_ = linkedPageId;
+}
+

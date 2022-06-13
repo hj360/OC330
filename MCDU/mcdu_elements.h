@@ -8,11 +8,11 @@ class Element
     public:
         Element();
         Element(std::string text_, int row_, int offset_, int color_);
-        ~Element();
+        ~Element(){};
 
         void getElement(std::string &text_, int &row_, int &offset_, int &color_);
 
-    private:
+    protected:
         //Current value of text that shows on the MCDU
         std::string text;
         //Row which the element renders on the MCDU
@@ -22,6 +22,20 @@ class Element
         //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
         int color;
     
+};
+
+class Link : public Element
+{
+    public:
+        Link(std::string text_, int row_, int offset_, int color_, int linkedPageId_);
+        ~Link(){};
+
+        void Select(int &linkedPageId_);
+    
+    private:
+
+        int linkedPageId;
+
 };
 
 #endif
