@@ -2,13 +2,17 @@
 
 Display::Display()
 {
-    sfWindow = new sf::RenderWindow(sf::VideoMode(384, 420), "A330");
+    sfWindow = new sf::RenderWindow(sf::VideoMode(384, 400), "A330");
 }
 
 Display::Display(FMGS* FMGS_)
 {
     A330_FMGS = FMGS_;
-    sfWindow = new sf::RenderWindow(sf::VideoMode(384, 420), "A330");
+    sfWindow = new sf::RenderWindow(sf::VideoMode(384, 400), "A330");
+
+    icon.loadFromFile("res/icon.png");
+
+    sfWindow->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     //Initialize GUI
     debugGUI = new GUI(sfWindow, A330_FMGS);

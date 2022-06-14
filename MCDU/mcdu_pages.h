@@ -43,4 +43,12 @@ class Ac_Status : public Page
 
 };
 
+class Init_A : public Page
+{
+    public:
+        Init_A(int id_);
+        ~Init_A(){};
+
+};
+
 #endif

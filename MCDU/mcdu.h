@@ -51,17 +51,27 @@ class MCDU
         //MCDU Pages
         Page* P_DATA_INDEX_1;
         Page* P_AC_STATUS;
+        Page* P_INIT_A;
 
         //Line select keys
         std::vector<bool> lsk;
 
-        sf::Font mcduFont;
+        sf::Font mcduFont_s;
+        sf::Font mcduFont_l;
 
         //Lsk elements for the active page
         std::vector<Element*> lskElements;
         std::vector<Element*> pageElements;
 
         bool inTransition;
+
+        //MCDU colors
+        sf::Color mcdu_white;
+        sf::Color mcdu_green;
+        sf::Color mcdu_blue;
+        sf::Color mcdu_magenta;
+        sf::Color mcdu_yellow;
+        sf::Color mcdu_orange;
 
 };
 

@@ -34,6 +34,7 @@ class Display
     private:
 
         FMGS* A330_FMGS;
+        sf::Image icon;
         
 
 };

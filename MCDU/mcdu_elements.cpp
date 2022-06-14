@@ -12,12 +12,13 @@ Element::Element()
     type = 0;
 }
 
-Element::Element(std::string text_, int row_, int offset_, int color_)
+Element::Element(std::string text_, int row_, int offset_, int color_, int size_)
 {
     text = text_;
     row = row_;
     offset = offset_;
     color = color_;
+    size = size_;
 }
 
 void Element::Select(int &linkedPageId_, Scratchpad &pad_)
@@ -33,20 +34,22 @@ int Element::getType()
 }
 
 //For rendering to a display. Sets reference vars to those of the specific element
-void Element::getElement(std::string &text_, int &row_, int &offset_, int &color_)
+void Element::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_)
 {
     text_ = text;
     row_ = row;
     offset_ = offset;
     color_ = color;
+    size_ = size;
 }
 
-Link::Link(std::string text_, int row_, int offset_, int color_, int linkedPageId_)
+Link::Link(std::string text_, int row_, int offset_, int color_, int size_, int linkedPageId_)
 {
     text = text_;
     row = row_;
     offset = offset_;
     color = color_;
+    size = size_;
     linkedPageId = linkedPageId_;
 
     type = 1;

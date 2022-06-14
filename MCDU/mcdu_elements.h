@@ -8,10 +8,10 @@ class Element
 {
     public:
         Element();
-        Element(std::string text_, int row_, int offset_, int color_);
+        Element(std::string text_, int row_, int offset_, int color_, int size_);
         ~Element(){};
 
-        void getElement(std::string &text_, int &row_, int &offset_, int &color_);
+        void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_);
         virtual void Select(int &linkedPageId_, Scratchpad &pad_);
         int getType();
 
@@ -31,13 +31,16 @@ class Element
         //0 - plain text
         //1 - link
         int type;
+
+        //0 is label 1 is large
+        int size;
     
 };
 
 class Link : public Element
 {
     public:
-        Link(std::string text_, int row_, int offset_, int color_, int linkedPageId_);
+        Link(std::string text_, int row_, int offset_, int color_, int size_, int linkedPageId_);
         ~Link(){};
 
         virtual void Select(int &linkedPageId_, Scratchpad &pad_);
