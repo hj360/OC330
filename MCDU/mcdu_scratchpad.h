@@ -10,6 +10,8 @@ class Scratchpad
         Scratchpad(int size);
         ~Scratchpad();
 
+        void setState(int state_);
+        void AddMSG(int msgCode_);
         void AddToScratchpad(std::string str_);
         void CLRScratchpad();
         void GetScratchPad(std::string &pad_);

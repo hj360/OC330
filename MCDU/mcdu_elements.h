@@ -1,4 +1,5 @@
 #include <string>
+#include "mcdu_scratchpad.h"
 
 #ifndef MCDU_ELEMENTS_H
 #define MCDU_ELEMENTS_H
@@ -11,7 +12,7 @@ class Element
         ~Element(){};
 
         void getElement(std::string &text_, int &row_, int &offset_, int &color_);
-        void Select(int &linkedPageId_);
+        virtual void Select(int &linkedPageId_, Scratchpad &pad_);
         int getType();
 
     protected:
@@ -38,7 +39,9 @@ class Link : public Element
     public:
         Link(std::string text_, int row_, int offset_, int color_, int linkedPageId_);
         ~Link(){};
-    
+
+        virtual void Select(int &linkedPageId_, Scratchpad &pad_);
+
     private:
 
 };

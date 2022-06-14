@@ -19,11 +19,43 @@ void GUI::imgui_UPDATE(sf::Clock &deltaClock)
 
 void GUI::imgui_RENDER()
 {
-    ImGui::Begin("Hello");
-    ImGui::Text("Text");
-    if(ImGui::Button("LSK1"))
+    ImGui::Begin("MCDU LSK");
+    if(ImGui::Button("LSK1L"))
+    {
+        A330_FMGS->MCDU1->selectLsk(0);
+    }else if(ImGui::Button("LSK2L"))
     {
         A330_FMGS->MCDU1->selectLsk(1);
+    }else if(ImGui::Button("LSK3L"))
+    {
+        A330_FMGS->MCDU1->selectLsk(2);        
+    }else if(ImGui::Button("LSK4L"))
+    {
+        A330_FMGS->MCDU1->selectLsk(3);       
+    }else if(ImGui::Button("LSK5L"))
+    {
+        A330_FMGS->MCDU1->selectLsk(4);       
+    }else if(ImGui::Button("LSK6L"))
+    {
+        A330_FMGS->MCDU1->selectLsk(5);  
+    }else if(ImGui::Button("LSK1R"))
+    {
+        A330_FMGS->MCDU1->selectLsk(6); 
+    }else if(ImGui::Button("LSK2R"))
+    {
+        A330_FMGS->MCDU1->selectLsk(7);
+    }else if(ImGui::Button("LSK3R"))
+    {
+        A330_FMGS->MCDU1->selectLsk(8); 
+    }else if(ImGui::Button("LSK4R"))
+    {
+        A330_FMGS->MCDU1->selectLsk(9);
+    }else if(ImGui::Button("LSK5R"))
+    {
+        A330_FMGS->MCDU1->selectLsk(10); 
+    }else if(ImGui::Button("LSK6R"))
+    {
+        A330_FMGS->MCDU1->selectLsk(11);  
     }
     ImGui::End();
 

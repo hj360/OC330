@@ -16,8 +16,13 @@ class MCDU
         void selectLsk(int lsk);
         void InitPages();
         void DrawMCDU(sf::RenderWindow* sfWindow);
+        void SetActivePage(Page* page_);
+
+        void CleanPages();
         //Pointer to MCDU scratchpad
         Scratchpad* pad;
+
+        void DrawPageTransitions(sf::RenderWindow* sfWindow);
 
     private:
         //1 is MCDU1, 2 is MCDU2, 3 is MCDU3
@@ -51,6 +56,12 @@ class MCDU
         std::vector<bool> lsk;
 
         sf::Font mcduFont;
+
+        //Lsk elements for the active page
+        std::vector<Element*> lskElements;
+        std::vector<Element*> pageElements;
+
+        bool inTransition;
 
 };
 

@@ -11,17 +11,19 @@ class Page
         Page(int id_);
         ~Page(){};
 
-        std::vector<Element> getElements();
-        std::vector<Element> getLSKElements();
+        void Clean();
+
+        std::vector<Element*>& getElements();
+        std::vector<Element*>& getLSKElements();
         int getPageId();
-        Element getLSKElement(int lsk);
+        Element*& getLSKElement(int lsk);
         
 
 
     protected:
         //Page elements
-        std::vector<Element> pageElements;
-        std::vector<Element> lskElements;
+        std::vector<Element*> pageElements;
+        std::vector<Element*> lskElements;
         int pageID;
 };
 

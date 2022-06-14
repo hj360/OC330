@@ -11,6 +11,11 @@ Scratchpad::~Scratchpad()
 
 }
 
+void Scratchpad::setState(int state_)
+{
+    state = state_;
+}
+
 void Scratchpad::AddToScratchpad(std::string str_)
 {
     //Check if scratchpad has room and if mode is correct
@@ -35,12 +40,34 @@ void Scratchpad::CLRScratchpad()
         state = 0;
     } else if(state == 2)
     {
+        msg.erase(msg.begin());
         state = 0;
+    }
+}
+
+void Scratchpad::AddMSG(int msgCode_)
+{
+    switch(msgCode_)
+    {
+        case 0:
+            msg.push_back("NOT ALLOWED");
+    }
+
+    //Remove last element if there are more than 5 messages
+    //Last in first out structure
+    if(msg.size() > 5)
+    {
+        msg.pop_back();
     }
 }
 
 void Scratchpad::GetScratchPad(std::string &pad_)
 {
+    //Check for scratchpad messages
+    if(msg.size() > 0)
+    {
+        state = 2;
+    }
     //Check state of Scratchpad
     if(state == 0)
     {

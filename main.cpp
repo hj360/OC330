@@ -27,6 +27,7 @@ int main(int argc, char* argv[])
         debugDisplay->handleEvents();
         debugDisplay->debugGUI->imgui_UPDATE(deltaClock);
         debugDisplay->Display_CLEAR();
+        A330_FMGS->MCDU1->DrawPageTransitions(debugDisplay->sfWindow);
         debugDisplay->Display_RENDER();
         debugDisplay->debugGUI->imgui_RENDER();
         debugDisplay->Display_DISPLAY();
@@ -35,6 +36,7 @@ int main(int argc, char* argv[])
 
 
     //debugDisplay->imgui_DESTROY();
+    A330_FMGS->MCDU1->CleanPages();
     debugDisplay->debugGUI->imgui_DESTROY();
     delete debugDisplay;
     delete A330_FMGS;

@@ -1,5 +1,7 @@
 #include "mcdu_elements.h"
 
+#include <iostream>
+
 Element::Element()
 {
     text = "DEFAULT ELEMENT";
@@ -18,9 +20,11 @@ Element::Element(std::string text_, int row_, int offset_, int color_)
     color = color_;
 }
 
-void Element::Select(int &linkedPageId_)
+void Element::Select(int &linkedPageId_, Scratchpad &pad_)
 {
-    linkedPageId_ = linkedPageId;
+    //Element is not allowed to be selected
+    pad_.AddMSG(0);
+    std::cout << "Element element select" << std::endl;
 }
 
 int Element::getType()
@@ -46,4 +50,10 @@ Link::Link(std::string text_, int row_, int offset_, int color_, int linkedPageI
     linkedPageId = linkedPageId_;
 
     type = 1;
+}
+
+void Link::Select(int &linkedPageId_, Scratchpad &pad_)
+{
+    linkedPageId_ = linkedPageId;
+    std::cout << "Link element select" << std::endl;
 }

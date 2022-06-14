@@ -43,7 +43,7 @@ MCDU::MCDU(int id_, int w_, int h_)
 
     p_Act = 0;
 
-    ActivePage = P_DATA_INDEX_1;
+    SetActivePage(P_DATA_INDEX_1);
 }
 
 MCDU::~MCDU()
@@ -57,25 +57,44 @@ void MCDU::InitPages()
     P_AC_STATUS = new Ac_Status(1);
 }
 
+void MCDU::SetActivePage(Page* page_)
+{
+    ActivePage = page_;
+
+    //Get all lsk elements from the page
+    lskElements = ActivePage->getLSKElements();
+    pageElements = ActivePage->getElements();
+
+    inTransition = true;
+}
+
+void MCDU::DrawPageTransitions(sf::RenderWindow* sfWindow)
+{
+    if(inTransition)
+    {
+        sfWindow->clear();
+        sfWindow->display();
+        sf::sleep(sf::milliseconds(500));
+    }
+
+    inTransition = false;
+}
+
 void MCDU::selectLsk(int lsk)
 {
-    //Determine the type of element
-    Element lskElement = ActivePage->getLSKElement(0);
-
-    if(lskElement.getType() == 1)
+    //Check lsk has valid element
+    if(lskElements[lsk] == nullptr)
     {
-        lskElement.Select(p_Act);
+        pad->AddMSG(0); //Not allowed msg
+        return;
+    }
 
-        std::cout << p_Act << std::endl;
+    lskElements[lsk]->Select(p_Act, *pad);
 
-        //To be turned into an update function
-        if(p_Act == 1)
-        {
-            ActivePage = P_AC_STATUS;
-        }
-
-    } else {
-        std::cout << "Element type is not 1" << std::endl;
+    //Update any page changes
+    if(p_Act == 1)
+    {
+        SetActivePage(P_AC_STATUS);
     }
 
 }
@@ -97,9 +116,6 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)
     //Draw scratchpad
     sfWindow->draw(text);
 
-    std::vector<Element> pageElements = ActivePage->getElements();
-    std::vector<Element> lskElements = ActivePage->getLSKElements();
-
     std::string tempString;
     int tempRow;
     int tempOffset;
@@ -109,7 +125,7 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)
     //Render all page elements on current page
     for(int i = 0; i < pageElements.size(); ++i)
     {
-        pageElements[i].getElement(tempString, tempRow, tempOffset, tempColor);
+        pageElements[i]->getElement(tempString, tempRow, tempOffset, tempColor);
 
         //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
         if(tempColor == 0)
@@ -144,7 +160,13 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)
     //render all LSK elements
     for(int i = 0; i < lskElements.size(); ++i)
     {
-        lskElements[i].getElement(tempString, tempRow, tempOffset, tempColor);
+        //Check if lsk element is null
+        if(lskElements[i] == nullptr)
+        {
+            continue;
+        }
+
+        lskElements[i]->getElement(tempString, tempRow, tempOffset, tempColor);
 
         //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
         if(tempColor == 0)
@@ -175,4 +197,13 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)
 
         sfWindow->draw(text);
     }
+}
+
+void MCDU::CleanPages()
+{
+    P_DATA_INDEX_1->Clean();
+    P_AC_STATUS->Clean();
+
+    delete P_DATA_INDEX_1;
+    delete P_AC_STATUS;
 }
