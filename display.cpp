@@ -10,6 +10,9 @@ Display::Display(FMGS* FMGS_)
     A330_FMGS = FMGS_;
     sfWindow = new sf::RenderWindow(sf::VideoMode(1280, 720), "A330", sf::Style::Default);
 
+    //Create a mouse
+    mouse = new sf::Mouse();
+
     icon.loadFromFile("res/icon.png");
 
     sfWindow->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
@@ -24,7 +27,7 @@ Display::~Display() {}
 void Display::Display_RENDER()
 {
 
-    A330_FMGS->MCDU1->DrawMCDU(sfWindow);
+    A330_FMGS->MCDU1->DrawMCDU(sfWindow, mouse);
 
 }
 

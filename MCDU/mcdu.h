@@ -1,6 +1,7 @@
 #include <vector>
 #include "mcdu_scratchpad.h"
 #include "mcdu_pages.h"
+#include "../GUI/gui_elements.h"
 #include <SFML/Graphics.hpp>
 
 #ifndef MCDU_H
@@ -15,7 +16,7 @@ class MCDU
 
         void selectLsk(int lsk);
         void InitPages();
-        void DrawMCDU(sf::RenderWindow* sfWindow);
+        void DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_);
         void SetActivePage(Page* page_);
 
         void CleanPages();
@@ -78,7 +79,34 @@ class MCDU
         sf::Color mcdu_orange;
 
         //Mcdu outlines
-        sf::RectangleShape outline;
+        GUI_Window* outline;
+
+        //Test buttons
+        Button* LSK1L;
+        Button* LSK2L;
+        Button* LSK3L;
+        Button* LSK4L;
+        Button* LSK5L;
+        Button* LSK6L;
+        Button* LSK1R;
+        Button* LSK2R;
+        Button* LSK3R;
+        Button* LSK4R;
+        Button* LSK5R;
+        Button* LSK6R;
+
+        Button* DIR;
+        Button* PROG;
+        Button* PERF;
+        Button* INIT;
+        Button* DATA;
+        Button* EMPTY_KEY;
+        Button* FPLN;
+        Button* RAD_NAV;
+        Button* FUEL_PRED;
+        Button* SEC_FPLN;
+        Button* ATC_COMM;
+        Button* MCDU_MENU;  
 };
 
 

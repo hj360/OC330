@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
     Display* debugDisplay = new Display(A330_FMGS);
     
     debugDisplay->debugGUI->imgui_INIT();
-    debugDisplay->sfWindow->setFramerateLimit(30);
+    debugDisplay->sfWindow->setFramerateLimit(10);
 
 
     //GUI loop
@@ -27,7 +27,6 @@ int main(int argc, char* argv[])
         debugDisplay->handleEvents();
         debugDisplay->debugGUI->imgui_UPDATE(deltaClock);
         debugDisplay->Display_CLEAR();
-        A330_FMGS->MCDU1->DrawPageTransitions(debugDisplay->sfWindow);
         debugDisplay->Display_RENDER();
         debugDisplay->debugGUI->imgui_RENDER();
         debugDisplay->Display_DISPLAY();

@@ -86,11 +86,10 @@ Data_Index_1::Data_Index_1(int id_)
     pageElements.push_back(new Link("FUNCTION>", 12, 15, 0, 1, 0));
 
     //Set any lsks
-    //LSK1
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
     lskElements.push_back(new Link("<A/C STATUS", 8, 0, 0, 1, 1));
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);

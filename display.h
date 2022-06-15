@@ -35,6 +35,7 @@ class Display
 
         FMGS* A330_FMGS;
         sf::Image icon;
+        sf::Mouse* mouse;
         
 
 };
