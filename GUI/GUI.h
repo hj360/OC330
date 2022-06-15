@@ -29,6 +29,7 @@ class GUI
     private:
 
         sf::RenderWindow* sfWindow;
+        ImGuiStyle GUIStyle;
         FMGS* A330_FMGS;
 
 };

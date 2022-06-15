@@ -10,6 +10,13 @@ void GUI::imgui_INIT()
 {
     std::cout << "Starting ImGUI..." << std::endl;
     ImGui::SFML::Init(*sfWindow);
+
+    //For cases with high dpi
+    GUIStyle = ImGuiStyle();
+
+    GUIStyle.ScaleAllSizes(2.0f);
+
+
 }
 
 void GUI::imgui_UPDATE(sf::Clock &deltaClock)

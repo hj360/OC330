@@ -13,6 +13,9 @@ MCDU::MCDU(int id_, int w_, int h_)
     w = w_;
     h = h_;
 
+    x = 20;
+    y = 20;
+
     //Initialize line select keys
     lsk = { false, false, false, false, false, false };
 
@@ -117,6 +120,15 @@ void MCDU::selectLsk(int lsk)
 
 void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)
 {
+    //Draw bounding box
+    outline.setSize(sf::Vector2f((charW * 24) + 4, (charH * 14) + 4));
+    outline.setOutlineThickness(1);
+    outline.setOutlineColor(mcdu_white);
+    outline.setFillColor(sf::Color::Transparent);
+    outline.setPosition(sf::Vector2f(x - 2, y - 2));
+
+    sfWindow->draw(outline);
+
     //Render scratchpad
     pad->GetScratchPad(scratchpad_buff);
 
@@ -126,7 +138,7 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)
     text.setCharacterSize(fontSize);
     text.setFillColor(sf::Color::White);
     text.setString(scratchpad_buff);
-    text.setPosition(0, (charH * 13));
+    text.setPosition(x, (charH * 13) + y);
 
     //Draw scratchpad
     sfWindow->draw(text);
@@ -178,7 +190,7 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)
 
         text.setFillColor(elementColor);
         text.setString(tempString);
-        text.setPosition(charW * tempOffset, charH * tempRow);
+        text.setPosition(charW * tempOffset + x, charH * tempRow + y);
 
         sfWindow->draw(text);
     }
@@ -229,7 +241,7 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow)
 
         text.setFillColor(elementColor);
         text.setString(tempString);
-        text.setPosition(charW * tempOffset, charH * tempRow);
+        text.setPosition(charW * tempOffset + x, charH * tempRow + y);
 
         sfWindow->draw(text);
     }

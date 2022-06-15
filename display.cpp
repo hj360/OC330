@@ -2,13 +2,13 @@
 
 Display::Display()
 {
-    sfWindow = new sf::RenderWindow(sf::VideoMode(384, 400), "A330");
+    sfWindow = new sf::RenderWindow(sf::VideoMode(1280, 720), "A330", sf::Style::Default);
 }
 
 Display::Display(FMGS* FMGS_)
 {
     A330_FMGS = FMGS_;
-    sfWindow = new sf::RenderWindow(sf::VideoMode(384, 400), "A330");
+    sfWindow = new sf::RenderWindow(sf::VideoMode(1280, 720), "A330", sf::Style::Default);
 
     icon.loadFromFile("res/icon.png");
 

@@ -37,6 +37,10 @@ class MCDU
         int h;
         int refreshRate;
 
+        //Position of the MCDU refs top left of display
+        int x;
+        int y;
+
         //Defines the width and height of a character
         int charW;
         int charH;
@@ -73,6 +77,8 @@ class MCDU
         sf::Color mcdu_yellow;
         sf::Color mcdu_orange;
 
+        //Mcdu outlines
+        sf::RectangleShape outline;
 };
 
 

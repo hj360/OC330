@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
     Display* debugDisplay = new Display(A330_FMGS);
     
     debugDisplay->debugGUI->imgui_INIT();
-    debugDisplay->sfWindow->setFramerateLimit(10);
+    debugDisplay->sfWindow->setFramerateLimit(30);
 
 
     //GUI loop
