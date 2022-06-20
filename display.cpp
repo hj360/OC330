@@ -2,13 +2,13 @@
 
 Display::Display()
 {
-    sfWindow = new sf::RenderWindow(sf::VideoMode(1280, 720), "A330", sf::Style::Default);
+    sfWindow = new sf::RenderWindow(sf::VideoMode(1500, 900), "A330", sf::Style::Default);
 }
 
 Display::Display(FMGS* FMGS_)
 {
     A330_FMGS = FMGS_;
-    sfWindow = new sf::RenderWindow(sf::VideoMode(1280, 720), "A330", sf::Style::None);
+    sfWindow = new sf::RenderWindow(sf::VideoMode(1600, 800), "A330", sf::Style::None);
 
     //Create a mouse
     mouse = new sf::Mouse();

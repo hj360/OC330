@@ -11,7 +11,9 @@ UI::UI(sf::RenderWindow* sfWindow_, FMGS* FMGS_, sf::Mouse* mouse_)
 
     exit = new Button_Graphic(45, 30, "./res/exit.png", true);
     fmgc_button = new Button_Text(100, 30, "FMGC", font, true);
-    window_move = new Button_Text(21, 30, "", font, true);
+    elec_button = new Button_Text(100, 30, "ELEC", font, true);
+
+    window_move = new Button_Text(20, 30, "", font, true);
 
     exitCondition = false;
 }
@@ -33,6 +35,11 @@ void UI::DrawTaskbar()
     }
 
     if(fmgc_button->Draw(20, 0, sfWindow, mouse))
+    {
+
+    }
+
+    if(elec_button->Draw(120, 0, sfWindow, mouse))
     {
 
     }
