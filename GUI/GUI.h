@@ -16,16 +16,26 @@
 class UI
 {
     public:
-        UI(sf::RenderWindow* sfWindow_, FMGS* FMGS_);
+        UI(sf::RenderWindow* sfWindow_, FMGS* FMGS_, sf::Mouse* mouse_);
         ~UI(){};
 
         void DrawTaskbar();
+        bool getExitCondition();
 
     private:
         sf::RenderWindow* sfWindow;
         FMGS* A330_FMGS;
 
+        sf::Mouse* mouse;
+
+        //Main ui font
+        sf::Font font;
         sf::RectangleShape taskBarOutline;
+
+        Button_Graphic* exit;
+        Button_Text* fmgc_button;
+
+        bool exitCondition;
 };
 
 

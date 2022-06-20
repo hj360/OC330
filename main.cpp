@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     //Create a display
     Display* debugDisplay = new Display(A330_FMGS);
     
-    debugDisplay->sfWindow->setFramerateLimit(10);
+    debugDisplay->sfWindow->setFramerateLimit(30);
 
 
     //GUI loop
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
     }
 
 
-    //debugDisplay->imgui_DESTROY();
+    std::cout << "Quitting..." << std::endl;
     A330_FMGS->MCDU1->CleanPages();
     delete debugDisplay;
     delete A330_FMGS;

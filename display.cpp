@@ -8,7 +8,7 @@ Display::Display()
 Display::Display(FMGS* FMGS_)
 {
     A330_FMGS = FMGS_;
-    sfWindow = new sf::RenderWindow(sf::VideoMode(1280, 720), "A330", sf::Style::Default);
+    sfWindow = new sf::RenderWindow(sf::VideoMode(1280, 720), "A330", sf::Style::None);
 
     //Create a mouse
     mouse = new sf::Mouse();
@@ -18,7 +18,7 @@ Display::Display(FMGS* FMGS_)
     sfWindow->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     //Initialize GUI
-    systemGUI = new UI(sfWindow, A330_FMGS);
+    systemGUI = new UI(sfWindow, A330_FMGS, mouse);
 
 
 
