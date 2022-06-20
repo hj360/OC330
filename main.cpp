@@ -15,7 +15,6 @@ int main(int argc, char* argv[])
     //Create a display
     Display* debugDisplay = new Display(A330_FMGS);
     
-    debugDisplay->debugGUI->imgui_INIT();
     debugDisplay->sfWindow->setFramerateLimit(10);
 
 
@@ -25,10 +24,9 @@ int main(int argc, char* argv[])
     {
         //Update UI
         debugDisplay->handleEvents();
-        debugDisplay->debugGUI->imgui_UPDATE(deltaClock);
         debugDisplay->Display_CLEAR();
+        debugDisplay->drawWatermark();
         debugDisplay->Display_RENDER();
-        debugDisplay->debugGUI->imgui_RENDER();
         debugDisplay->Display_DISPLAY();
 
     }
@@ -36,7 +34,6 @@ int main(int argc, char* argv[])
 
     //debugDisplay->imgui_DESTROY();
     A330_FMGS->MCDU1->CleanPages();
-    debugDisplay->debugGUI->imgui_DESTROY();
     delete debugDisplay;
     delete A330_FMGS;
 

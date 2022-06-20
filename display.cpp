@@ -18,7 +18,19 @@ Display::Display(FMGS* FMGS_)
     sfWindow->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     //Initialize GUI
-    debugGUI = new GUI(sfWindow, A330_FMGS);
+    systemGUI = new UI(sfWindow, A330_FMGS);
+
+
+
+    //Get watermark
+    if(!watermarkTex.loadFromFile("./res/watermark.png"))
+    {
+        std::cout << "Watermark texture failed to load!" << std::endl;
+    }
+
+    watermarkTex.setSmooth(true);
+
+    watermarkSprite.setTexture(watermarkTex);
 }
 
 
@@ -26,6 +38,8 @@ Display::~Display() {}
 
 void Display::Display_RENDER()
 {
+    //Draw UI
+    systemGUI->DrawTaskbar();
 
     A330_FMGS->MCDU1->DrawMCDU(sfWindow, mouse);
 
@@ -46,7 +60,6 @@ void Display::handleEvents()
     sf::Event event;
         while (sfWindow->pollEvent(event))
         {
-            ImGui::SFML::ProcessEvent(event);
             switch (event.type)
             {
                 // window closed
@@ -189,4 +202,10 @@ void Display::handleEvents()
             }
 
         }
+}
+
+void Display::drawWatermark()
+{
+    watermarkSprite.setPosition(sf::Vector2f(sfWindow->getSize().x - 250, sfWindow->getSize().y - 40));
+    sfWindow->draw(watermarkSprite);
 }

@@ -1,37 +1,31 @@
 #include <iostream>
 
-#include <imgui.h>
-#include <imgui-SFML.h>
-
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
+#include "gui_elements.h"
+
 #include "../fmgs.h"
+
 
 
 #ifndef GUI_H
 #define GUI_H
 
-class GUI
+class UI
 {
     public:
-        GUI(sf::RenderWindow* sfWindow_, FMGS* FMGS_);
-        ~GUI();
+        UI(sf::RenderWindow* sfWindow_, FMGS* FMGS_);
+        ~UI(){};
 
-        void imgui_INIT();
-        void imgui_UPDATE(sf::Clock &deltaClock);
-        void imgui_RENDER();
-        void imgui_DESTROY();
-        void imgui_EVENTHANDLER(sf::Event Event_);
-
+        void DrawTaskbar();
 
     private:
-
         sf::RenderWindow* sfWindow;
-        ImGuiStyle GUIStyle;
         FMGS* A330_FMGS;
 
+        sf::RectangleShape taskBarOutline;
 };
 
 

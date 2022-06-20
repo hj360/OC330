@@ -27,13 +27,6 @@ FMGC_FM::~FMGC_FM()
 
 void FMGC_FM::set_fpln_origin(std::string origin_, int fpln_)
 {
-    //Check if string is valid
-    if(origin_.size() != 4)
-    {
-        //origin string is not a valid ICAO code//FORMAT ERROR
-        return;
-    }
-
     //If all checks out enter origin into FM origin
     if(fpln_ == 1)
     {
@@ -45,13 +38,6 @@ void FMGC_FM::set_fpln_origin(std::string origin_, int fpln_)
 
 void FMGC_FM::set_fpln_dest(std::string dest_, int fpln_)
 {
-    //Check if string is valid
-    if(dest_.size() != 4)
-    {
-        //origin string is not a valid ICAO code//FORMAT ERROR
-        return;
-    }
-
     //If all checks out enter origin into FM origin
     if(fpln_ == 1)
     {
@@ -86,11 +72,6 @@ void FMGC_FM::get_fpln_dest(std::string &dest_, int fpln_)
 void FMGC_FM::set_fpln_fltNbr(std::string fltNbr_, int fpln_)
 {
     //Check if string is valid
-    if(fltNbr_.size() > 8)
-    {
-        return;
-    }
-
     if(fpln_ == 1)
     {
         fpln_prim.fltNbr = fltNbr_;

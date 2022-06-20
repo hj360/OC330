@@ -3,9 +3,6 @@
 
 #include <iostream>
 
-#include <imgui.h>
-#include <imgui-SFML.h>
-
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -27,15 +24,19 @@ class Display
         void Display_CLEAR();
         void Display_DISPLAY();        
 
-        GUI* debugGUI;
+        UI* systemGUI;
 
         void handleEvents();
+        void drawWatermark();
 
     private:
 
         FMGS* A330_FMGS;
         sf::Image icon;
         sf::Mouse* mouse;
+
+        sf::Texture watermarkTex;
+        sf::Sprite watermarkSprite;
         
 
 };

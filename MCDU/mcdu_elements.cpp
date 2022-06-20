@@ -88,7 +88,6 @@ void FromTo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
         return;
     }
 
-
     std::string tempOrigin;
     std::string tempDest;
     std::string scratchpad;
@@ -118,17 +117,6 @@ void FromTo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
     //If input is correct and valid - input into fmgc
     ActiveFMGC_->FM.set_fpln_origin(tempOrigin, 1);
     ActiveFMGC_->FM.set_fpln_dest(tempDest, 1);
-    ActiveFMGC_->FM.get_fpln_origin(tempOrigin, 1);
-    ActiveFMGC_->FM.get_fpln_dest(tempDest, 1);
-
-    if(tempDest != "" && tempOrigin != "")
-    {
-        text = tempOrigin + "/" + tempDest;
-        color = 2;
-    } else {
-        text = "####/####";
-        color = 5;
-    }
 
     pad_.EmptyScratchPad();
 }
@@ -194,17 +182,6 @@ void FlightNumber::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC
     }
     //If input is correct and valid - input into fmgc
     ActiveFMGC_->FM.set_fpln_fltNbr(tempFltNbr, 1);
-    ActiveFMGC_->FM.get_fpln_fltNbr(tempFltNbr, 1);
-
-    if(tempFltNbr != "")
-    {
-        text = tempFltNbr;
-        color = 2;
-    } else {
-        text = "##########";
-        color = 5;
-    }
-
     pad_.EmptyScratchPad();
 }
 
