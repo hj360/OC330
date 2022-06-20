@@ -143,21 +143,23 @@ Init_A::Init_A(int id_)
 
     pageElements.push_back(new Element("INIT", 0, 10, 0, 1));
     pageElements.push_back(new Element("<>", 0, 22, 0, 1));
-
     pageElements.push_back(new Element("CO RTE", 1, 1, 0, 0));
     pageElements.push_back(new Element("FROM/TO", 1, 15, 0, 0));
-
     pageElements.push_back(new Element("#########", 2, 0, 5, 1));
-    pageElements.push_back(new Element("####/####", 2, 15, 5, 1));
+    pageElements.push_back(new Element("ALTN/CO RTE", 3, 0, 0, 0));
+    pageElements.push_back(new Element("FLT NBR", 5, 0, 0, 0));
+    pageElements.push_back(new Element("COST INDEX", 9, 0, 0, 0));
+    pageElements.push_back(new Element("CRZ FL/TEMP", 11, 0, 0, 0));
+    pageElements.push_back(new Element("TROPO", 11, 18, 0, 0));
+    
 
-
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(new FlightNumber("##########", 6, 0, 5, 1));
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
+    lskElements.push_back(new FromTo("####/####", 2, 15, 5, 1));
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);

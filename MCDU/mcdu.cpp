@@ -2,7 +2,7 @@
 
 #include "mcdu.h"
 
-MCDU::MCDU(int id_, int w_, int h_)
+MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_)
 {
     //Initialize class vars with constructor vars
     id = id_;
@@ -35,7 +35,7 @@ MCDU::MCDU(int id_, int w_, int h_)
     //Set colors
     mcdu_white = sf::Color(255, 255, 255);
     mcdu_green = sf::Color(0, 255, 17);
-    mcdu_blue = sf::Color(38, 89, 255);
+    mcdu_blue = sf::Color(30, 120, 255);
     mcdu_magenta = sf::Color(255, 0, 255);
     mcdu_yellow = sf::Color(255, 255, 0);
     mcdu_orange = sf::Color(255, 100, 0);
@@ -50,6 +50,9 @@ MCDU::MCDU(int id_, int w_, int h_)
     } else {
         std::cerr << "MCDU " << id << " Fail." << std::endl;
     }
+
+    //Set active FMGC
+    ActiveFMGC = ActiveFMGC_;
 
     InitPages();
 
@@ -138,7 +141,7 @@ void MCDU::selectLsk(int lsk)
         return;
     }
 
-    lskElements[lsk]->Select(p_Act, *pad);
+    lskElements[lsk]->Select(p_Act, *pad, ActiveFMGC);
 
     //Update any page changes
     if(p_Act == 1)
@@ -195,7 +198,7 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
     //Render all page elements on current page
     for(int i = 0; i < pageElements.size(); ++i)
     {
-        pageElements[i]->getElement(tempString, tempRow, tempOffset, tempColor, tempSize);
+        pageElements[i]->getElement(tempString, tempRow, tempOffset, tempColor, tempSize, ActiveFMGC);
 
         //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
         switch(tempColor)
@@ -246,7 +249,7 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
             continue;
         }
 
-        lskElements[i]->getElement(tempString, tempRow, tempOffset, tempColor, tempSize);
+        lskElements[i]->getElement(tempString, tempRow, tempOffset, tempColor, tempSize, ActiveFMGC);
 
         //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
         switch(tempColor)

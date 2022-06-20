@@ -15,6 +15,8 @@ class Scratchpad
         void AddToScratchpad(std::string str_);
         void CLRScratchpad();
         void GetScratchPad(std::string &pad_);
+        void EmptyScratchPad();
+        int GetState();
 
     private:
         //Usually 24 for length of MCDU screen in chars

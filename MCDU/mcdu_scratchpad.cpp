@@ -51,6 +51,13 @@ void Scratchpad::AddMSG(int msgCode_)
     {
         case 0:
             msg.push_back("NOT ALLOWED");
+            break;
+        case 1:
+            msg.push_back("FORMAT ERROR");
+            break;
+
+        default:
+            break;
     }
 
     //Remove last element if there are more than 5 messages
@@ -80,4 +87,14 @@ void Scratchpad::GetScratchPad(std::string &pad_)
         //Set scratchpad to the first message
         pad_ = msg[0];
     }
+}
+
+void Scratchpad::EmptyScratchPad()
+{
+    pad = "";
+}
+
+int Scratchpad::GetState()
+{
+    return state;
 }

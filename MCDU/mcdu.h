@@ -1,7 +1,8 @@
 #include <vector>
 #include "mcdu_scratchpad.h"
 #include "mcdu_pages.h"
-#include "../GUI/gui_elements.h"
+#include "gui_elements.h"
+#include "fmgc.h"
 #include <SFML/Graphics.hpp>
 
 #ifndef MCDU_H
@@ -11,7 +12,7 @@
 class MCDU
 {
     public:
-        MCDU(int id_, int w_, int h_);
+        MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_);
         ~MCDU();
 
         void selectLsk(int lsk);
@@ -50,6 +51,9 @@ class MCDU
         int fontSize;
         
         std::string scratchpad_buff;
+
+        //Pointer to the linked FMGC
+        FMGC* ActiveFMGC;
         //Pointer to the active page
         Page* ActivePage;
         int p_Act;;

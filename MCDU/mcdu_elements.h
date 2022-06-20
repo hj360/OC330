@@ -1,5 +1,6 @@
 #include <string>
 #include "mcdu_scratchpad.h"
+#include "fmgc.h"
 
 #ifndef MCDU_ELEMENTS_H
 #define MCDU_ELEMENTS_H
@@ -11,8 +12,8 @@ class Element
         Element(std::string text_, int row_, int offset_, int color_, int size_);
         ~Element(){};
 
-        void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_);
-        virtual void Select(int &linkedPageId_, Scratchpad &pad_);
+        virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
+        virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
         int getType();
 
     protected:
@@ -43,7 +44,33 @@ class Link : public Element
         Link(std::string text_, int row_, int offset_, int color_, int size_, int linkedPageId_);
         ~Link(){};
 
-        virtual void Select(int &linkedPageId_, Scratchpad &pad_);
+        virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
+
+    private:
+
+};
+
+class FromTo : public Element
+{
+    public:
+        FromTo(std::string text_, int row_, int offset_, int color_, int size_);
+        ~FromTo(){};
+
+        virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
+        virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
+
+    private:
+
+};
+
+class FlightNumber : public Element
+{
+    public:
+        FlightNumber(std::string text_, int row_, int offset_, int color_, int size_);
+        ~FlightNumber(){};
+
+        virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
+        virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
 
     private:
 

@@ -13,6 +13,9 @@ FMGC_FM::FMGC_FM()
     fpln_sec.origin = "";
     fpln_sec.dest = "";
 
+    fpln_prim.fltNbr = "";
+    fpln_sec.fltNbr = "";
+
 
 
 }
@@ -77,5 +80,32 @@ void FMGC_FM::get_fpln_dest(std::string &dest_, int fpln_)
         dest_ = fpln_prim.dest;
     } else {
         dest_ = fpln_sec.dest;
+    }
+}
+
+void FMGC_FM::set_fpln_fltNbr(std::string fltNbr_, int fpln_)
+{
+    //Check if string is valid
+    if(fltNbr_.size() > 8)
+    {
+        return;
+    }
+
+    if(fpln_ == 1)
+    {
+        fpln_prim.fltNbr = fltNbr_;
+    } else {
+        fpln_sec.fltNbr = fltNbr_;
+    }
+}
+
+void FMGC_FM::get_fpln_fltNbr(std::string &fltNbr_, int fpln_)
+{
+    //Sets passed reference value to the value of the chosen fpln origin
+    if(fpln_ == 1)
+    {
+        fltNbr_ = fpln_prim.fltNbr;
+    } else {
+        fltNbr_ = fpln_sec.fltNbr;
     }
 }
