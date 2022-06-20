@@ -11,6 +11,7 @@ UI::UI(sf::RenderWindow* sfWindow_, FMGS* FMGS_, sf::Mouse* mouse_)
 
     exit = new Button_Graphic(45, 30, "./res/exit.png", true);
     fmgc_button = new Button_Text(100, 30, "FMGC", font, true);
+    window_move = new Button_Text(21, 30, "", font, true);
 
     exitCondition = false;
 }
@@ -31,9 +32,18 @@ void UI::DrawTaskbar()
         sfWindow->close();
     }
 
-    if(fmgc_button->Draw(50, 0, sfWindow, mouse))
+    if(fmgc_button->Draw(20, 0, sfWindow, mouse))
     {
 
+    }
+
+    if(window_move->Draw(0, 0, sfWindow, mouse))
+    {
+        while(mouse->isButtonPressed(mouse->Left))
+        {
+            sfWindow->setPosition(sf::Vector2i(mouse->getPosition().x - 10, mouse->getPosition().y - 10));
+        }
+        
     }
 
 

@@ -98,8 +98,10 @@ bool Button_Graphic::Draw(int x_, int y_, sf::RenderWindow* sfWindow, sf::Mouse*
         if(Clicked(*sfWindow, mouse_))
         {
             shape.setFillColor(sf::Color::Cyan);
+            shape.setOutlineColor(sf::Color::Cyan);
         } else {
             shape.setFillColor(sf::Color::Transparent);
+            shape.setOutlineColor(sf::Color(50, 50, 50));
         }
     }
 
