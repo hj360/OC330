@@ -80,6 +80,12 @@ void FromTo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
     {
         ActiveFMGC_->FM.set_fpln_origin("", 1);
         ActiveFMGC_->FM.set_fpln_dest("", 1);
+
+        ActiveFMGC_->FM.set_fpln_altn("", 1);
+        ActiveFMGC_->FM.set_fpln_altnCoRte("", 1);
+
+        ActiveFMGC_->FM.set_fpln_coRte("", 1);
+
         text = "####/####";
         color = 5;
 
@@ -115,11 +121,16 @@ void FromTo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
     tempOrigin = scratchpad.substr(0, 4);
     tempDest = scratchpad.substr(5, 4);
 
+    ActiveFMGC_->FM.set_fpln_altn("NONE", 1);
+    ActiveFMGC_->FM.set_fpln_coRte("NONE", 1);
+
     //If input is correct and valid - input into fmgc
     ActiveFMGC_->FM.set_fpln_origin(tempOrigin, 1);
     ActiveFMGC_->FM.set_fpln_dest(tempDest, 1);
 
     pad_.EmptyScratchPad();
+
+    linkedPageId_ = 5; //Go to route selection page
 }
 
 void FromTo::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_)
@@ -252,6 +263,7 @@ void AltnCoRte::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
             return;
         } else if (tempAltnCoRte[0] == '/')
         {
+            tempAltnCoRte.erase(0, 1); //remove the '/'
             ActiveFMGC_->FM.set_fpln_altnCoRte(tempAltnCoRte, 1);
             color = 2;
             pad_.EmptyScratchPad();
@@ -276,7 +288,7 @@ void AltnCoRte::getElement(std::string &text_, int &row_, int &offset_, int &col
     
     if(tempAltnCoRte != "")
     {
-        text = tempAltnCoRte;
+        text = tempAltn + "/" + tempAltnCoRte;
         color = 2;
     } else if(tempAltn != "") {
         text = tempAltn;
@@ -284,6 +296,73 @@ void AltnCoRte::getElement(std::string &text_, int &row_, int &offset_, int &col
     } else {
         text = "----/----------";
         color = 0;
+    }
+
+    text_ = text;
+    row_ = row;
+    offset_ = offset;
+    color_ = color;
+    size_ = size;
+}
+
+CoRte::CoRte(std::string text_, int row_, int offset_, int color_, int size_)
+{
+    text = text_;
+    row = row_;
+    offset = offset_;
+    color = color_;
+    size = size_;
+    linkedPageId = 0;
+
+    type = 1;
+}
+
+void CoRte::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
+{
+    linkedPageId_ = linkedPageId;
+    //Check if pad is clearing the field
+    if(pad_.GetState() == 1)
+    {
+        ActiveFMGC_->FM.set_fpln_coRte("", 1);
+        text = "##########";
+        color = 0;
+
+        pad_.EmptyScratchPad();
+        pad_.setState(0);
+
+        return;
+    }
+
+    std::string tempCoRte;
+
+    pad_.GetScratchPad(tempCoRte);
+    //Check if input is correct format
+    if(tempCoRte.length() > 3 && tempCoRte.length() < 11 )
+    {
+        ActiveFMGC_->FM.set_fpln_coRte(tempCoRte, 1);
+        color = 2;
+        pad_.EmptyScratchPad();
+        return;
+  
+    } else
+    {
+        pad_.AddMSG(1);
+        return;
+    }    
+}
+
+void CoRte::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_)
+{
+    std::string tempCoRte;
+    ActiveFMGC_->FM.get_fpln_coRte(tempCoRte, 1);
+    
+    if(tempCoRte != "")
+    {
+        text = tempCoRte;
+        color = 2;
+    } else {
+        text = "##########";
+        color = 5;
     }
 
     text_ = text;

@@ -9,6 +9,7 @@ FMGC_FM::FMGC_FM()
     //_______________PRIMARY FLIGHT PLAN_________________
     fpln_prim.origin = "";
     fpln_prim.dest = "";
+    fpln_prim.coRte = "";
     fpln_prim.altn = "";
     fpln_prim.altnCoRte = "";
 
@@ -22,6 +23,7 @@ FMGC_FM::FMGC_FM()
     //_______________SECONDARY FLIGHT PLAN_______________
     fpln_sec.origin = "";
     fpln_sec.dest = "";
+    fpln_sec.coRte = "";
     fpln_sec.altn = "";
     fpln_sec.altnCoRte = "";
 
@@ -120,6 +122,28 @@ void FMGC_FM::get_fpln_altn(std::string &altn_, int fpln_)
         altn_ = fpln_prim.altn;
     } else {
         altn_ = fpln_sec.altn;
+    }
+}
+
+void FMGC_FM::set_fpln_coRte(std::string coRte_, int fpln_)
+{
+    //If all checks out enter origin into FM origin
+    if(fpln_ == 1)
+    {
+        fpln_prim.coRte = coRte_;
+    } else {
+        fpln_sec.coRte = coRte_;
+    }
+}
+
+void FMGC_FM::get_fpln_coRte(std::string &coRte_, int fpln_)
+{
+    //Sets passed reference value to the value of the chosen fpln origin
+    if(fpln_ == 1)
+    {
+        coRte_ = fpln_prim.coRte;
+    } else {
+        coRte_ = fpln_sec.coRte;
     }
 }
 

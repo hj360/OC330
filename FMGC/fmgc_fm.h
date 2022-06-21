@@ -7,6 +7,7 @@ struct FlightPlan
 {
     std::string origin;
     std::string dest;
+    std::string coRte;
     std::string altn;
     std::string altnCoRte;
 
@@ -46,6 +47,7 @@ class FMGC_FM
         //Setters
         void set_fpln_origin(std::string origin_, int fpln_);
         void set_fpln_dest(std::string dest_, int fpln_);
+        void set_fpln_coRte(std::string coRte_, int fpln_);
         void set_fpln_altn(std::string altn_, int fpln_);
         void set_fpln_altnCoRte(std::string altnCoRte_, int fpln_);
         void set_fpln_fltNbr(std::string fltNbr_, int fpln_);
@@ -54,20 +56,21 @@ class FMGC_FM
         void get_fpln_origin(std::string &origin_, int fpln_);
         void get_fpln_dest(std::string &dest_, int fpln_);
         void get_fpln_altn(std::string &altn_, int fpln_);
+        void get_fpln_coRte(std::string &coRte_, int fpln_);
         void get_fpln_altnCoRte(std::string &altnCoRte_, int fpln_);
         void get_fpln_fltNbr(std::string &fltNbr_, int fpln_);
 
     private:
         //Navigation
         //Performance
+        InitWeights weights;
         //F-PLN Management
-        //Managed Guidance computation
-        //Information display
-
-        //Primary and secondary flight plans
         FlightPlan fpln_prim;
         FlightPlan fpln_sec;
-        InitWeights weights;
+        //Managed Guidance computation
+        //Information display
+        
+        
 };
 
 

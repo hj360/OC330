@@ -140,7 +140,6 @@ Init_A::Init_A()
     pageElements.push_back(new Element("<>", 0, 22, 0, 1));
     pageElements.push_back(new Element("CO RTE", 1, 1, 0, 0));
     pageElements.push_back(new Element("FROM/TO", 1, 15, 0, 0));
-    pageElements.push_back(new Element("#########", 2, 0, 5, 1));
     pageElements.push_back(new Element("ALTN/CO RTE", 3, 0, 0, 0));
     pageElements.push_back(new Element("FLT NBR", 5, 0, 0, 0));
     pageElements.push_back(new Element("COST INDEX", 9, 0, 0, 0));
@@ -148,7 +147,7 @@ Init_A::Init_A()
     pageElements.push_back(new Element("TROPO", 11, 18, 0, 0));
     
 
-    lskElements.push_back(nullptr);
+    lskElements.push_back(new CoRte("#########", 2, 0, 5, 1));
     lskElements.push_back(new AltnCoRte("----/----------", 4, 0, 0, 1));
     lskElements.push_back(new FlightNumber("##########", 6, 0, 5, 1));
     lskElements.push_back(nullptr);
@@ -182,6 +181,31 @@ Init_B::Init_B()
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+}
+
+Route_Sel::Route_Sel()
+{
+    pageID = 5;
+    leftPageID = 0;
+    rightPageID = 0;
+
+    pageElements.push_back(new FromTo("####/####", 0, 6, 0, 1));
+    pageElements.push_back(new Element("<>", 0, 22, 0, 1));
+
+    
+
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(new Link("<RETURN", 12, 0, 0, 1, 3));
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);

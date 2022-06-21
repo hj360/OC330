@@ -67,6 +67,7 @@ class MCDU
         Page* P_AC_STATUS;
         Page* P_INIT_A;
         Page* P_INIT_B;
+        Page* P_RTE_SEL;
 
         //Line select keys
         std::vector<bool> lsk;

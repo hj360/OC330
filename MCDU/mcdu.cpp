@@ -103,6 +103,7 @@ void MCDU::InitPages()
     P_AC_STATUS = new Ac_Status();
     P_INIT_A = new Init_A();
     P_INIT_B = new Init_B();
+    P_RTE_SEL = new Route_Sel();
 }
 
 void MCDU::SetActivePage(Page* page_)
@@ -191,6 +192,9 @@ void MCDU::updateActivePage()
             break;
         case 4:
             SetActivePage(P_INIT_B);
+            break;
+        case 5:
+            SetActivePage(P_RTE_SEL);
             break;
         default:
             break;
