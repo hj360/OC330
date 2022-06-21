@@ -10,6 +10,9 @@ Display::Display(FMGS* FMGS_)
     A330_FMGS = FMGS_;
     sfWindow = new sf::RenderWindow(sf::VideoMode(1600, 800), "A330", sf::Style::None);
 
+    //Set the active MCDU
+    ActiveMCDU = A330_FMGS->MCDU1;
+
     //Create a mouse
     mouse = new sf::Mouse();
 
@@ -41,7 +44,7 @@ void Display::Display_RENDER()
     //Draw UI
     systemGUI->DrawTaskbar();
 
-    A330_FMGS->MCDU1->DrawMCDU(sfWindow, mouse);
+    ActiveMCDU->DrawMCDU(sfWindow, mouse);
 
 }
 
@@ -71,124 +74,136 @@ void Display::handleEvents()
                     switch (event.key.code)
                     {
                     case sf::Keyboard::Space:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad(" ");
+                        ActiveMCDU->pad->AddToScratchpad(" ");
                         break;
                     case sf::Keyboard::BackSpace:
-                        A330_FMGS->MCDU1->pad->CLRScratchpad();
+                        ActiveMCDU->pad->CLRScratchpad();
                         break;
                     case sf::Keyboard::A:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("A");
+                        ActiveMCDU->pad->AddToScratchpad("A");
                         break;
                     case sf::Keyboard::B:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("B");
+                        ActiveMCDU->pad->AddToScratchpad("B");
                         break;
                     case sf::Keyboard::C:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("C");
+                        ActiveMCDU->pad->AddToScratchpad("C");
                         break;
                     case sf::Keyboard::D:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("D");
+                        ActiveMCDU->pad->AddToScratchpad("D");
                         break;
                     case sf::Keyboard::E:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("E");
+                        ActiveMCDU->pad->AddToScratchpad("E");
                         break;
                     case sf::Keyboard::F:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("F");
+                        ActiveMCDU->pad->AddToScratchpad("F");
                         break;
                     case sf::Keyboard::G:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("G");
+                        ActiveMCDU->pad->AddToScratchpad("G");
                         break;
                     case sf::Keyboard::H:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("H");
+                        ActiveMCDU->pad->AddToScratchpad("H");
                         break;
                     case sf::Keyboard::I:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("I");
+                        ActiveMCDU->pad->AddToScratchpad("I");
                         break;
                     case sf::Keyboard::J:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("J");
+                        ActiveMCDU->pad->AddToScratchpad("J");
                         break;
                     case sf::Keyboard::K:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("K");
+                        ActiveMCDU->pad->AddToScratchpad("K");
                         break;
                     case sf::Keyboard::L:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("L");
+                        ActiveMCDU->pad->AddToScratchpad("L");
                         break;
                     case sf::Keyboard::M:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("M");
+                        ActiveMCDU->pad->AddToScratchpad("M");
                         break;
                     case sf::Keyboard::N:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("N");
+                        ActiveMCDU->pad->AddToScratchpad("N");
                         break;
                     case sf::Keyboard::O:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("O");
+                        ActiveMCDU->pad->AddToScratchpad("O");
                         break;
                     case sf::Keyboard::P:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("P");
+                        ActiveMCDU->pad->AddToScratchpad("P");
                         break;
                     case sf::Keyboard::Q:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("Q");
+                        ActiveMCDU->pad->AddToScratchpad("Q");
                         break;
                     case sf::Keyboard::R:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("R");
+                        ActiveMCDU->pad->AddToScratchpad("R");
                         break;
                     case sf::Keyboard::S:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("S");
+                        ActiveMCDU->pad->AddToScratchpad("S");
                         break;
                     case sf::Keyboard::T:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("T");
+                        ActiveMCDU->pad->AddToScratchpad("T");
                         break;
                     case sf::Keyboard::U:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("U");
+                        ActiveMCDU->pad->AddToScratchpad("U");
                         break;
                     case sf::Keyboard::V:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("V");
+                        ActiveMCDU->pad->AddToScratchpad("V");
                         break;
                     case sf::Keyboard::W:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("W");
+                        ActiveMCDU->pad->AddToScratchpad("W");
                         break;
                     case sf::Keyboard::X:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("X");
+                        ActiveMCDU->pad->AddToScratchpad("X");
                         break;
                     case sf::Keyboard::Y:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("Y");
+                        ActiveMCDU->pad->AddToScratchpad("Y");
                         break;
                     case sf::Keyboard::Z:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("Z");
+                        ActiveMCDU->pad->AddToScratchpad("Z");
                         break;
                     case sf::Keyboard::Num0:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("0");
+                        ActiveMCDU->pad->AddToScratchpad("0");
                         break;
                     case sf::Keyboard::Num1:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("1");
+                        ActiveMCDU->pad->AddToScratchpad("1");
                         break;
                     case sf::Keyboard::Num2:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("2");
+                        ActiveMCDU->pad->AddToScratchpad("2");
                         break;
                     case sf::Keyboard::Num3:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("3");
+                        ActiveMCDU->pad->AddToScratchpad("3");
                         break;
                     case sf::Keyboard::Num4:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("4");
+                        ActiveMCDU->pad->AddToScratchpad("4");
                         break;
                     case sf::Keyboard::Num5:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("5");
+                        ActiveMCDU->pad->AddToScratchpad("5");
                         break;
                     case sf::Keyboard::Num6:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("6");
+                        ActiveMCDU->pad->AddToScratchpad("6");
                         break;
                     case sf::Keyboard::Num7:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("7");
+                        ActiveMCDU->pad->AddToScratchpad("7");
                         break;
                     case sf::Keyboard::Num8:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("8");
+                        ActiveMCDU->pad->AddToScratchpad("8");
                         break;
                     case sf::Keyboard::Num9:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("9");
+                        ActiveMCDU->pad->AddToScratchpad("9");
                         break;
                     case sf::Keyboard::Slash:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad("/");
+                        ActiveMCDU->pad->AddToScratchpad("/");
                         break;
                     case sf::Keyboard::Period:
-                        A330_FMGS->MCDU1->pad->AddToScratchpad(".");
+                        ActiveMCDU->pad->AddToScratchpad(".");
+                        break;
+                    case sf::Keyboard::Left:
+                        ActiveMCDU->goLeft();
+                        break;
+                    case sf::Keyboard::Right:
+                        ActiveMCDU->goRight();
+                        break;
+                    case sf::Keyboard::Up:
+                        //Move mcdu page up
+                        break;
+                    case sf::Keyboard::Down:
+                        //Move mcdu page down
                         break;
 
                     default:

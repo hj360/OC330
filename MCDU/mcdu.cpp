@@ -56,9 +56,9 @@ MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_)
 
     InitPages();
 
-    p_Act = 0;
+    p_Act = 2;
 
-    SetActivePage(P_DATA_INDEX_1);
+    SetActivePage(P_AC_STATUS);
 
     outline = new GUI_Window(w, h);
 
@@ -99,9 +99,10 @@ MCDU::~MCDU()
 
 void MCDU::InitPages()
 {
-    P_DATA_INDEX_1 = new Data_Index_1(0);
-    P_AC_STATUS = new Ac_Status(1);
-    P_INIT_A = new Init_A(2);
+    P_DATA_INDEX_1 = new Data_Index_1();
+    P_AC_STATUS = new Ac_Status();
+    P_INIT_A = new Init_A();
+    P_INIT_B = new Init_B();
 }
 
 void MCDU::SetActivePage(Page* page_)
@@ -143,19 +144,58 @@ void MCDU::selectLsk(int lsk)
 
     lskElements[lsk]->Select(p_Act, *pad, ActiveFMGC);
 
-    //Update any page changes
-    if(p_Act == 1)
-    {
-        SetActivePage(P_AC_STATUS);
-    }
-
-    if(p_Act == 2)
-    {
-        SetActivePage(P_INIT_A);
-    }
+    updateActivePage();
 
 }
 
+void MCDU::goLeft()
+{
+    int tempID = ActivePage->getLeftPageId();
+    if(tempID != 0)
+    {
+        p_Act = tempID;
+        updateActivePage();
+    }
+
+    return;
+    
+}
+
+void MCDU::goRight()
+{
+    int tempID = ActivePage->getRightPageId();
+    if(tempID != 0)
+    {
+        p_Act = tempID;
+        updateActivePage();
+    }
+
+    return;
+}
+
+void MCDU::updateActivePage()
+{
+        //Update any page changes
+    switch(p_Act)
+    {
+        case 0:
+            break;
+        case 1:
+            SetActivePage(P_DATA_INDEX_1);
+            break;
+        case 2:
+            SetActivePage(P_AC_STATUS);
+            break;
+        case 3:
+            SetActivePage(P_INIT_A);
+            break;
+        case 4:
+            SetActivePage(P_INIT_B);
+            break;
+        default:
+            break;
+    }
+}
 
 void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
 {

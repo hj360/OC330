@@ -1,0 +1,6 @@
+make.exe --dry-run --always-make --keep-going --print-directory
+make: Entering directory 'c:/dev/OC330'
+g++ -Isrc/include -IMCDU -IFMGC -IGUI -c *.cpp FMGC/*.cpp MCDU/*.cpp GUI/*.cpp
+g++ *.o -o main -Lsrc/lib -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lwinmm -lgdi32
+make: Leaving directory 'c:/dev/OC330'
+ 

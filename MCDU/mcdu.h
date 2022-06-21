@@ -20,6 +20,11 @@ class MCDU
         void DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_);
         void SetActivePage(Page* page_);
 
+        void updateActivePage();
+
+        void goRight();
+        void goLeft();
+
         void CleanPages();
         //Pointer to MCDU scratchpad
         Scratchpad* pad;
@@ -61,6 +66,7 @@ class MCDU
         Page* P_DATA_INDEX_1;
         Page* P_AC_STATUS;
         Page* P_INIT_A;
+        Page* P_INIT_B;
 
         //Line select keys
         std::vector<bool> lsk;

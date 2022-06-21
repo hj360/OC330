@@ -74,6 +74,7 @@ FromTo::FromTo(std::string text_, int row_, int offset_, int color_, int size_)
 
 void FromTo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
 {
+    linkedPageId_ = linkedPageId;
     //Check if pad is clearing the field
     if(pad_.GetState() == 1)
     {
@@ -158,6 +159,7 @@ FlightNumber::FlightNumber(std::string text_, int row_, int offset_, int color_,
 
 void FlightNumber::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
 {
+    linkedPageId_ = linkedPageId;
     //Check if pad is clearing the field
     if(pad_.GetState() == 1)
     {

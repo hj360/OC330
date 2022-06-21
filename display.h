@@ -32,6 +32,7 @@ class Display
     private:
 
         FMGS* A330_FMGS;
+        MCDU* ActiveMCDU;
         sf::Image icon;
         sf::Mouse* mouse;
 

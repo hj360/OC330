@@ -2,31 +2,11 @@
 
 Page::Page()
 {
-    pageID = 0;
-}
-
-Page::Page(int id_)
-{
     //Sample page
     //Set ID
-    pageID = id_;
-    //Add an element
-    pageElements.push_back(new Element("TITLE FIELD", 0, 5, 0, 1));
-    pageElements.push_back(new Element("LABEL", 1, 1, 0, 0));
-    pageElements.push_back(new Element("<ELEMENT", 2, 0, 0, 0));
-
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
+    pageID = 0;
+    leftPageID = 0;
+    rightPageID = 0;
 }
 
 void Page::Clean()
@@ -57,15 +37,26 @@ int Page::getPageId()
     return pageID;
 }
 
+int Page::getLeftPageId()
+{
+    return leftPageID;
+}
+
+int Page::getRightPageId()
+{
+    return rightPageID;
+}
+
 Element*& Page::getLSKElement(int lsk)
 {
     return lskElements[lsk];
 }
 
-Data_Index_1::Data_Index_1(int id_)
+Data_Index_1::Data_Index_1()
 {
-    pageID = id_;
-
+    pageID = 1;
+    leftPageID = 0;
+    rightPageID = 0;
 
     //Elements for Data index 1
     pageElements.push_back(new Element("DATA INDEX    1/2 <>", 0, 4, 0, 1));
@@ -89,7 +80,7 @@ Data_Index_1::Data_Index_1(int id_)
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
-    lskElements.push_back(new Link("<A/C STATUS", 8, 0, 0, 1, 1));
+    lskElements.push_back(new Link("<A/C STATUS", 8, 0, 0, 1, 2));
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
@@ -100,9 +91,11 @@ Data_Index_1::Data_Index_1(int id_)
     lskElements.push_back(nullptr);
 }
 
-Ac_Status::Ac_Status(int id_)
+Ac_Status::Ac_Status()
 {
-    pageID = id_;
+    pageID = 2;
+    leftPageID = 0;
+    rightPageID = 0;
 
     //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
     //Elements for Data index 1
@@ -136,9 +129,11 @@ Ac_Status::Ac_Status(int id_)
 
 }
 
-Init_A::Init_A(int id_)
+Init_A::Init_A()
 {
-    pageID = id_;
+    pageID = 3;
+    leftPageID = 0;
+    rightPageID = 4;
 
 
     pageElements.push_back(new Element("INIT", 0, 10, 0, 1));
@@ -160,6 +155,34 @@ Init_A::Init_A(int id_)
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(new FromTo("####/####", 2, 15, 5, 1));
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+}
+
+Init_B::Init_B()
+{
+    pageID = 4;
+    leftPageID = 3;
+    rightPageID = 0;
+
+    pageElements.push_back(new Element("INIT", 0, 10, 0, 1));
+    pageElements.push_back(new Element("<>", 0, 22, 0, 1));
+    pageElements.push_back(new Element("TAXI", 1, 0, 0, 0));
+    pageElements.push_back(new Element("ZFW/ZFWCG", 1, 15, 0, 0));
+    pageElements.push_back(new Element("#.#", 2, 0, 5, 1));
+    pageElements.push_back(new Element("###.#/##.#", 2, 13, 5, 1));
+    
+
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
+    lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);

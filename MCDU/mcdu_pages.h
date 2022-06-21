@@ -8,7 +8,6 @@ class Page
 {
     public:
         Page();
-        Page(int id_);
         ~Page(){};
 
         void Clean();
@@ -16,6 +15,8 @@ class Page
         std::vector<Element*>& getElements();
         std::vector<Element*>& getLSKElements();
         int getPageId();
+        int getLeftPageId();
+        int getRightPageId();
         Element*& getLSKElement(int lsk);
         
 
@@ -25,12 +26,14 @@ class Page
         std::vector<Element*> pageElements;
         std::vector<Element*> lskElements;
         int pageID;
+        int leftPageID;
+        int rightPageID;
 };
 
 class Data_Index_1 : public Page
 {
     public:
-        Data_Index_1(int id_);
+        Data_Index_1();
         ~Data_Index_1(){};
 
 };
@@ -38,7 +41,7 @@ class Data_Index_1 : public Page
 class Ac_Status : public Page
 {
     public:
-        Ac_Status(int id_);
+        Ac_Status();
         ~Ac_Status(){};
 
 };
@@ -46,9 +49,16 @@ class Ac_Status : public Page
 class Init_A : public Page
 {
     public:
-        Init_A(int id_);
+        Init_A();
         ~Init_A(){};
 
+};
+
+class Init_B : public Page
+{
+    public:
+        Init_B();
+        ~Init_B(){};
 };
 
 #endif
