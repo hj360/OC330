@@ -149,7 +149,7 @@ Init_A::Init_A()
     
 
     lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
+    lskElements.push_back(new AltnCoRte("----/----------", 4, 0, 0, 1));
     lskElements.push_back(new FlightNumber("##########", 6, 0, 5, 1));
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);

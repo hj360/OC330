@@ -63,6 +63,19 @@ class FromTo : public Element
 
 };
 
+class AltnCoRte : public Element
+{
+    public:
+        AltnCoRte(std::string text_, int row_, int offset_, int color_, int size_);
+        ~AltnCoRte(){};
+
+        virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
+        virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
+
+    private:
+
+};
+
 class FlightNumber : public Element
 {
     public:
