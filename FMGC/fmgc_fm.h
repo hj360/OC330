@@ -1,48 +1,51 @@
 #include <string>
+#include <fstream>
+#include <iostream>
+#include "fmgc_db.h"
 
 #ifndef FMGC_FM_H
 #define FMGC_FM_H
 
 struct FlightPlan
 {
-    std::string origin;
-    std::string dest;
-    std::string coRte;
-    std::string altn;
-    std::string altnCoRte;
+    std::string origin = "";
+    std::string dest = "";
+    std::string coRte = "";
+    std::string altn = "";
+    std::string altnCoRte = "";
 
-    std::string fltNbr;
+    std::string fltNbr = "";
 
-    int costIndex;
-    int crzFl;
-    int crzTemp;
-    int tropo;   
-    
+    int costIndex = -999;
+    int crzFl = -999;
+    int crzTemp = -999;
+    int tropo = -999;   
 };
 
 struct InitWeights
 {
-    int taxi;
-    int tripFuel;
-    int tripTime;
-    int rsv;
-    int altnFuel;
-    int finalFuel;
-    int extraFuel;
-    int zfw;
-    int zfwCg;
-    int blockFuel;
-    int tow;
-    int lw;
-    int minDestFob;
-    int tripWind;
+    int taxi = -999;
+    int tripFuel = -999;
+    int tripTime = -999;
+    int rsv = -999;
+    int altnFuel = -999;
+    int finalFuel = -999;
+    int extraFuel = -999;
+    int zfw = -999;
+    int zfwCg = -999;
+    int blockFuel = -999;
+    int tow = -999;
+    int lw = -999;
+    int minDestFob = -999;
+    int tripWind = -999;
 };
 
 class FMGC_FM
 {
     public:
-        FMGC_FM();
-        ~FMGC_FM();
+        FMGC_FM(){};
+        FMGC_FM(AirlineConfigDB* airlineConfigDB_);
+        ~FMGC_FM(){};
 
         //Setters
         void set_fpln_origin(std::string origin_, int fpln_);
@@ -51,6 +54,7 @@ class FMGC_FM
         void set_fpln_altn(std::string altn_, int fpln_);
         void set_fpln_altnCoRte(std::string altnCoRte_, int fpln_);
         void set_fpln_fltNbr(std::string fltNbr_, int fpln_);
+        void set_tropo(int tropo_, int fpln_);
 
         //Getters
         void get_fpln_origin(std::string &origin_, int fpln_);
@@ -59,10 +63,16 @@ class FMGC_FM
         void get_fpln_coRte(std::string &coRte_, int fpln_);
         void get_fpln_altnCoRte(std::string &altnCoRte_, int fpln_);
         void get_fpln_fltNbr(std::string &fltNbr_, int fpln_);
+        void get_tropo(int &tropo_, int fpln_);
+
+
+
+        void get_db_tropo(int &tropo_);
 
     private:
         //Navigation
         //Performance
+        AirlineConfigDB* airlineConfigDB;
         InitWeights weights;
         //F-PLN Management
         FlightPlan fpln_prim;

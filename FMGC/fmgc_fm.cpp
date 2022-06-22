@@ -1,62 +1,8 @@
 #include "fmgc_fm.h"
 
-FMGC_FM::FMGC_FM()
+FMGC_FM::FMGC_FM(AirlineConfigDB* airlineConfigDB_)
 {
-    //Initialize class vars with constructor vars
-
-
-    //Initizlize prim and sec fplns
-    //_______________PRIMARY FLIGHT PLAN_________________
-    fpln_prim.origin = "";
-    fpln_prim.dest = "";
-    fpln_prim.coRte = "";
-    fpln_prim.altn = "";
-    fpln_prim.altnCoRte = "";
-
-    fpln_prim.fltNbr = "";
-
-    fpln_prim.costIndex = -999;
-    fpln_prim.crzFl = -999;
-    fpln_prim.crzTemp = -999;
-    fpln_prim.tropo = -999;   
-
-    //_______________SECONDARY FLIGHT PLAN_______________
-    fpln_sec.origin = "";
-    fpln_sec.dest = "";
-    fpln_sec.coRte = "";
-    fpln_sec.altn = "";
-    fpln_sec.altnCoRte = "";
-
-    fpln_sec.fltNbr = "";
-
-    fpln_sec.costIndex = -999;
-    fpln_sec.crzFl = -999;
-    fpln_sec.crzTemp = -999;
-    fpln_sec.tropo = -999;   
-
-
-
-    //_______________Initial Weights____________________(kg)
-    weights.taxi = 400;
-    weights.tripFuel = 0;
-    weights.tripTime = 0;
-    weights.rsv = 0;
-    weights.altnFuel = 0;
-    weights.finalFuel = 0;
-    weights.extraFuel = 0;
-    weights.zfw = 0;
-    weights.zfwCg = 0;
-    weights.blockFuel = 0;
-    weights.tow = 0;
-    weights.lw = 0;
-    weights.minDestFob = 0;
-    weights.tripWind = 0;
-
-}
-
-FMGC_FM::~FMGC_FM()
-{
-
+    airlineConfigDB = airlineConfigDB_;
 }
 
 void FMGC_FM::set_fpln_origin(std::string origin_, int fpln_)
@@ -189,4 +135,41 @@ void FMGC_FM::get_fpln_fltNbr(std::string &fltNbr_, int fpln_)
     } else {
         fltNbr_ = fpln_sec.fltNbr;
     }
+}
+
+void FMGC_FM::set_tropo(int tropo_, int fpln_)
+{
+    //Check if string is valid
+    if(fpln_ == 1)
+    {
+        fpln_prim.tropo = tropo_;
+    } else {
+        fpln_sec.tropo = tropo_;
+    }
+}
+
+void FMGC_FM::get_tropo(int &tropo_, int fpln_)
+{
+    //Sets passed reference value to the value of the chosen fpln origin
+    if(fpln_ == 1)
+    {
+        tropo_ = fpln_prim.tropo;
+    } else {
+
+        tropo_ = fpln_sec.tropo;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+void FMGC_FM::get_db_tropo(int &tropo_)
+{
+    tropo_ = airlineConfigDB->tropo_default;
 }

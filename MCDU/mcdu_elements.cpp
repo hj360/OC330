@@ -8,8 +8,6 @@ Element::Element()
     row = 0;
     offset = 0;
     color = 0;
-
-    type = 0;
 }
 
 Element::Element(std::string text_, int row_, int offset_, int color_, int size_)
@@ -26,11 +24,6 @@ void Element::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
     //Element is not allowed to be selected
     pad_.AddMSG(0);
     std::cout << "Element element select" << std::endl;
-}
-
-int Element::getType()
-{
-    return type;
 }
 
 //For rendering to a display. Sets reference vars to those of the specific element
@@ -51,8 +44,6 @@ Link::Link(std::string text_, int row_, int offset_, int color_, int size_, int 
     color = color_;
     size = size_;
     linkedPageId = linkedPageId_;
-
-    type = 1;
 }
 
 void Link::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
@@ -60,16 +51,14 @@ void Link::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
     linkedPageId_ = linkedPageId;
 }
 
-FromTo::FromTo(std::string text_, int row_, int offset_, int color_, int size_)
+FromTo::FromTo(int row_, int offset_)
 {
-    text = text_;
+    text = "####/####";
     row = row_;
     offset = offset_;
-    color = color_;
-    size = size_;
+    color = 5;
+    size = 1;
     linkedPageId = 0;
-
-    type = 1;
 }
 
 void FromTo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
@@ -156,16 +145,14 @@ void FromTo::getElement(std::string &text_, int &row_, int &offset_, int &color_
     size_ = size;
 }
 
-FlightNumber::FlightNumber(std::string text_, int row_, int offset_, int color_, int size_)
+FlightNumber::FlightNumber(int row_, int offset_)
 {
-    text = text_;
+    text = "##########";
     row = row_;
     offset = offset_;
-    color = color_;
-    size = size_;
+    color = 5;
+    size = 1;
     linkedPageId = 0;
-
-    type = 1;
 }
 
 void FlightNumber::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
@@ -219,16 +206,14 @@ void FlightNumber::getElement(std::string &text_, int &row_, int &offset_, int &
     size_ = size;
 }
 
-AltnCoRte::AltnCoRte(std::string text_, int row_, int offset_, int color_, int size_)
+AltnCoRte::AltnCoRte(int row_, int offset_)
 {
-    text = text_;
+    text = "----/----------";
     row = row_;
     offset = offset_;
-    color = color_;
-    size = size_;
+    color = 0;
+    size = 1;
     linkedPageId = 0;
-
-    type = 1;
 }
 
 void AltnCoRte::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
@@ -305,16 +290,14 @@ void AltnCoRte::getElement(std::string &text_, int &row_, int &offset_, int &col
     size_ = size;
 }
 
-CoRte::CoRte(std::string text_, int row_, int offset_, int color_, int size_)
+CoRte::CoRte(int row_, int offset_)
 {
-    text = text_;
+    text = "##########";
     row = row_;
     offset = offset_;
-    color = color_;
-    size = size_;
+    color = 5;
+    size = 1;
     linkedPageId = 0;
-
-    type = 1;
 }
 
 void CoRte::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
@@ -363,6 +346,91 @@ void CoRte::getElement(std::string &text_, int &row_, int &offset_, int &color_,
     } else {
         text = "##########";
         color = 5;
+    }
+
+    text_ = text;
+    row_ = row;
+    offset_ = offset;
+    color_ = color;
+    size_ = size;
+}
+
+Tropo::Tropo(int row_, int offset_)
+{
+    text = "#####";
+    row = row_;
+    offset = offset_;
+    color = 5;
+    size = 0;
+    linkedPageId = 0;
+}
+
+void Tropo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
+{
+    linkedPageId_ = linkedPageId;
+    int tempTropo;
+    ActiveFMGC_->FM.get_tropo(tempTropo, 1);
+    //Check if pad is clearing the field
+    if(pad_.GetState() == 1)
+    {
+        if(tempTropo != -999)
+        {
+            ActiveFMGC_->FM.set_tropo(-999, 1);
+            pad_.setState(0);
+            pad_.EmptyScratchPad();
+            return;
+        } else {
+            pad_.setState(0);
+            pad_.EmptyScratchPad();
+            pad_.AddMSG(0);
+            return;
+        }
+        return;
+    }
+
+    std::string tempTropoStr;
+
+    pad_.GetScratchPad(tempTropoStr);
+
+    try
+    {
+        tempTropo = stoi(tempTropoStr);
+    } catch (...)
+    {
+        pad_.AddMSG(1);
+    }
+    
+    //Check if input is correct format
+    if(tempTropo >= 0 && tempTropo <= 99999 )
+    {
+        ActiveFMGC_->FM.set_tropo(tempTropo, 1);
+        color = 2;
+        size = 1;
+        pad_.EmptyScratchPad();
+        return;
+  
+    } else
+    {
+        pad_.AddMSG(1);
+        return;
+    }    
+}
+
+void Tropo::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_)
+{
+    int tempTropo;
+    ActiveFMGC_->FM.get_tropo(tempTropo, 1);
+    
+    if(tempTropo != -999)
+    {
+        text = std::to_string(tempTropo);
+        color = 2;
+        size = 1;
+    } else {
+        ActiveFMGC_->FM.get_db_tropo(tempTropo);
+        text = std::to_string(tempTropo);
+        color = 2;
+        size = 0;
     }
 
     text_ = text;

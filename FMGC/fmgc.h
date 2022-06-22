@@ -2,6 +2,7 @@
 #include "fmgc_fm.h"
 #include "fmgc_fg.h"
 #include "fmgc_fe.h"
+#include "fmgc_db.h"
 
 #ifndef FMGC_H
 #define FMGC_H
@@ -11,6 +12,8 @@ class FMGC
     public:
         FMGC(int id_);
         ~FMGC();
+
+        bool LoadAirlineConfig();
 
         //Separate FMGC components
         FMGC_FM FM;
@@ -22,6 +25,11 @@ class FMGC
         int id;
         //Is FMGC available?
         bool avail;
+        //FMGC Datasets
+        NavDB* navDB;
+        AirlineConfigDB* airlineConfigDB;
+        PerfDB* perfDB;
+        MagVarDB* magVarDB;
 
 };
 

@@ -25,14 +25,8 @@ class Element
         int offset;
         //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
         int color;
-
+        //For a linked page if it exists, 0 for no linked page
         int linkedPageId;
-
-        //Type of element//
-        //0 - plain text
-        //1 - link
-        int type;
-
         //0 is label 1 is large
         int size;
     
@@ -53,7 +47,7 @@ class Link : public Element
 class FromTo : public Element
 {
     public:
-        FromTo(std::string text_, int row_, int offset_, int color_, int size_);
+        FromTo(int row_, int offset_);
         ~FromTo(){};
 
         virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
@@ -66,7 +60,7 @@ class FromTo : public Element
 class CoRte : public Element
 {
     public:
-        CoRte(std::string text_, int row_, int offset_, int color_, int size_);
+        CoRte(int row_, int offset_);
         ~CoRte(){};
 
         virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
@@ -79,7 +73,7 @@ class CoRte : public Element
 class AltnCoRte : public Element
 {
     public:
-        AltnCoRte(std::string text_, int row_, int offset_, int color_, int size_);
+        AltnCoRte(int row_, int offset_);
         ~AltnCoRte(){};
 
         virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
@@ -92,8 +86,21 @@ class AltnCoRte : public Element
 class FlightNumber : public Element
 {
     public:
-        FlightNumber(std::string text_, int row_, int offset_, int color_, int size_);
+        FlightNumber(int row_, int offset_);
         ~FlightNumber(){};
+
+        virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
+        virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
+
+    private:
+
+};
+
+class Tropo : public Element
+{
+    public:
+        Tropo(int row_, int offset_);
+        ~Tropo(){};
 
         virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
         virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);

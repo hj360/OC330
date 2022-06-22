@@ -108,7 +108,7 @@ Ac_Status::Ac_Status()
     pageElements.push_back(new Element("SECOND NAV DATA BASE", 5, 1, 0, 0));
     pageElements.push_back(new Link("<28MAY-24JUN", 6, 0, 2, 0, 0));
     pageElements.push_back(new Element("CHG CODE", 9, 0, 0, 0));
-    pageElements.push_back(new Link("[]", 10, 0, 2, 1, 0));
+    pageElements.push_back(new Link("[ ]", 10, 0, 2, 1, 0));
     pageElements.push_back(new Element("IDLE/PERF", 11, 0, 0, 0));
     pageElements.push_back(new Element("SOFTWARE", 11, 15, 0, 0));
     pageElements.push_back(new Link("+0.0/+4.4", 12, 0, 1, 1, 0));
@@ -144,21 +144,21 @@ Init_A::Init_A()
     pageElements.push_back(new Element("FLT NBR", 5, 0, 0, 0));
     pageElements.push_back(new Element("COST INDEX", 9, 0, 0, 0));
     pageElements.push_back(new Element("CRZ FL/TEMP", 11, 0, 0, 0));
-    pageElements.push_back(new Element("TROPO", 11, 18, 0, 0));
+    pageElements.push_back(new Element("TROPO", 11, 19, 0, 0));
     
 
-    lskElements.push_back(new CoRte("#########", 2, 0, 5, 1));
-    lskElements.push_back(new AltnCoRte("----/----------", 4, 0, 0, 1));
-    lskElements.push_back(new FlightNumber("##########", 6, 0, 5, 1));
+    lskElements.push_back(new CoRte(2, 0));
+    lskElements.push_back(new AltnCoRte(4, 0));
+    lskElements.push_back(new FlightNumber(6, 0));
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
-    lskElements.push_back(new FromTo("####/####", 2, 15, 5, 1));
+    lskElements.push_back(new FromTo(2, 15));
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
+    lskElements.push_back(new Tropo(12, 19));
 }
 
 Init_B::Init_B()
@@ -195,7 +195,7 @@ Route_Sel::Route_Sel()
     leftPageID = 0;
     rightPageID = 0;
 
-    pageElements.push_back(new FromTo("####/####", 0, 6, 0, 1));
+    pageElements.push_back(new FromTo(0, 6));
     pageElements.push_back(new Element("<>", 0, 22, 0, 1));
 
     
