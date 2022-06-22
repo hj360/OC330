@@ -55,6 +55,9 @@ void Scratchpad::AddMSG(int msgCode_)
         case 1:
             msg.push_back("FORMAT ERROR");
             break;
+        case 2:
+            msg.push_back("ENTRY OUT OF RANGE");
+            break;
 
         default:
             break;

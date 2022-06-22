@@ -35,7 +35,7 @@ MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_)
     //Set colors
     mcdu_white = sf::Color(255, 255, 255);
     mcdu_green = sf::Color(0, 255, 17);
-    mcdu_blue = sf::Color(30, 120, 255);
+    mcdu_blue = sf::Color(0, 150, 255);
     mcdu_magenta = sf::Color(255, 0, 255);
     mcdu_yellow = sf::Color(255, 255, 0);
     mcdu_orange = sf::Color(255, 100, 0);

@@ -135,11 +135,13 @@ void FromTo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
     {
         ActiveFMGC_->FM.set_fpln_origin("", 1);
         ActiveFMGC_->FM.set_fpln_dest("", 1);
-
         ActiveFMGC_->FM.set_fpln_altn("", 1);
         ActiveFMGC_->FM.set_fpln_altnCoRte("", 1);
-
         ActiveFMGC_->FM.set_fpln_coRte("", 1);
+        ActiveFMGC_->FM.set_crz_fl(-999, 1);
+        ActiveFMGC_->FM.set_crz_temp(-999, 1);
+        ActiveFMGC_->FM.set_cost_index(-999, 1);
+
 
         text = "####/####";
         color = 5;
@@ -310,6 +312,7 @@ void AltnCoRte::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
             ActiveFMGC_->FM.set_fpln_altnCoRte("", 1);
             color = 2;
             pad_.EmptyScratchPad();
+            linkedPageId_ = 5;
             return;
         } else if (tempAltnCoRte[0] == '/')
         {
@@ -317,6 +320,7 @@ void AltnCoRte::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
             ActiveFMGC_->FM.set_fpln_altnCoRte(tempAltnCoRte, 1);
             color = 2;
             pad_.EmptyScratchPad();
+            linkedPageId_ = 5;
             return;
         } else {
             pad_.AddMSG(1);
@@ -550,7 +554,7 @@ void CostIndex::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
   
     } else
     {
-        pad_.AddMSG(1);
+        pad_.AddMSG(2);
         return;
     }    
 }
@@ -564,9 +568,14 @@ void CostIndex::getElement(std::string &text_, int &row_, int &offset_, int &col
         color = 2;
         size = 1;
     } else {
-        text = "---";
-        color = 0;
-        size = 1;
+        if(ActiveFMGC_->FM.is_fpln_init(1))
+        {
+            text = "###";
+            color = 5;
+        } else {
+            text = "---";
+            color = 0;
+        }
     }
 
     text_ = text;
@@ -615,7 +624,7 @@ void CrzFlTemp::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
     int tempCrzFl = ActiveFMGC_->FM.get_crz_fl(1);
     int tempCrzTemp = ActiveFMGC_->FM.get_crz_temp(1);
     //Check input format
-    if(tempScratchPad[3] == '/')
+    if(tempScratchPad.length() > 3 && tempScratchPad[3] == '/')
     {
         tempCrzFlStr = tempCrzFlStr.substr(0, 3);
         tempCrzTempStr = tempCrzTempStr.substr(4, tempScratchPad.length()-4);
@@ -630,7 +639,7 @@ void CrzFlTemp::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
             return;
         }
 
-    } else if (tempScratchPad[2] == '/' )
+    } else if (tempScratchPad.length() > 2 && tempScratchPad[2] == '/' )
     {
         tempCrzFlStr = tempCrzFlStr.substr(0, 2);
         tempCrzTempStr = tempCrzTempStr.substr(3, tempScratchPad.length()-3);
@@ -645,7 +654,7 @@ void CrzFlTemp::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
             return;
         }
 
-    }else if (tempScratchPad[1] == '/' )
+    }else if (tempScratchPad.length() > 1 && tempScratchPad[1] == '/' )
     {
         tempCrzFlStr = tempCrzFlStr.substr(0, 1);
         tempCrzTempStr = tempCrzTempStr.substr(2, tempScratchPad.length()-2);
@@ -660,13 +669,11 @@ void CrzFlTemp::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
             return;
         }
 
-    } else if (tempScratchPad[0] == '/')
+    } else if (tempScratchPad.length() > 0 && tempScratchPad[0] == '/')
     {
-        tempCrzTempStr = tempCrzTempStr.substr(1, tempScratchPad.length()-1);
-
         try
         {
-            tempCrzTemp = stoi(tempCrzTempStr);
+            tempCrzTemp = stoi(tempCrzTempStr.substr(1, tempScratchPad.length()-1));
             
         } catch (...)
         {
@@ -679,6 +686,7 @@ void CrzFlTemp::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
         try
         {
             tempCrzFl = stoi(tempScratchPad);
+            tempCrzTemp = -999;
         } catch (...)
         {
             pad_.AddMSG(1);
@@ -703,7 +711,7 @@ void CrzFlTemp::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
         } else 
         {
             //Find temp table
-            tempCrzTemp = 0;
+            tempCrzTemp = ActiveFMGC_->FM.get_isa(tempCrzFl);
         }
         ActiveFMGC_->FM.set_crz_temp(tempCrzTemp, 1);
         color = 0;
@@ -713,7 +721,7 @@ void CrzFlTemp::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
   
     } else
     {
-        pad_.AddMSG(1);
+        pad_.AddMSG(2);
         return;
     }    
 }
@@ -738,9 +746,14 @@ void CrzFlTemp::getElement(std::string &text_, int &row_, int &offset_, int &col
         color = 2;
         size = 1;
     } else {
-        text = "----- /---.";
-        color = 0;
-        size = 1;
+        if(ActiveFMGC_->FM.is_fpln_init(1))
+        {
+            text = "##### /###.";
+            color = 5;
+        } else {
+            text = "----- /---.";
+            color = 0;
+        }
     }
 
     text_ = text;

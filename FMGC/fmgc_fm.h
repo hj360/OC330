@@ -74,6 +74,8 @@ class FMGC_FM
 
 
         int get_db_tropo();
+        bool is_fpln_init(int fpln_);
+        int get_isa(int fl_);
 
     private:
         //Navigation
@@ -85,6 +87,8 @@ class FMGC_FM
         FlightPlan fpln_sec;
         //Managed Guidance computation
         //Information display
+
+    static const double temp_ISA[];
         
         
 };

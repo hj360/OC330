@@ -3,6 +3,35 @@
 FMGC_FM::FMGC_FM(AirlineConfigDB* airlineConfigDB_)
 {
     airlineConfigDB = airlineConfigDB_;
+
+}
+
+const double FMGC_FM::temp_ISA[] = {15,13,11,9.1,7.1,5.1,3.1,1.1,-0.8,-2.8,-4.8,-6.8,-8.8,-10.8,-12.7,-14.7,-16.7,-18.7,-20.7,-22.6,-24.6,-26.6,-28.6,-30.6,-32.5,-34.5,-36.5,-38.5,-40.5,-42.5,-44.4,-46.4,-48.4,-50.4,-52.4,-54.3,-56.3,-56.5,-56.5,-56.5,-56.5, -56.5};
+
+int FMGC_FM::get_isa(int fl_)
+{
+    fl_ = fl_/10;
+    return temp_ISA[fl_];
+}
+
+bool FMGC_FM::is_fpln_init(int fpln_)
+{
+    if(fpln_ == 1)
+    {
+        if(fpln_prim.origin != "" && fpln_prim.dest != "")
+        {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        if(fpln_sec.origin != "" && fpln_sec.dest != "")
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 void FMGC_FM::set_fpln_origin(std::string origin_, int fpln_)
