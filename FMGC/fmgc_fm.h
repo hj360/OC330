@@ -55,6 +55,9 @@ class FMGC_FM
         void set_fpln_altnCoRte(std::string altnCoRte_, int fpln_);
         void set_fpln_fltNbr(std::string fltNbr_, int fpln_);
         void set_tropo(int tropo_, int fpln_);
+        void set_cost_index(int costIndex_, int fpln_);
+        void set_crz_fl(int crzFl_, int fpln_);
+        void set_crz_temp(int crzTemp_, int fpln_);
 
         //Getters
         std::string get_fpln_origin(int fpln_);
@@ -63,7 +66,10 @@ class FMGC_FM
         std::string get_fpln_coRte(int fpln_);
         std::string get_fpln_altnCoRte(int fpln_);
         std::string get_fpln_fltNbr(int fpln_);
+        int get_cost_index(int fpln_);
         int get_tropo(int fpln_);
+        int get_crz_fl(int fpln_);
+        int get_crz_temp(int fpln_);
 
 
 

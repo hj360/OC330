@@ -160,6 +160,77 @@ int FMGC_FM::get_tropo(int fpln_)
     }
 }
 
+void FMGC_FM::set_cost_index(int costIndex_, int fpln_)
+{
+    //Check if string is valid
+    if(fpln_ == 1)
+    {
+        fpln_prim.costIndex = costIndex_;
+    } else {
+        fpln_sec.costIndex = costIndex_;
+    }
+}
+
+int FMGC_FM::get_cost_index(int fpln_)
+{
+    //Sets passed reference value to the value of the chosen fpln origin
+    if(fpln_ == 1)
+    {
+        return fpln_prim.costIndex;
+    } else {
+
+        return fpln_sec.costIndex;
+    }
+}
+
+void FMGC_FM::set_crz_fl(int crzFl_, int fpln_)
+{
+    //Check if string is valid
+    if(fpln_ == 1)
+    {
+        fpln_prim.crzFl = crzFl_;
+    } else {
+        fpln_sec.crzFl = crzFl_;
+    }
+}
+
+int FMGC_FM::get_crz_fl(int fpln_)
+{
+    //Sets passed reference value to the value of the chosen fpln origin
+    if(fpln_ == 1)
+    {
+        return fpln_prim.crzFl;
+    } else {
+
+        return fpln_sec.crzFl;
+    }
+}
+
+void FMGC_FM::set_crz_temp(int crzTemp_, int fpln_)
+{
+    //Check if string is valid
+    if(fpln_ == 1)
+    {
+        fpln_prim.crzTemp = crzTemp_;
+    } else {
+        fpln_sec.crzTemp = crzTemp_;
+    }
+}
+
+int FMGC_FM::get_crz_temp(int fpln_)
+{
+    //Sets passed reference value to the value of the chosen fpln origin
+    if(fpln_ == 1)
+    {
+        return fpln_prim.crzTemp;
+    } else {
+
+        return fpln_sec.crzTemp;
+    }
+}
+
+
+
 
 
 

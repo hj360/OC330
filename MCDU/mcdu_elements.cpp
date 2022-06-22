@@ -497,3 +497,255 @@ void Tropo::getElement(std::string &text_, int &row_, int &offset_, int &color_,
     color_ = color;
     size_ = size;
 }
+
+//_______________________________________________COST INDEX________________________________________//
+
+CostIndex::CostIndex(int row_, int offset_)
+{
+    text = "---";
+    row = row_;
+    offset = offset_;
+    color = 0;
+    size = 1;
+    linkedPageId = 0;
+}
+
+void CostIndex::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
+{
+    linkedPageId_ = linkedPageId;
+    //Check if pad is clearing the field
+    if(pad_.GetState() == 1 && ActiveFMGC_->FM.get_cost_index(1) != -999)
+    {
+        ActiveFMGC_->FM.set_cost_index(-999, 1);
+        text = "---";
+        pad_.EmptyScratchPad();
+        pad_.setState(0);
+        return;
+    } else if (pad_.GetState() == 1 )
+    {
+        pad_.AddMSG(0);
+        return;
+    }
+
+    std::string tempScratchPad;
+    pad_.GetScratchPad(tempScratchPad);
+    int tempCostIndex;
+    try
+    {
+        tempCostIndex = stoi(tempScratchPad);
+    } catch (...)
+    {
+        pad_.AddMSG(1);
+        return;
+    }
+    
+    //Check if input is correct format
+    if(tempCostIndex >= 0 && tempCostIndex <= 999 )
+    {
+        ActiveFMGC_->FM.set_cost_index(tempCostIndex, 1);
+        color = 0;
+        size = 1;
+        pad_.EmptyScratchPad();
+        return;
+  
+    } else
+    {
+        pad_.AddMSG(1);
+        return;
+    }    
+}
+
+void CostIndex::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_)
+{
+    
+    if(ActiveFMGC_->FM.get_cost_index(1) != -999)
+    {
+        text = std::to_string(ActiveFMGC_->FM.get_cost_index(1));
+        color = 2;
+        size = 1;
+    } else {
+        text = "---";
+        color = 0;
+        size = 1;
+    }
+
+    text_ = text;
+    row_ = row;
+    offset_ = offset;
+    color_ = color;
+    size_ = size;
+}
+
+
+//_______________________________________________CRZ FL TEMP________________________________________//
+
+CrzFlTemp::CrzFlTemp(int row_, int offset_)
+{
+    text = "----- /---.";
+    row = row_;
+    offset = offset_;
+    color = 0;
+    size = 1;
+    linkedPageId = 0;
+}
+
+void CrzFlTemp::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
+{
+    linkedPageId_ = linkedPageId;
+    //Check if pad is clearing the field
+    if(pad_.GetState() == 1 && ActiveFMGC_->FM.get_crz_fl(1) != -999)
+    {
+        ActiveFMGC_->FM.set_crz_fl(-999, 1);
+        ActiveFMGC_->FM.set_crz_temp(-999, 1);
+        text = "----- /---.";
+        pad_.EmptyScratchPad();
+        pad_.setState(0);
+        return;
+    } else if (pad_.GetState() == 1 )
+    {
+        pad_.AddMSG(0);
+        return;
+    }
+
+    std::string tempScratchPad;
+    
+    pad_.GetScratchPad(tempScratchPad);
+    std::string tempCrzFlStr = tempScratchPad;
+    std::string tempCrzTempStr = tempScratchPad;
+    int tempCrzFl = ActiveFMGC_->FM.get_crz_fl(1);
+    int tempCrzTemp = ActiveFMGC_->FM.get_crz_temp(1);
+    //Check input format
+    if(tempScratchPad[3] == '/')
+    {
+        tempCrzFlStr = tempCrzFlStr.substr(0, 3);
+        tempCrzTempStr = tempCrzTempStr.substr(4, tempScratchPad.length()-4);
+
+        try
+        {
+            tempCrzFl = stoi(tempCrzFlStr);
+            tempCrzTemp = stoi(tempCrzTempStr);
+        } catch (...)
+        {
+            pad_.AddMSG(1);
+            return;
+        }
+
+    } else if (tempScratchPad[2] == '/' )
+    {
+        tempCrzFlStr = tempCrzFlStr.substr(0, 2);
+        tempCrzTempStr = tempCrzTempStr.substr(3, tempScratchPad.length()-3);
+
+        try
+        {
+            tempCrzFl = stoi(tempCrzFlStr);
+            tempCrzTemp = stoi(tempCrzTempStr);
+        } catch (...)
+        {
+            pad_.AddMSG(1);
+            return;
+        }
+
+    }else if (tempScratchPad[1] == '/' )
+    {
+        tempCrzFlStr = tempCrzFlStr.substr(0, 1);
+        tempCrzTempStr = tempCrzTempStr.substr(2, tempScratchPad.length()-2);
+
+        try
+        {
+            tempCrzFl = stoi(tempCrzFlStr);
+            tempCrzTemp = stoi(tempCrzTempStr);
+        } catch (...)
+        {
+            pad_.AddMSG(1);
+            return;
+        }
+
+    } else if (tempScratchPad[0] == '/')
+    {
+        tempCrzTempStr = tempCrzTempStr.substr(1, tempScratchPad.length()-1);
+
+        try
+        {
+            tempCrzTemp = stoi(tempCrzTempStr);
+            
+        } catch (...)
+        {
+            pad_.AddMSG(1);
+            return;
+        }
+
+    } else if (tempScratchPad.length() == 3 || tempScratchPad.length() == 2 || tempScratchPad.length() == 1)
+    {
+        try
+        {
+            tempCrzFl = stoi(tempScratchPad);
+        } catch (...)
+        {
+            pad_.AddMSG(1);
+            return;
+        }
+
+    } else {
+        pad_.AddMSG(1);
+        return;
+    }
+
+    //Check if input is correct format
+    if(tempCrzFl > 0 && tempCrzFl <= 410 )
+    {
+        ActiveFMGC_->FM.set_crz_fl(tempCrzFl, 1);
+        if(tempCrzTemp > 0 && tempCrzTemp <= 99)
+        {
+            tempCrzTemp = -tempCrzTemp;
+        } else if (tempCrzTemp <= 0 && tempCrzTemp >= -99)
+        {
+
+        } else 
+        {
+            //Find temp table
+            tempCrzTemp = 0;
+        }
+        ActiveFMGC_->FM.set_crz_temp(tempCrzTemp, 1);
+        color = 0;
+        size = 1;
+        pad_.EmptyScratchPad();
+        return;
+  
+    } else
+    {
+        pad_.AddMSG(1);
+        return;
+    }    
+}
+
+void CrzFlTemp::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_)
+{
+    
+    if(ActiveFMGC_->FM.get_crz_fl(1) != -999 && ActiveFMGC_->FM.get_crz_temp(1) != -999)
+    {
+        int tempFL = ActiveFMGC_->FM.get_crz_fl(1);
+
+        if(tempFL < 10)
+        {
+            text = "FL00" + std::to_string(tempFL) + " /" + std::to_string(ActiveFMGC_->FM.get_crz_temp(1));
+        } else if(tempFL < 100)
+        {
+            text = "FL0" + std::to_string(tempFL) + " /" + std::to_string(ActiveFMGC_->FM.get_crz_temp(1));
+        } else {
+            text = "FL" + std::to_string(tempFL) + " /" + std::to_string(ActiveFMGC_->FM.get_crz_temp(1));
+        }
+
+        color = 2;
+        size = 1;
+    } else {
+        text = "----- /---.";
+        color = 0;
+        size = 1;
+    }
+
+    text_ = text;
+    row_ = row;
+    offset_ = offset;
+    color_ = color;
+    size_ = size;
+}

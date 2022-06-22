@@ -150,8 +150,8 @@ Init_A::Init_A()
     lskElements.push_back(new AltnCoRte(4, 0));
     lskElements.push_back(new FlightNumber(6, 0));
     lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
+    lskElements.push_back(new CostIndex(10, 0));
+    lskElements.push_back(new CrzFlTemp(12, 0));
     lskElements.push_back(new FromTo(2, 15));
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);

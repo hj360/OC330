@@ -113,6 +113,30 @@ class FlightNumber : public Element
         virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
         virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
 
+};
+
+class CostIndex : public Element
+{
+    public:
+        CostIndex(int row_, int offset_);
+        ~CostIndex(){};
+
+        virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
+        virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
+
+    private:
+
+};
+
+class CrzFlTemp : public Element
+{
+    public:
+        CrzFlTemp(int row_, int offset_);
+        ~CrzFlTemp(){};
+
+        virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
+        virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
+
     private:
 
 };
@@ -125,8 +149,6 @@ class Tropo : public Element
 
         virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
         virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
-
-    private:
 
 };
 

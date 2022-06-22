@@ -193,6 +193,9 @@ void Display::handleEvents()
                     case sf::Keyboard::Period:
                         ActiveMCDU->pad->AddToScratchpad(".");
                         break;
+                    case sf::Keyboard::Dash:
+                        ActiveMCDU->pad->AddToScratchpad("-");
+                        break;
                     case sf::Keyboard::Left:
                         ActiveMCDU->goLeft();
                         break;
