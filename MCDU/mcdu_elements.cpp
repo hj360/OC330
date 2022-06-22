@@ -51,6 +51,72 @@ void Link::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
     linkedPageId_ = linkedPageId;
 }
 
+
+//_______________________________________________Engine type_________________________________________//
+EngineType::EngineType(int row_, int offset_)
+{
+    text = "#######";
+    row = row_;
+    offset = offset_;
+    color = 5;
+    size = 1;
+    linkedPageId = 0;
+}
+
+void EngineType::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
+{
+    //Return error if user tries to select engine type
+    linkedPageId_ = linkedPageId;
+    pad_.AddMSG(1);
+    return;
+}
+
+void EngineType::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_)
+{    
+    text = ActiveFMGC_->getEngineType();
+    color = 1;
+
+    text_ = text;
+    row_ = row;
+    offset_ = offset;
+    color_ = color;
+    size_ = size;
+}
+
+//_______________________________________________AIRCRAFT TYPE__________________________________________//
+AircraftType::AircraftType(int row_, int offset_)
+{
+    text = "#######";
+    row = row_;
+    offset = offset_;
+    color = 0;
+    size = 1;
+    linkedPageId = 0;
+}
+
+void AircraftType::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
+{
+    //Return error if user tries to select engine type
+    linkedPageId_ = linkedPageId;
+    pad_.AddMSG(1);
+    return;
+}
+
+void AircraftType::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_)
+{    
+    text = ActiveFMGC_->getAircraftType();
+    color = 0;
+
+    text_ = text;
+    row_ = row;
+    offset_ = offset;
+    color_ = color;
+    size_ = size;
+}
+
+
+//_______________________________________________FROM TO FIELD________________________________________//
+
 FromTo::FromTo(int row_, int offset_)
 {
     text = "####/####";
@@ -123,15 +189,10 @@ void FromTo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
 }
 
 void FromTo::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_)
-{
-    std::string tempOrigin;
-    std::string tempDest;
-    ActiveFMGC_->FM.get_fpln_origin(tempOrigin, 1);
-    ActiveFMGC_->FM.get_fpln_dest(tempDest, 1);
-    
-    if(tempDest != "" && tempOrigin != "")
+{    
+    if(ActiveFMGC_->FM.get_fpln_origin(1) != "" && ActiveFMGC_->FM.get_fpln_dest(1) != "")
     {
-        text = tempOrigin + "/" + tempDest;
+        text = ActiveFMGC_->FM.get_fpln_origin(1) + "/" + ActiveFMGC_->FM.get_fpln_dest(1);
         color = 2;
     } else {
         text = "####/####";
@@ -144,6 +205,9 @@ void FromTo::getElement(std::string &text_, int &row_, int &offset_, int &color_
     color_ = color;
     size_ = size;
 }
+
+
+//_______________________________________________FLIGHT NUMBER________________________________________//
 
 FlightNumber::FlightNumber(int row_, int offset_)
 {
@@ -187,12 +251,10 @@ void FlightNumber::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC
 
 void FlightNumber::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_)
 {
-    std::string tempFltNbr;
-    ActiveFMGC_->FM.get_fpln_fltNbr(tempFltNbr, 1);
-
-    if(tempFltNbr != "")
+  
+    if(ActiveFMGC_->FM.get_fpln_fltNbr(1) != "")
     {
-        text = tempFltNbr;
+        text = ActiveFMGC_->FM.get_fpln_fltNbr(1);;
         color = 2;
     } else {
         text = "##########";
@@ -205,6 +267,9 @@ void FlightNumber::getElement(std::string &text_, int &row_, int &offset_, int &
     color_ = color;
     size_ = size;
 }
+
+
+//_______________________________________________ALTN CO ROUTE________________________________________//
 
 AltnCoRte::AltnCoRte(int row_, int offset_)
 {
@@ -266,17 +331,13 @@ void AltnCoRte::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
 
 void AltnCoRte::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_)
 {
-    std::string tempAltn;
-    std::string tempAltnCoRte;
-    ActiveFMGC_->FM.get_fpln_altn(tempAltn, 1);
-    ActiveFMGC_->FM.get_fpln_altnCoRte(tempAltnCoRte, 1);
-    
-    if(tempAltnCoRte != "")
+   
+    if(ActiveFMGC_->FM.get_fpln_altnCoRte(1) != "")
     {
-        text = tempAltn + "/" + tempAltnCoRte;
+        text = ActiveFMGC_->FM.get_fpln_altn(1) + "/" + ActiveFMGC_->FM.get_fpln_altnCoRte(1);
         color = 2;
-    } else if(tempAltn != "") {
-        text = tempAltn;
+    } else if(ActiveFMGC_->FM.get_fpln_altn(1) != "") {
+        text = ActiveFMGC_->FM.get_fpln_altn(1);
         color = 2;
     } else {
         text = "----/----------";
@@ -289,6 +350,8 @@ void AltnCoRte::getElement(std::string &text_, int &row_, int &offset_, int &col
     color_ = color;
     size_ = size;
 }
+
+//_______________________________________________CO ROUTE________________________________________//
 
 CoRte::CoRte(int row_, int offset_)
 {
@@ -336,12 +399,10 @@ void CoRte::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
 
 void CoRte::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_)
 {
-    std::string tempCoRte;
-    ActiveFMGC_->FM.get_fpln_coRte(tempCoRte, 1);
     
-    if(tempCoRte != "")
+    if(ActiveFMGC_->FM.get_fpln_coRte(1) != "")
     {
-        text = tempCoRte;
+        text = ActiveFMGC_->FM.get_fpln_coRte(1);
         color = 2;
     } else {
         text = "##########";
@@ -355,6 +416,8 @@ void CoRte::getElement(std::string &text_, int &row_, int &offset_, int &color_,
     size_ = size;
 }
 
+//_______________________________________________TROPO________________________________________//
+
 Tropo::Tropo(int row_, int offset_)
 {
     text = "#####";
@@ -367,13 +430,10 @@ Tropo::Tropo(int row_, int offset_)
 
 void Tropo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
 {
-    linkedPageId_ = linkedPageId;
-    int tempTropo;
-    ActiveFMGC_->FM.get_tropo(tempTropo, 1);
     //Check if pad is clearing the field
     if(pad_.GetState() == 1)
     {
-        if(tempTropo != -999)
+        if(ActiveFMGC_->FM.get_tropo(1) != -999)
         {
             ActiveFMGC_->FM.set_tropo(-999, 1);
             pad_.setState(0);
@@ -389,6 +449,7 @@ void Tropo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
     }
 
     std::string tempTropoStr;
+    int tempTropo;
 
     pad_.GetScratchPad(tempTropoStr);
 
@@ -398,6 +459,7 @@ void Tropo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
     } catch (...)
     {
         pad_.AddMSG(1);
+        return;
     }
     
     //Check if input is correct format
@@ -418,17 +480,13 @@ void Tropo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
 
 void Tropo::getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_)
 {
-    int tempTropo;
-    ActiveFMGC_->FM.get_tropo(tempTropo, 1);
-    
-    if(tempTropo != -999)
+    if(ActiveFMGC_->FM.get_tropo(1) != -999)
     {
-        text = std::to_string(tempTropo);
+        text = std::to_string(ActiveFMGC_->FM.get_tropo(1));
         color = 2;
         size = 1;
     } else {
-        ActiveFMGC_->FM.get_db_tropo(tempTropo);
-        text = std::to_string(tempTropo);
+        text = std::to_string(ActiveFMGC_->FM.get_db_tropo());
         color = 2;
         size = 0;
     }

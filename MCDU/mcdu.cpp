@@ -16,9 +16,6 @@ MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_)
     x = 100;
     y = 70;
 
-    //Initialize line select keys
-    lsk = { false, false, false, false, false, false };
-
     charW = w/dimX;
     charH = h/dimY;
     //Dynamically calculate font size
@@ -31,6 +28,9 @@ MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_)
     //mcduFont.loadFromFile("res/fonts/B612Mono-Regular.ttf");
     mcduFont_s.loadFromFile("res/fonts/MCDU_S.ttf");
     mcduFont_l.loadFromFile("res/fonts/MCDU_M.ttf");
+
+    //Initialize clock
+    sfClock.restart();
 
     //Set colors
     mcdu_white = sf::Color(255, 255, 255);

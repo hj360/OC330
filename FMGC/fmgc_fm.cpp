@@ -27,25 +27,25 @@ void FMGC_FM::set_fpln_dest(std::string dest_, int fpln_)
     }
 }
 
-void FMGC_FM::get_fpln_origin(std::string &origin_, int fpln_)
+std::string FMGC_FM::get_fpln_origin(int fpln_)
 {
     //Sets passed reference value to the value of the chosen fpln origin
     if(fpln_ == 1)
     {
-        origin_ = fpln_prim.origin;
+        return fpln_prim.origin;
     } else {
-        origin_ = fpln_sec.origin;
+        return fpln_sec.origin;
     }
 }
 
-void FMGC_FM::get_fpln_dest(std::string &dest_, int fpln_)
+std::string FMGC_FM::get_fpln_dest(int fpln_)
 {
     //Sets passed reference value to the value of the chosen fpln origin
     if(fpln_ == 1)
     {
-        dest_ = fpln_prim.dest;
+        return fpln_prim.dest;
     } else {
-        dest_ = fpln_sec.dest;
+        return fpln_sec.dest;
     }
 }
 
@@ -60,14 +60,14 @@ void FMGC_FM::set_fpln_altn(std::string altn_, int fpln_)
     }
 }
 
-void FMGC_FM::get_fpln_altn(std::string &altn_, int fpln_)
+std::string FMGC_FM::get_fpln_altn(int fpln_)
 {
     //Sets passed reference value to the value of the chosen fpln origin
     if(fpln_ == 1)
     {
-        altn_ = fpln_prim.altn;
+        return fpln_prim.altn;
     } else {
-        altn_ = fpln_sec.altn;
+        return fpln_sec.altn;
     }
 }
 
@@ -82,14 +82,14 @@ void FMGC_FM::set_fpln_coRte(std::string coRte_, int fpln_)
     }
 }
 
-void FMGC_FM::get_fpln_coRte(std::string &coRte_, int fpln_)
+std::string FMGC_FM::get_fpln_coRte(int fpln_)
 {
     //Sets passed reference value to the value of the chosen fpln origin
     if(fpln_ == 1)
     {
-        coRte_ = fpln_prim.coRte;
+        return fpln_prim.coRte;
     } else {
-        coRte_ = fpln_sec.coRte;
+        return fpln_sec.coRte;
     }
 }
 
@@ -104,14 +104,14 @@ void FMGC_FM::set_fpln_altnCoRte(std::string altnCoRte_, int fpln_)
     }
 }
 
-void FMGC_FM::get_fpln_altnCoRte(std::string &altnCoRte_, int fpln_)
+std::string FMGC_FM::get_fpln_altnCoRte(int fpln_)
 {
     //Sets passed reference value to the value of the chosen fpln origin
     if(fpln_ == 1)
     {
-        altnCoRte_ = fpln_prim.altnCoRte;
+        return fpln_prim.altnCoRte;
     } else {
-        altnCoRte_ = fpln_sec.altnCoRte;
+        return fpln_sec.altnCoRte;
     }
 }
 
@@ -126,14 +126,14 @@ void FMGC_FM::set_fpln_fltNbr(std::string fltNbr_, int fpln_)
     }
 }
 
-void FMGC_FM::get_fpln_fltNbr(std::string &fltNbr_, int fpln_)
+std::string FMGC_FM::get_fpln_fltNbr(int fpln_)
 {
     //Sets passed reference value to the value of the chosen fpln origin
     if(fpln_ == 1)
     {
-        fltNbr_ = fpln_prim.fltNbr;
+        return fpln_prim.fltNbr;
     } else {
-        fltNbr_ = fpln_sec.fltNbr;
+        return fpln_sec.fltNbr;
     }
 }
 
@@ -148,15 +148,15 @@ void FMGC_FM::set_tropo(int tropo_, int fpln_)
     }
 }
 
-void FMGC_FM::get_tropo(int &tropo_, int fpln_)
+int FMGC_FM::get_tropo(int fpln_)
 {
     //Sets passed reference value to the value of the chosen fpln origin
     if(fpln_ == 1)
     {
-        tropo_ = fpln_prim.tropo;
+        return fpln_prim.tropo;
     } else {
 
-        tropo_ = fpln_sec.tropo;
+        return fpln_sec.tropo;
     }
 }
 
@@ -169,7 +169,7 @@ void FMGC_FM::get_tropo(int &tropo_, int fpln_)
 
 
 
-void FMGC_FM::get_db_tropo(int &tropo_)
+int FMGC_FM::get_db_tropo()
 {
-    tropo_ = airlineConfigDB->tropo_default;
+    return airlineConfigDB->tropo_default;
 }

@@ -25,6 +25,12 @@ FMGC::FMGC(int id_)
     } else {
         std::cout << "Airline Database Failed to Load!" << std::endl;
     }
+    if(LoadPerfConfig())
+    {
+        std::cout << "Performance Database Loaded!" << std::endl;
+    } else {
+        std::cout << "Performance Database Failed to Load!" << std::endl;
+    }
     //FMGC is online
     avail = 1;
     //Error checking
@@ -36,12 +42,41 @@ FMGC::FMGC(int id_)
     }
 }
 
+bool FMGC::LoadPerfConfig()
+{
+    std::fstream in("./CONFIG/fmgs_perf_config.cfg");
+    if(!in.is_open())
+    {
+        std::cout << "Error! Cannot load FMGS Performance Config file" << std::endl;
+        return false;
+    }
+
+    std::string param;
+    std::string value;
+
+    while(!in.eof())
+    {
+        in >> param;
+        in >> value;
+
+        if(param == "aircraft_desig")
+        {
+            perfDB->aircraft_desig = value;
+        } else if (param == "engine_desig")
+        {
+            perfDB->engine_desig = value;
+        } 
+    }
+
+    return true;
+}
+
 bool FMGC::LoadAirlineConfig()
 {
     std::fstream in("./CONFIG/fmgs_airline_config.cfg");
     if(!in.is_open())
     {
-        std::cout << "Error! Cannot load FMGS Config file" << std::endl;
+        std::cout << "Error! Cannot load FMGS Airline Config file" << std::endl;
         return false;
     }
 

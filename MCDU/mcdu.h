@@ -69,11 +69,11 @@ class MCDU
         Page* P_INIT_B;
         Page* P_RTE_SEL;
 
-        //Line select keys
-        std::vector<bool> lsk;
-
         sf::Font mcduFont_s;
         sf::Font mcduFont_l;
+
+        //Clock for display refresh
+        sf::Clock sfClock;
 
         //Lsk elements for the active page
         std::vector<Element*> lskElements;

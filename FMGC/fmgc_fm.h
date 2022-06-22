@@ -57,17 +57,17 @@ class FMGC_FM
         void set_tropo(int tropo_, int fpln_);
 
         //Getters
-        void get_fpln_origin(std::string &origin_, int fpln_);
-        void get_fpln_dest(std::string &dest_, int fpln_);
-        void get_fpln_altn(std::string &altn_, int fpln_);
-        void get_fpln_coRte(std::string &coRte_, int fpln_);
-        void get_fpln_altnCoRte(std::string &altnCoRte_, int fpln_);
-        void get_fpln_fltNbr(std::string &fltNbr_, int fpln_);
-        void get_tropo(int &tropo_, int fpln_);
+        std::string get_fpln_origin(int fpln_);
+        std::string get_fpln_dest(int fpln_);
+        std::string get_fpln_altn(int fpln_);
+        std::string get_fpln_coRte(int fpln_);
+        std::string get_fpln_altnCoRte(int fpln_);
+        std::string get_fpln_fltNbr(int fpln_);
+        int get_tropo(int fpln_);
 
 
 
-        void get_db_tropo(int &tropo_);
+        int get_db_tropo();
 
     private:
         //Navigation

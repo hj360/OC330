@@ -44,6 +44,27 @@ class Link : public Element
 
 };
 
+//AC Status page
+class EngineType : public Element
+{
+    public:
+        EngineType(int row_, int offset_);
+        ~EngineType(){};
+
+        virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
+        virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
+};
+
+class AircraftType : public Element
+{
+    public:
+        AircraftType(int row_, int offset_);
+        ~AircraftType(){};
+
+        virtual void Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_);
+        virtual void getElement(std::string &text_, int &row_, int &offset_, int &color_, int &size_, FMGC* ActiveFMGC_);
+};
+
 class FromTo : public Element
 {
     public:

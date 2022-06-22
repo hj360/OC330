@@ -99,9 +99,8 @@ Ac_Status::Ac_Status()
 
     //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
     //Elements for Data index 1
-    pageElements.push_back(new Element("A330-300B", 0, 6, 0, 1));
+    pageElements.push_back(new AircraftType(0, 6));
     pageElements.push_back(new Element("ENG", 1, 1, 0, 0));
-    pageElements.push_back(new Link("PW4168A", 2, 0, 1, 1, 0));
     pageElements.push_back(new Element("ACTIVE NAV DATA BASE", 3, 1, 0, 0));
     pageElements.push_back(new Element("28MAY-24JUN", 4, 1, 2 ,1));
     pageElements.push_back(new Element("AB2388371", 4, 14, 1, 1));
@@ -114,7 +113,7 @@ Ac_Status::Ac_Status()
     pageElements.push_back(new Link("+0.0/+4.4", 12, 0, 1, 1, 0));
     pageElements.push_back(new Link("STATUS/XLOAD>", 12, 11, 0, 1, 0));
 
-    lskElements.push_back(nullptr);
+    lskElements.push_back(new EngineType(2, 0));
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);
     lskElements.push_back(nullptr);

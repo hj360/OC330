@@ -14,11 +14,15 @@ class FMGC
         ~FMGC();
 
         bool LoadAirlineConfig();
-
+        bool LoadPerfConfig();
         //Separate FMGC components
         FMGC_FM FM;
         FMGC_FG FG;
         FMGC_FE FE;
+
+
+        std::string getAircraftType(){return perfDB->aircraft_desig;};
+        std::string getEngineType(){return perfDB->engine_desig;};
 
     private:
         //1 is FMGC1, 2 is FMGC2
