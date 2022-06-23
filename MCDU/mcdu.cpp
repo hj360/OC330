@@ -13,6 +13,9 @@ MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_)
     w = w_;
     h = h_;
 
+    mcduDisplay.create(w, h);
+    mcduDisplay.clear(sf::Color::Black);
+
     x = 100;
     y = 70;
 
@@ -89,6 +92,9 @@ MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_)
     SEC_FPLN = new Button(w/8, h/12, "SEC\nF-PLN", mcduFont_s);
     ATC_COMM = new Button(w/8, h/12, "ATC\nCOMM", mcduFont_s);
     MCDU_MENU = new Button(w/8, h/12, "MCDU\nMENU", mcduFont_s);
+
+    //Start the clock
+    sfClock.restart();
     
 }
 
@@ -119,19 +125,8 @@ void MCDU::SetActivePage(Page* page_)
     lskElements = ActivePage->getLSKElements();
     pageElements = ActivePage->getElements();
 
-    inTransition = true;
-}
-
-void MCDU::DrawPageTransitions(sf::RenderWindow* sfWindow)
-{
-    if(inTransition)
-    {
-        sfWindow->clear();
-        sfWindow->display();
-        sf::sleep(sf::milliseconds(250));
-    }
-
-    inTransition = false;
+    sfClock.restart();
+    mcduDisplay.clear();
 }
 
 void MCDU::selectLsk(int lsk)
@@ -144,6 +139,8 @@ void MCDU::selectLsk(int lsk)
     }
 
     lskElements[lsk]->Select(p_Act, *pad, ActiveFMGC);
+
+    sfClock.restart();
 
     updateActivePage();
 
@@ -203,137 +200,150 @@ void MCDU::updateActivePage()
 
 void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
 {
-    if(inTransition)
+    //Only render every 500ms
+    if(sfClock.getElapsedTime() > sf::milliseconds(500))
     {
-        outline->Draw(x, y, sfWindow, mouse_);
-        inTransition = false;
-        return;
+        //Clear mcdu texture
+        mcduDisplay.clear();
+        //Render scratchpad
+        pad->GetScratchPad(scratchpad_buff);
+
+        sf::Text text;
+
+        text.setFont(mcduFont_l);
+        text.setCharacterSize(fontSize);
+        text.setFillColor(sf::Color::White);
+        text.setString(scratchpad_buff);
+        text.setPosition(0, (charH * 13));
+        //draw to texture
+        mcduDisplay.draw(text);
+
+        std::string tempString;
+        int tempRow;
+        int tempOffset;
+        int tempColor;
+        int tempSize;
+        sf::Color elementColor;
+
+        //Render all page elements on current page
+        for(int i = 0; i < pageElements.size(); ++i)
+        {
+            pageElements[i]->getElement(tempString, tempRow, tempOffset, tempColor, tempSize, ActiveFMGC);
+
+            //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
+            switch(tempColor)
+            {
+                case 0:
+                    elementColor = mcdu_white;
+                    break;
+                case 1:
+                    elementColor = mcdu_green;
+                    break;
+                case 2:
+                    elementColor = mcdu_blue;
+                    break;
+                case 3:
+                    elementColor = mcdu_magenta;
+                    break;
+                case 4:
+                    elementColor = mcdu_yellow;
+                    break;
+                case 5:
+                    elementColor = mcdu_orange;
+                    break;
+
+                default:
+                    break;
+            }
+
+            if(tempSize == 0)
+            {
+                text.setFont(mcduFont_s);
+            } else {
+                text.setFont(mcduFont_l);
+            }
+
+            text.setFillColor(elementColor);
+            text.setString(tempString);
+            //text.setPosition(charW * tempOffset + x, charH * tempRow + y);
+            text.setPosition(charW * tempOffset, charH * tempRow);
+            mcduDisplay.draw(text);
+        }
+
+        //render all LSK elements
+        for(int i = 0; i < lskElements.size(); ++i)
+        {
+            //Check if lsk element is null
+            if(lskElements[i] == nullptr)
+            {
+                continue;
+            }
+
+            lskElements[i]->getElement(tempString, tempRow, tempOffset, tempColor, tempSize, ActiveFMGC);
+
+            //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
+            switch(tempColor)
+            {
+                case 0:
+                    elementColor = mcdu_white;
+                    break;
+                case 1:
+                    elementColor = mcdu_green;
+                    break;
+                case 2:
+                    elementColor = mcdu_blue;
+                    break;
+                case 3:
+                    elementColor = mcdu_magenta;
+                    break;
+                case 4:
+                    elementColor = mcdu_yellow;
+                    break;
+                case 5:
+                    elementColor = mcdu_orange;
+                    break;
+
+                default:
+                    break;
+            }
+
+            if(tempSize == 0)
+            {
+                text.setFont(mcduFont_s);
+            } else {
+                text.setFont(mcduFont_l);
+            }
+
+            text.setFillColor(elementColor);
+            text.setString(tempString);
+            text.setPosition(charW * tempOffset, charH * tempRow);
+            mcduDisplay.draw(text);
+        }
+
+        //Draw MCDU Display
+        mcduDisplay.display();
+
+        sfClock.restart();
     }
+
+
+    
+
     //Draw bounding box
     if(outline->Draw(x, y, sfWindow, mouse_))
     {
         x = mouse_->getPosition(*sfWindow).x - w/2;
         y = mouse_->getPosition(*sfWindow).y - h/2;
 
+        mcduDisplay.clear();
+
         return;
     }
 
-    //Render scratchpad
-    pad->GetScratchPad(scratchpad_buff);
 
-    sf::Text text;
-
-    text.setFont(mcduFont_l);
-    text.setCharacterSize(fontSize);
-    text.setFillColor(sf::Color::White);
-    text.setString(scratchpad_buff);
-    text.setPosition(x, (charH * 13) + y);
-
-    //Draw scratchpad
-    sfWindow->draw(text);
-
-    std::string tempString;
-    int tempRow;
-    int tempOffset;
-    int tempColor;
-    int tempSize;
-    sf::Color elementColor;
-
-    //Render all page elements on current page
-    for(int i = 0; i < pageElements.size(); ++i)
-    {
-        pageElements[i]->getElement(tempString, tempRow, tempOffset, tempColor, tempSize, ActiveFMGC);
-
-        //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
-        switch(tempColor)
-        {
-            case 0:
-                elementColor = mcdu_white;
-                break;
-            case 1:
-                elementColor = mcdu_green;
-                break;
-            case 2:
-                elementColor = mcdu_blue;
-                break;
-            case 3:
-                elementColor = mcdu_magenta;
-                break;
-            case 4:
-                elementColor = mcdu_yellow;
-                break;
-            case 5:
-                elementColor = mcdu_orange;
-                break;
-
-            default:
-                break;
-        }
-
-        if(tempSize == 0)
-        {
-            text.setFont(mcduFont_s);
-        } else {
-            text.setFont(mcduFont_l);
-        }
-
-        text.setFillColor(elementColor);
-        text.setString(tempString);
-        text.setPosition(charW * tempOffset + x, charH * tempRow + y);
-
-        sfWindow->draw(text);
-    }
-
-    //render all LSK elements
-    for(int i = 0; i < lskElements.size(); ++i)
-    {
-        //Check if lsk element is null
-        if(lskElements[i] == nullptr)
-        {
-            continue;
-        }
-
-        lskElements[i]->getElement(tempString, tempRow, tempOffset, tempColor, tempSize, ActiveFMGC);
-
-        //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
-        switch(tempColor)
-        {
-            case 0:
-                elementColor = mcdu_white;
-                break;
-            case 1:
-                elementColor = mcdu_green;
-                break;
-            case 2:
-                elementColor = mcdu_blue;
-                break;
-            case 3:
-                elementColor = mcdu_magenta;
-                break;
-            case 4:
-                elementColor = mcdu_yellow;
-                break;
-            case 5:
-                elementColor = mcdu_orange;
-                break;
-
-            default:
-                break;
-        }
-
-        if(tempSize == 0)
-        {
-            text.setFont(mcduFont_s);
-        } else {
-            text.setFont(mcduFont_l);
-        }
-
-        text.setFillColor(elementColor);
-        text.setString(tempString);
-        text.setPosition(charW * tempOffset + x, charH * tempRow + y);
-
-        sfWindow->draw(text);
-    }
+    mcduSprite.setTexture(mcduDisplay.getTexture());
+    mcduSprite.setPosition(sf::Vector2f(x, y));
+    sfWindow->draw(mcduSprite);
 
 
     //test buttons
@@ -433,17 +443,6 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
     {
         
     }
-
-
-
-
-
-
-
-
-
-
-
 }
 
 void MCDU::CleanPages()

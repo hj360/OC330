@@ -29,8 +29,6 @@ class MCDU
         //Pointer to MCDU scratchpad
         Scratchpad* pad;
 
-        void DrawPageTransitions(sf::RenderWindow* sfWindow);
-
     private:
         //1 is MCDU1, 2 is MCDU2, 3 is MCDU3
         int id;
@@ -43,6 +41,13 @@ class MCDU
         int w;
         int h;
         int refreshRate;
+
+        //Texture for display
+        sf::RenderTexture mcduDisplay;
+        sf::Sprite mcduSprite;
+
+        //Clock for checking mcdu refresh rate
+        sf::Clock sfClock;
 
         //Position of the MCDU refs top left of display
         int x;
@@ -72,14 +77,9 @@ class MCDU
         sf::Font mcduFont_s;
         sf::Font mcduFont_l;
 
-        //Clock for display refresh
-        sf::Clock sfClock;
-
         //Lsk elements for the active page
         std::vector<Element*> lskElements;
         std::vector<Element*> pageElements;
-
-        bool inTransition;
 
         //MCDU colors
         sf::Color mcdu_white;
