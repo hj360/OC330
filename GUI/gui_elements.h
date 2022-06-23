@@ -93,6 +93,27 @@ class GUI_Window
         sf::RectangleShape shape;
 };
 
+class CheckBox
+{
+    public:
+        CheckBox(std::string text_, sf::Font& font_);
+        ~CheckBox(){};
+
+        bool Draw(int x_, int y_, sf::RenderWindow* sfWindow, sf::Mouse* mouse_);
+        bool Clicked(sf::Window& sfWindow, sf::Mouse* mouse_);
+    private:
+        //Position of the button on screen
+        int x;
+        int y;
+        //shape
+        sf::RectangleShape shape;
+        sf::Text text;
+
+        bool lastPressed;
+        bool isChecked;
+
+};
+
 
 
 #endif

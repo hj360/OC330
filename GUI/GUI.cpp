@@ -13,6 +13,16 @@ UI::UI(sf::RenderWindow* sfWindow_, FMGS* FMGS_, sf::Mouse* mouse_)
     fmgc_button = new Button_Text(100, 30, "FMGC", font, true);
     elec_button = new Button_Text(100, 30, "ELEC", font, true);
 
+    chbx_MCDU1 = new CheckBox("Show MCDU 1", font);
+    chbx_MCDU2 = new CheckBox("Show MCDU 2", font);
+    chbx_MCDU3 = new CheckBox("Show MCDU 3", font);
+
+    drawMCDU1 = true;
+    drawMCDU2 = false;
+    drawMCDU3 = false;
+
+    show_debug_fmgc = false;
+
     window_move = new Button_Text(20, 30, "", font, true);
 
     exitCondition = false;
@@ -36,7 +46,7 @@ void UI::DrawTaskbar()
 
     if(fmgc_button->Draw(20, 0, sfWindow, mouse))
     {
-
+        show_debug_fmgc = !show_debug_fmgc;
     }
 
     if(elec_button->Draw(120, 0, sfWindow, mouse))
@@ -53,10 +63,33 @@ void UI::DrawTaskbar()
         
     }
 
+    if(show_debug_fmgc)
+    {
+        draw_debug_fmgc();
+    }
+
 
 }
 
 bool UI::getExitCondition()
 {
     return exitCondition;
+}
+
+void UI::draw_debug_fmgc()
+{
+    int debugWindowX = sfWindow->getSize().x - 200;
+    int debugWindowY = 200;
+    if(chbx_MCDU1->Draw(debugWindowX, debugWindowY, sfWindow, mouse))
+    {
+        drawMCDU1 = !drawMCDU1;
+    }
+    if(chbx_MCDU2->Draw(debugWindowX, debugWindowY + 50, sfWindow, mouse))
+    {
+        drawMCDU2 = !drawMCDU2;
+    }
+    if(chbx_MCDU3->Draw(debugWindowX, debugWindowY + 100, sfWindow, mouse))
+    {
+        drawMCDU3 = !drawMCDU3;
+    }
 }

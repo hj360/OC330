@@ -18,6 +18,13 @@ class UI
         ~UI(){};
 
         void DrawTaskbar();
+        void draw_debug_fmgc();
+
+        bool drawMCDU1;
+        bool drawMCDU2;
+        bool drawMCDU3;
+
+
         bool getExitCondition();
 
     private:
@@ -35,7 +42,15 @@ class UI
         Button_Text* elec_button;
         Button_Text* window_move;
 
+
+        //FMGC Debug window
+        CheckBox* chbx_MCDU1;
+        CheckBox* chbx_MCDU2;
+        CheckBox* chbx_MCDU3;
+
         bool exitCondition;
+
+        bool show_debug_fmgc;
 };
 
 

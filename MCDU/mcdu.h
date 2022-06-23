@@ -73,6 +73,8 @@ class MCDU
         Page* P_INIT_A;
         Page* P_INIT_B;
         Page* P_RTE_SEL;
+        Page* P_GPS_MONITOR;
+        Page* P_POSITION_MONITOR;
 
         sf::Font mcduFont_s;
         sf::Font mcduFont_l;

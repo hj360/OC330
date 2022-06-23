@@ -81,5 +81,24 @@ class Route_Sel : public Page
         virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
 };
 
+class Gps_Monitor : public Page
+{
+    public:
+        Gps_Monitor();
+        ~Gps_Monitor(){};
+
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_);
+        virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
+};
+
+class Position_Monitor : public Page
+{
+    public:
+        Position_Monitor();
+        ~Position_Monitor(){};
+
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_);
+        virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
+};
 
 #endif

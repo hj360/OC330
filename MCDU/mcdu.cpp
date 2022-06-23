@@ -110,6 +110,8 @@ void MCDU::InitPages()
     P_INIT_A = new Init_A();
     P_INIT_B = new Init_B();
     P_RTE_SEL = new Route_Sel();
+    P_GPS_MONITOR = new Gps_Monitor();
+    P_POSITION_MONITOR = new Position_Monitor();
 }
 
 void MCDU::SetActivePage(Page* page_)
@@ -135,7 +137,9 @@ void MCDU::selectLsk(int lsk)
 
     if(p_Act != ActivePage->getPageId())
     {
+        
         updateActivePage();
+        std::cout << ActivePage->getPageId() << std::endl;
     }
     
 
@@ -188,6 +192,12 @@ void MCDU::updateActivePage()
         case 5:
             SetActivePage(P_RTE_SEL);
             break;
+        case 6:
+            SetActivePage(P_GPS_MONITOR);
+            break;
+        case 7:
+            SetActivePage(P_POSITION_MONITOR);
+            break;
         default:
             break;
     }
@@ -196,7 +206,7 @@ void MCDU::updateActivePage()
 void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
 {
     //Only render every 500ms
-    if(sfClock.getElapsedTime() > sf::milliseconds(1))
+    if(sfClock.getElapsedTime() > sf::milliseconds(300))
     {
         //Clear mcdu texture
         mcduDisplay.clear();

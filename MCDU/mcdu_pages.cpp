@@ -42,37 +42,23 @@ void Data_Index_1::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpa
 {
     p_act_ = this->pageID;
 
-    switch(lsk_)
+    if(lsk_ == 1)
     {
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        case 4:
-            p_act_ = 2;
-            break;
-        case 5:
-            break;
-        case 6:
-            break;
-        case 7:
-            break;
-        case 8:
-            break;
-        case 9:
-            break;
-        case 10:
-            break;
-        case 11:
-            break;
-        case 12:
-            break;
-        default:
-            break;
-
+        p_act_ = 7;
+        return;
+    } else if(lsk_ == 3)
+    {
+        p_act_ = 6;
+        return;
+    } else if(lsk_ == 4)
+    {
+        p_act_ = 2;
+        return;
+    } else {
+        pad_.AddMSG(0);
+        return;
     }
+
 
 }
 
@@ -836,6 +822,137 @@ std::vector<Element> Route_Sel::getElements(FMGC* ActiveFMGC_)
     //Dynamic values
     std::string tempString;
     int tempRow, tempOffset, tempColor, tempSize, tempNum;
+
+    return pageElements;
+}
+
+Gps_Monitor::Gps_Monitor()
+{
+    pageID = 6;
+    leftPageID = 0;
+    rightPageID = 0;
+}
+
+void Gps_Monitor::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
+{
+    p_act_ = this->pageID;
+
+    switch(lsk_)
+    {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        case 8:
+            break;
+        case 9:
+            break;
+        case 10:
+            break;
+        case 11:
+            break;
+        case 12:
+            break;
+        default:
+            break;
+
+    }
+
+}
+
+
+std::vector<Element> Gps_Monitor::getElements(FMGC* ActiveFMGC_)
+{
+    pageElements.clear();
+
+    pageElements.push_back(Element("GPS MONITOR", 0, 7, 0, 1));
+    pageElements.push_back(Element("GPS1 POSITION", 1, 0, 0, 0));
+    pageElements.push_back(Element("TTRK    GPS ALT       GS", 3, 0, 0 ,0));
+    pageElements.push_back(Element("MERIT           MODE/SAT", 5, 0, 0, 0));
+    pageElements.push_back(Element("GPS2 POSITION", 7, 0, 0, 0));
+    pageElements.push_back(Element("TTRK    GPS ALT       GS", 9, 0, 0 ,0));
+    pageElements.push_back(Element("MERIT           MODE/SAT", 11, 0, 0, 0));
+
+    //Dynamic values
+    std::string tempString;
+    int tempRow, tempOffset, tempColor, tempSize;
+
+
+    return pageElements;
+}
+
+Position_Monitor::Position_Monitor()
+{
+    pageID = 7;
+    leftPageID = 0;
+    rightPageID = 0;
+}
+
+void Position_Monitor::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
+{
+    p_act_ = this->pageID;
+
+    switch(lsk_)
+    {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        case 8:
+            break;
+        case 9:
+            break;
+        case 10:
+            break;
+        case 11:
+            break;
+        case 12:
+            break;
+        default:
+            break;
+
+    }
+
+}
+
+
+std::vector<Element> Position_Monitor::getElements(FMGC* ActiveFMGC_)
+{
+    pageElements.clear();
+
+    pageElements.push_back(Element("POSITION MONITOR", 0, 4, 0, 1));
+    pageElements.push_back(Element("FMS1", 2, 0, 0, 0));
+    pageElements.push_back(Element("3IRS/GPS", 3, 6, 0 ,0));
+    pageElements.push_back(Element("FMS1", 4, 0, 0, 0));
+    pageElements.push_back(Element("3IRS/GPS", 5, 6, 0 ,0));
+    pageElements.push_back(Element("GPIRS", 6, 0, 0, 0));
+    pageElements.push_back(Element("MIX IRS", 8, 0, 0 ,0));
+    pageElements.push_back(Element("IRS1    IRS2    IRS3", 9, 2, 0 ,0));
+
+    //Dynamic values
+    std::string tempString;
+    int tempRow, tempOffset, tempColor, tempSize;
+
 
     return pageElements;
 }

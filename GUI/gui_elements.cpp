@@ -291,3 +291,78 @@ bool GUI_Window::Clicked(sf::Window& sfWindow, sf::Mouse* mouse_)
         return false;
     }
 }
+
+CheckBox::CheckBox(std::string text_, sf::Font& font_)
+{
+    shape.setSize(sf::Vector2f(30, 30));
+    shape.setOutlineThickness(-1);
+    shape.setOutlineColor(sf::Color::White);
+    shape.setFillColor(sf::Color::Black);
+
+    text.setFont(font_);
+    text.setCharacterSize(15);
+    text.setFillColor(sf::Color::White);
+    text.setString(text_);
+    
+    lastPressed = false;
+    isChecked = false;
+
+    x = 0;
+    y = 0;
+}
+
+//Returns true if pressed
+bool CheckBox::Draw(int x_, int y_, sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
+{
+    x = x_;
+    y = y_;
+
+    //Set position
+    shape.setPosition(sf::Vector2f(x_, y_));
+    text.setPosition(sf::Vector2f(x_ + 50, y_ + 5));
+
+    //Draw box
+    sfWindow->draw(shape);
+    //Draw image
+    sfWindow->draw(text);
+
+    //Only check if mouse is clicked
+    if(mouse_->isButtonPressed(mouse_->Left))
+    {
+        if(lastPressed == false && Clicked(*sfWindow, mouse_))
+        {
+            lastPressed = true;
+            isChecked = !isChecked;
+            if(isChecked == false)
+            {
+                shape.setFillColor(sf::Color::Black);
+            } else {
+                shape.setFillColor(sf::Color::Cyan);
+            }
+            return true;
+        }
+
+        lastPressed = true;
+        return false;
+    }
+
+    lastPressed = false;
+
+    return false;
+
+}
+
+//check if cursor is inside box
+bool CheckBox::Clicked(sf::Window& sfWindow, sf::Mouse* mouse_)
+{
+    sf::Vector2i mousePos = mouse_->getPosition(sfWindow);
+
+    if(shape.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+    {
+        
+        return true;
+    } else {
+        return false;
+    }
+}
+
