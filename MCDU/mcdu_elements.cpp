@@ -141,6 +141,7 @@ void FromTo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
         ActiveFMGC_->FM.set_crz_fl(-999, 1);
         ActiveFMGC_->FM.set_crz_temp(-999, 1);
         ActiveFMGC_->FM.set_cost_index(-999, 1);
+        ActiveFMGC_->FM.set_fpln_fltNbr("", 1);
 
 
         text = "####/####";
@@ -178,12 +179,24 @@ void FromTo::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
     tempOrigin = scratchpad.substr(0, 4);
     tempDest = scratchpad.substr(5, 4);
 
-    ActiveFMGC_->FM.set_fpln_altn("NONE", 1);
-    ActiveFMGC_->FM.set_fpln_coRte("NONE", 1);
-
+    //Check if there already exists a flightplan
+    if(ActiveFMGC_->FM.is_fpln_init(1))
+    {
+        ActiveFMGC_->FM.set_fpln_origin("", 1);
+        ActiveFMGC_->FM.set_fpln_dest("", 1);
+        ActiveFMGC_->FM.set_fpln_altn("", 1);
+        ActiveFMGC_->FM.set_fpln_altnCoRte("", 1);
+        ActiveFMGC_->FM.set_fpln_coRte("", 1);
+        ActiveFMGC_->FM.set_crz_fl(-999, 1);
+        ActiveFMGC_->FM.set_crz_temp(-999, 1);
+        ActiveFMGC_->FM.set_cost_index(-999, 1);
+        ActiveFMGC_->FM.set_fpln_fltNbr("", 1);
+    }
     //If input is correct and valid - input into fmgc
     ActiveFMGC_->FM.set_fpln_origin(tempOrigin, 1);
     ActiveFMGC_->FM.set_fpln_dest(tempDest, 1);
+    ActiveFMGC_->FM.set_fpln_altn("NONE", 1);
+    ActiveFMGC_->FM.set_fpln_coRte("NONE", 1);
 
     pad_.EmptyScratchPad();
 
@@ -699,7 +712,7 @@ void CrzFlTemp::Select(int &linkedPageId_, Scratchpad &pad_, FMGC* ActiveFMGC_)
     }
 
     //Check if input is correct format
-    if(tempCrzFl > 0 && tempCrzFl <= 410 )
+    if(tempCrzFl > 0 && tempCrzFl <= 410 && ActiveFMGC_->FM.is_fpln_init(1))
     {
         ActiveFMGC_->FM.set_crz_fl(tempCrzFl, 1);
         if(tempCrzTemp > 0 && tempCrzTemp <= 99)

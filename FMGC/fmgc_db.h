@@ -2,9 +2,13 @@
 #define FMGC_DB_H
 
 #include <string>
+#include <vector>
+#include <map>
 
 struct NavDB
 {
+    //Holds all airports and their coords
+    std::map<std::string, std::vector<long double>> arpts;
 
 };
 
