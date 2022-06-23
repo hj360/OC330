@@ -78,8 +78,7 @@ class MCDU
         sf::Font mcduFont_l;
 
         //Lsk elements for the active page
-        std::vector<Element*> lskElements;
-        std::vector<Element*> pageElements;
+        std::vector<Element> pageElements;
 
         //MCDU colors
         sf::Color mcdu_white;

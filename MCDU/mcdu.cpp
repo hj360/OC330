@@ -61,7 +61,7 @@ MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_)
 
     p_Act = 2;
 
-    SetActivePage(P_AC_STATUS);
+    SetActivePage(P_DATA_INDEX_1);
 
     outline = new GUI_Window(w, h);
 
@@ -122,8 +122,7 @@ void MCDU::SetActivePage(Page* page_)
     ActivePage = page_;
 
     //Get all lsk elements from the page
-    lskElements = ActivePage->getLSKElements();
-    pageElements = ActivePage->getElements();
+    pageElements = ActivePage->getElements(ActiveFMGC);
 
     sfClock.restart();
     mcduDisplay.clear();
@@ -132,17 +131,13 @@ void MCDU::SetActivePage(Page* page_)
 void MCDU::selectLsk(int lsk)
 {
     //Check lsk has valid element
-    if(lskElements[lsk] == nullptr)
+    ActivePage->selectLSK(lsk, ActiveFMGC, p_Act, *pad);
+
+    if(p_Act != ActivePage->getPageId())
     {
-        pad->AddMSG(0); //Not allowed msg
-        return;
+        updateActivePage();
     }
-
-    lskElements[lsk]->Select(p_Act, *pad, ActiveFMGC);
-
-    sfClock.restart();
-
-    updateActivePage();
+    
 
 }
 
@@ -201,7 +196,7 @@ void MCDU::updateActivePage()
 void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
 {
     //Only render every 500ms
-    if(sfClock.getElapsedTime() > sf::milliseconds(500))
+    if(sfClock.getElapsedTime() > sf::milliseconds(1))
     {
         //Clear mcdu texture
         mcduDisplay.clear();
@@ -225,10 +220,12 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
         int tempSize;
         sf::Color elementColor;
 
+        pageElements = ActivePage->getElements(ActiveFMGC);
+
         //Render all page elements on current page
         for(int i = 0; i < pageElements.size(); ++i)
         {
-            pageElements[i]->getElement(tempString, tempRow, tempOffset, tempColor, tempSize, ActiveFMGC);
+            pageElements[i].getElement(tempString, tempRow, tempOffset, tempColor, tempSize);
 
             //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
             switch(tempColor)
@@ -269,65 +266,11 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
             text.setPosition(charW * tempOffset, charH * tempRow);
             mcduDisplay.draw(text);
         }
-
-        //render all LSK elements
-        for(int i = 0; i < lskElements.size(); ++i)
-        {
-            //Check if lsk element is null
-            if(lskElements[i] == nullptr)
-            {
-                continue;
-            }
-
-            lskElements[i]->getElement(tempString, tempRow, tempOffset, tempColor, tempSize, ActiveFMGC);
-
-            //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
-            switch(tempColor)
-            {
-                case 0:
-                    elementColor = mcdu_white;
-                    break;
-                case 1:
-                    elementColor = mcdu_green;
-                    break;
-                case 2:
-                    elementColor = mcdu_blue;
-                    break;
-                case 3:
-                    elementColor = mcdu_magenta;
-                    break;
-                case 4:
-                    elementColor = mcdu_yellow;
-                    break;
-                case 5:
-                    elementColor = mcdu_orange;
-                    break;
-
-                default:
-                    break;
-            }
-
-            if(tempSize == 0)
-            {
-                text.setFont(mcduFont_s);
-            } else {
-                text.setFont(mcduFont_l);
-            }
-
-            text.setFillColor(elementColor);
-            text.setString(tempString);
-            text.setPosition(charW * tempOffset, charH * tempRow);
-            mcduDisplay.draw(text);
-        }
-
         //Draw MCDU Display
         mcduDisplay.display();
 
         sfClock.restart();
     }
-
-
-    
 
     //Draw bounding box
     if(outline->Draw(x, y, sfWindow, mouse_))
@@ -340,7 +283,6 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
         return;
     }
 
-
     mcduSprite.setTexture(mcduDisplay.getTexture());
     mcduSprite.setPosition(sf::Vector2f(x, y));
     sfWindow->draw(mcduSprite);
@@ -349,51 +291,51 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
     //test buttons
     if(LSK1L->Draw(x-charW*4, y + 2*charH, sfWindow, mouse_))
     {
-        selectLsk(0);
+        selectLsk(1);
     }
     if(LSK2L->Draw(x-charW*4, y + 4*charH, sfWindow, mouse_))
     {
-        selectLsk(1);
+        selectLsk(2);
     }
     if(LSK3L->Draw(x-charW*4, y + 6*charH, sfWindow, mouse_))
     {
-        selectLsk(2);
+        selectLsk(3);
     }
     if(LSK4L->Draw(x-charW*4, y + 8*charH, sfWindow, mouse_))
     {
-        selectLsk(3);
+        selectLsk(4);
     }
     if(LSK5L->Draw(x-charW*4, y + 10*charH, sfWindow, mouse_))
     {
-        selectLsk(4);
+        selectLsk(5);
     }
     if(LSK6L->Draw(x-charW*4, y + 12*charH, sfWindow, mouse_))
     {
-        selectLsk(5);
+        selectLsk(6);
     }
     if(LSK1R->Draw(x+charW*25, y + 2*charH, sfWindow, mouse_))
     {
-        selectLsk(6);
+        selectLsk(7);
     }
     if(LSK2R->Draw(x+charW*25, y + 4*charH, sfWindow, mouse_))
     {
-        selectLsk(7);
+        selectLsk(8);
     }
     if(LSK3R->Draw(x+charW*25, y + 6*charH, sfWindow, mouse_))
     {
-        selectLsk(8);
+        selectLsk(9);
     }
     if(LSK4R->Draw(x+charW*25, y + 8*charH, sfWindow, mouse_))
     {
-        selectLsk(9);
+        selectLsk(10);
     }
     if(LSK5R->Draw(x+charW*25, y + 10*charH, sfWindow, mouse_))
     {
-        selectLsk(10);
+        selectLsk(11);
     }
     if(LSK6R->Draw(x+charW*25, y + 12*charH, sfWindow, mouse_))
     {
-        selectLsk(11);
+        selectLsk(12);
     }
 
 
@@ -447,9 +389,9 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
 
 void MCDU::CleanPages()
 {
-    P_DATA_INDEX_1->Clean();
-    P_AC_STATUS->Clean();
+    //P_DATA_INDEX_1->Clean();
+    //P_AC_STATUS->Clean();
 
     delete P_DATA_INDEX_1;
-    delete P_AC_STATUS;
+    //delete P_AC_STATUS;
 }

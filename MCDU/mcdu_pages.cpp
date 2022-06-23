@@ -2,34 +2,18 @@
 
 Page::Page()
 {
-    //Sample page
-    //Set ID
     pageID = 0;
-    leftPageID = 0;
-    rightPageID = 0;
 }
 
-void Page::Clean()
+std::vector<Element> Page::getElements(FMGC* ActiveFMGC_)
 {
-    for(int i = 0; i < pageElements.size(); ++i)
-    {
-        delete pageElements[i];
-    }
-
-    for(int i = 0; i < lskElements.size(); ++i)
-    {
-        delete lskElements[i];
-    }
-}
-
-std::vector<Element*>& Page::getElements()
-{
+    pageElements.clear();
     return pageElements;
 }
 
-std::vector<Element*>& Page::getLSKElements()
+void Page::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
 {
-    return lskElements;
+
 }
 
 int Page::getPageId()
@@ -47,85 +31,171 @@ int Page::getRightPageId()
     return rightPageID;
 }
 
-Element*& Page::getLSKElement(int lsk)
-{
-    return lskElements[lsk];
-}
-
 Data_Index_1::Data_Index_1()
 {
     pageID = 1;
     leftPageID = 0;
     rightPageID = 0;
-
-    //Elements for Data index 1
-    pageElements.push_back(new Element("DATA INDEX    1/2 <>", 0, 4, 0, 1));
-    pageElements.push_back(new Element("POSITION", 1, 1, 0, 0));
-    pageElements.push_back(new Link("<MONITOR", 2, 0, 0, 1, 0));
-    pageElements.push_back(new Element("IRS", 3, 1, 0, 0));
-    pageElements.push_back(new Link("<MONITOR", 4, 0, 0, 1, 0));
-    pageElements.push_back(new Element("GPS", 5, 1, 0, 0));
-    pageElements.push_back(new Link("<MONITOR", 6, 0, 0, 1, 0));
-
-    pageElements.push_back(new Element("CLOSEST", 9, 1, 0, 0));
-    pageElements.push_back(new Link("<AIRPORTS", 10, 0, 0, 1, 0));
-    pageElements.push_back(new Element("PRINT", 9, 18, 0, 0));
-    pageElements.push_back(new Link("FUNCTION>", 10, 15, 0, 1, 0));
-    pageElements.push_back(new Element("EQUITIME", 11, 1, 0, 0));
-    pageElements.push_back(new Link("<POINT", 12, 0, 0, 1, 0));
-    pageElements.push_back(new Element("AOC", 11, 18, 0, 0));
-    pageElements.push_back(new Link("FUNCTION>", 12, 15, 0, 1, 0));
-
-    //Set any lsks
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(new Link("<A/C STATUS", 8, 0, 0, 1, 2));
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
 }
+
+void Data_Index_1::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
+{
+    p_act_ = this->pageID;
+
+    switch(lsk_)
+    {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            p_act_ = 2;
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        case 8:
+            break;
+        case 9:
+            break;
+        case 10:
+            break;
+        case 11:
+            break;
+        case 12:
+            break;
+        default:
+            break;
+
+    }
+
+}
+
+std::vector<Element> Data_Index_1::getElements(FMGC* ActiveFMGC_)
+{
+    pageElements.clear();
+    //Elements for Data index 1
+    pageElements.push_back(Element("DATA INDEX    1/2 <>", 0, 4, 0, 1));
+    pageElements.push_back(Element("POSITION", 1, 1, 0, 0));
+    pageElements.push_back(Element("<MONITOR", 2, 0, 0, 1));
+    pageElements.push_back(Element("IRS", 3, 1, 0, 0));
+    pageElements.push_back(Element("<MONITOR", 4, 0, 0, 1));
+    pageElements.push_back(Element("GPS", 5, 1, 0, 0));
+    pageElements.push_back(Element("<MONITOR", 6, 0, 0, 1));
+    pageElements.push_back(Element("<A/C STATUS", 8, 0, 0, 1));
+    pageElements.push_back(Element("CLOSEST", 9, 1, 0, 0));
+    pageElements.push_back(Element("<AIRPORTS", 10, 0, 0, 1));
+    pageElements.push_back(Element("PRINT", 9, 18, 0, 0));
+    pageElements.push_back(Element("FUNCTION>", 10, 15, 0, 1));
+    pageElements.push_back(Element("EQUITIME", 11, 1, 0, 0));
+    pageElements.push_back(Element("<POINT", 12, 0, 0, 1));
+    pageElements.push_back(Element("AOC", 11, 18, 0, 0));
+    pageElements.push_back(Element("FUNCTION>", 12, 15, 0, 1));
+
+    return pageElements;
+}
+
+
+
 
 Ac_Status::Ac_Status()
 {
     pageID = 2;
     leftPageID = 0;
     rightPageID = 0;
+}
 
-    //Select text color// 0 = white // 1 = green // 2 = blue // 3 = magenta // 4 = yellow // 5 = orange
-    //Elements for Data index 1
-    pageElements.push_back(new AircraftType(0, 6));
-    pageElements.push_back(new Element("ENG", 1, 1, 0, 0));
-    pageElements.push_back(new Element("ACTIVE NAV DATA BASE", 3, 1, 0, 0));
-    pageElements.push_back(new Element("28MAY-24JUN", 4, 1, 2 ,1));
-    pageElements.push_back(new Element("AB2388371", 4, 14, 1, 1));
-    pageElements.push_back(new Element("SECOND NAV DATA BASE", 5, 1, 0, 0));
-    pageElements.push_back(new Link("<28MAY-24JUN", 6, 0, 2, 0, 0));
-    pageElements.push_back(new Element("CHG CODE", 9, 0, 0, 0));
-    pageElements.push_back(new Link("[ ]", 10, 0, 2, 1, 0));
-    pageElements.push_back(new Element("IDLE/PERF", 11, 0, 0, 0));
-    pageElements.push_back(new Element("SOFTWARE", 11, 15, 0, 0));
-    pageElements.push_back(new Link("+0.0/+4.4", 12, 0, 1, 1, 0));
-    pageElements.push_back(new Link("STATUS/XLOAD>", 12, 11, 0, 1, 0));
+void Ac_Status::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
+{
+    p_act_ = this->pageID;
 
-    lskElements.push_back(new EngineType(2, 0));
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
+    switch(lsk_)
+    {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        case 8:
+            break;
+        case 9:
+            break;
+        case 10:
+            break;
+        case 11:
+            break;
+        case 12:
+            break;
+        default:
+            break;
 
+    }
+
+}
+
+
+std::vector<Element> Ac_Status::getElements(FMGC* ActiveFMGC_)
+{
+    pageElements.clear();
+
+    pageElements.push_back(Element("ENG", 1, 1, 0, 0));
+    pageElements.push_back(Element("ACTIVE NAV DATA BASE", 3, 1, 0, 0));
+    pageElements.push_back(Element("28MAY-24JUN", 4, 1, 2 ,1));
+    pageElements.push_back(Element("AB2388371", 4, 14, 1, 1));
+    pageElements.push_back(Element("SECOND NAV DATA BASE", 5, 1, 0, 0));
+    pageElements.push_back(Element("<28MAY-24JUN", 6, 0, 2, 0));
+    pageElements.push_back(Element("CHG CODE", 9, 0, 0, 0));
+    pageElements.push_back(Element("[ ]", 10, 0, 2, 1));
+    pageElements.push_back(Element("IDLE/PERF", 11, 0, 0, 0));
+    pageElements.push_back(Element("SOFTWARE", 11, 15, 0, 0));
+    pageElements.push_back(Element("+0.0/+4.4", 12, 0, 1, 1));
+    pageElements.push_back(Element("STATUS/XLOAD>", 12, 11, 0, 1));
+
+    //Dynamic values
+    std::string tempString;
+    int tempRow, tempOffset, tempColor, tempSize;
+
+    //Aircraft type
+    tempString = ActiveFMGC_->getAircraftType();
+    if(tempString == "")
+    {
+        tempString = "#######";
+    }
+    tempRow = 0;
+    tempOffset = 6;
+    tempColor = 0;
+    tempSize = 1;
+    
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //Engine type
+    tempString = ActiveFMGC_->getEngineType();
+    if(tempString == "")
+    {
+        tempString = "#######";
+    }
+    tempRow = 2;
+    tempOffset = 0;
+    tempColor = 1;
+    tempSize = 1;
+    
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    return pageElements;
 }
 
 Init_A::Init_A()
@@ -133,59 +203,608 @@ Init_A::Init_A()
     pageID = 3;
     leftPageID = 0;
     rightPageID = 4;
-
-
-    pageElements.push_back(new Element("INIT", 0, 10, 0, 1));
-    pageElements.push_back(new Element("<>", 0, 22, 0, 1));
-    pageElements.push_back(new Element("CO RTE", 1, 1, 0, 0));
-    pageElements.push_back(new Element("FROM/TO", 1, 15, 0, 0));
-    pageElements.push_back(new Element("ALTN/CO RTE", 3, 0, 0, 0));
-    pageElements.push_back(new Element("FLT NBR", 5, 0, 0, 0));
-    pageElements.push_back(new Element("COST INDEX", 9, 0, 0, 0));
-    pageElements.push_back(new Element("CRZ FL/TEMP", 11, 0, 0, 0));
-    pageElements.push_back(new Element("TROPO", 11, 19, 0, 0));
-    
-
-    lskElements.push_back(new CoRte(2, 0));
-    lskElements.push_back(new AltnCoRte(4, 0));
-    lskElements.push_back(new FlightNumber(6, 0));
-    lskElements.push_back(nullptr);
-    lskElements.push_back(new CostIndex(10, 0));
-    lskElements.push_back(new CrzFlTemp(12, 0));
-    lskElements.push_back(new FromTo(2, 15));
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(new Tropo(12, 19));
 }
+
+void Init_A::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
+{
+    p_act_ = this->pageID;
+
+    if(lsk_ == 1)
+    {
+        if(pad_.GetState() == 1)
+        {
+            ActiveFMGC_->FM.set_fpln_coRte("", 1);
+            pad_.EmptyScratchPad();
+            pad_.setState(0);
+
+            return;
+        }
+
+        std::string tempCoRte;
+
+        pad_.GetScratchPad(tempCoRte);
+        //Check if input is correct format
+        if(tempCoRte.length() > 3 && tempCoRte.length() < 11 )
+        {
+            ActiveFMGC_->FM.set_fpln_coRte(tempCoRte, 1);
+            pad_.EmptyScratchPad();
+            return;
+    
+        } else
+        {
+            pad_.AddMSG(1);
+            return;
+        }    
+
+        return;
+
+    }else if(lsk_ == 2)
+    {
+        if(pad_.GetState() == 1)
+        {
+            ActiveFMGC_->FM.set_fpln_altn("", 1);
+            ActiveFMGC_->FM.set_fpln_altnCoRte("", 1);
+            pad_.EmptyScratchPad();
+            pad_.setState(0);
+
+            return;
+        }
+
+        std::string tempAltnCoRte;
+
+        pad_.GetScratchPad(tempAltnCoRte);
+        //Check if input is correct format
+        if(tempAltnCoRte.length() > 3 && tempAltnCoRte.length() < 11 )
+        {
+            if(tempAltnCoRte.length() == 4)
+            {
+                ActiveFMGC_->FM.set_fpln_altn(tempAltnCoRte, 1);
+                ActiveFMGC_->FM.set_fpln_altnCoRte("", 1);
+                pad_.EmptyScratchPad();
+                p_act_ = 5;
+                return;
+            } else if (tempAltnCoRte[0] == '/')
+            {
+                tempAltnCoRte.erase(0, 1); //remove the '/'
+                ActiveFMGC_->FM.set_fpln_altnCoRte(tempAltnCoRte, 1);
+                pad_.EmptyScratchPad();
+                p_act_ = 5;
+                return;
+            } else {
+                pad_.AddMSG(1);
+                return;
+            }     
+        } else
+        {
+            pad_.AddMSG(1);
+            return;
+        }
+
+        return;
+
+    } else if(lsk_ == 3)
+    {
+        //Check if pad is clearing the field
+        if(pad_.GetState() == 1)
+        {
+            ActiveFMGC_->FM.set_fpln_fltNbr("", 1);
+            pad_.EmptyScratchPad();
+            pad_.setState(0);
+            return;
+        }
+
+        std::string tempFltNbr;
+
+        pad_.GetScratchPad(tempFltNbr);
+        //Check if input is correct format
+        if(tempFltNbr.length() > 8)
+        {
+            pad_.AddMSG(1);
+            return;
+        }
+        //If input is correct and valid - input into fmgc
+        ActiveFMGC_->FM.set_fpln_fltNbr(tempFltNbr, 1);
+        pad_.EmptyScratchPad();
+        return;
+
+    } else if(lsk_ == 5)
+    {
+        if(pad_.GetState() == 1 && ActiveFMGC_->FM.get_cost_index(1) != -999)
+        {
+            ActiveFMGC_->FM.set_cost_index(-999, 1);
+            pad_.EmptyScratchPad();
+            pad_.setState(0);
+            return;
+        } else if (pad_.GetState() == 1 )
+        {
+            pad_.AddMSG(0);
+            return;
+        }
+
+        std::string tempScratchPad;
+        pad_.GetScratchPad(tempScratchPad);
+        int tempCostIndex;
+        try
+        {
+            tempCostIndex = stoi(tempScratchPad);
+        } catch (...)
+        {
+            pad_.AddMSG(1);
+            return;
+        }
+
+        if(tempCostIndex >= 0 && tempCostIndex <= 999 )
+        {
+            ActiveFMGC_->FM.set_cost_index(tempCostIndex, 1);
+            pad_.EmptyScratchPad();
+            return;
+    
+        } else
+        {
+            pad_.AddMSG(2);
+            return;
+        }    
+        return;
+    } else if(lsk_ == 6)
+    {
+        if(pad_.GetState() == 1 && ActiveFMGC_->FM.get_crz_fl(1) != -999)
+        {
+            ActiveFMGC_->FM.set_crz_fl(-999, 1);
+            ActiveFMGC_->FM.set_crz_temp(-999, 1);
+            pad_.EmptyScratchPad();
+            pad_.setState(0);
+            return;
+        } else if (pad_.GetState() == 1 )
+        {
+            pad_.AddMSG(0);
+            return;
+        }
+
+        std::string tempScratchPad;
+        
+        pad_.GetScratchPad(tempScratchPad);
+        std::string tempCrzFlStr = tempScratchPad;
+        std::string tempCrzTempStr = tempScratchPad;
+        int tempCrzFl = ActiveFMGC_->FM.get_crz_fl(1);
+        int tempCrzTemp = ActiveFMGC_->FM.get_crz_temp(1);
+        //Check input format
+        if(tempScratchPad.length() > 3 && tempScratchPad[3] == '/')
+        {
+            tempCrzFlStr = tempCrzFlStr.substr(0, 3);
+            tempCrzTempStr = tempCrzTempStr.substr(4, tempScratchPad.length()-4);
+
+            try
+            {
+                tempCrzFl = stoi(tempCrzFlStr);
+                tempCrzTemp = stoi(tempCrzTempStr);
+            } catch (...)
+            {
+                pad_.AddMSG(1);
+                return;
+            }
+
+        } else if (tempScratchPad.length() > 2 && tempScratchPad[2] == '/' )
+        {
+            tempCrzFlStr = tempCrzFlStr.substr(0, 2);
+            tempCrzTempStr = tempCrzTempStr.substr(3, tempScratchPad.length()-3);
+
+            try
+            {
+                tempCrzFl = stoi(tempCrzFlStr);
+                tempCrzTemp = stoi(tempCrzTempStr);
+            } catch (...)
+            {
+                pad_.AddMSG(1);
+                return;
+            }
+
+        }else if (tempScratchPad.length() > 1 && tempScratchPad[1] == '/' )
+        {
+            tempCrzFlStr = tempCrzFlStr.substr(0, 1);
+            tempCrzTempStr = tempCrzTempStr.substr(2, tempScratchPad.length()-2);
+
+            try
+            {
+                tempCrzFl = stoi(tempCrzFlStr);
+                tempCrzTemp = stoi(tempCrzTempStr);
+            } catch (...)
+            {
+                pad_.AddMSG(1);
+                return;
+            }
+
+        } else if (tempScratchPad.length() > 0 && tempScratchPad[0] == '/')
+        {
+            try
+            {
+                tempCrzTemp = stoi(tempCrzTempStr.substr(1, tempScratchPad.length()-1));
+                
+            } catch (...)
+            {
+                pad_.AddMSG(1);
+                return;
+            }
+
+        } else if (tempScratchPad.length() == 3 || tempScratchPad.length() == 2 || tempScratchPad.length() == 1)
+        {
+            try
+            {
+                tempCrzFl = stoi(tempScratchPad);
+                tempCrzTemp = -999;
+            } catch (...)
+            {
+                pad_.AddMSG(1);
+                return;
+            }
+
+        } else {
+            pad_.AddMSG(1);
+            return;
+        }
+
+        //Check if input is correct format
+        if(tempCrzFl > 0 && tempCrzFl <= 410 && ActiveFMGC_->FM.is_fpln_init(1))
+        {
+            ActiveFMGC_->FM.set_crz_fl(tempCrzFl, 1);
+            if(tempCrzTemp > 0 && tempCrzTemp <= 99)
+            {
+                tempCrzTemp = -tempCrzTemp;
+            }
+
+            ActiveFMGC_->FM.set_crz_temp(tempCrzTemp, 1);
+            pad_.EmptyScratchPad();
+            return;
+    
+        } else
+        {
+            pad_.AddMSG(2);
+            return;
+        }    
+        return;
+    } else if(lsk_ == 7)
+    {
+        if(pad_.GetState() == 1)
+        {
+            ActiveFMGC_->FM.set_fpln_origin("", 1);
+            ActiveFMGC_->FM.set_fpln_dest("", 1);
+            ActiveFMGC_->FM.set_fpln_altn("", 1);
+            ActiveFMGC_->FM.set_fpln_altnCoRte("", 1);
+            ActiveFMGC_->FM.set_fpln_coRte("", 1);
+            ActiveFMGC_->FM.set_crz_fl(-999, 1);
+            ActiveFMGC_->FM.set_crz_temp(-999, 1);
+            ActiveFMGC_->FM.set_cost_index(-999, 1);
+            ActiveFMGC_->FM.set_fpln_fltNbr("", 1);
+
+            pad_.EmptyScratchPad();
+            pad_.setState(0);
+
+            return;
+        }
+
+        std::string tempOrigin;
+        std::string tempDest;
+        std::string scratchpad;
+
+        pad_.GetScratchPad(scratchpad);
+        //Check if input is correct format
+        if(scratchpad.length() != 9)
+        {
+            pad_.AddMSG(1);
+            return;
+        } else if(scratchpad[4] != '/')
+        {
+            pad_.AddMSG(1);
+            return;
+        }
+        /*else if(scratchpad.substr(0, 4))
+        {
+
+        } else if(scratchpad.substr(5, 4))
+        {
+
+        }*/
+
+        tempOrigin = scratchpad.substr(0, 4);
+        tempDest = scratchpad.substr(5, 4);
+
+        //Check if there already exists a flightplan
+        if(ActiveFMGC_->FM.is_fpln_init(1))
+        {
+            ActiveFMGC_->FM.set_fpln_origin("", 1);
+            ActiveFMGC_->FM.set_fpln_dest("", 1);
+            ActiveFMGC_->FM.set_fpln_altn("", 1);
+            ActiveFMGC_->FM.set_fpln_altnCoRte("", 1);
+            ActiveFMGC_->FM.set_fpln_coRte("", 1);
+            ActiveFMGC_->FM.set_crz_fl(-999, 1);
+            ActiveFMGC_->FM.set_crz_temp(-999, 1);
+            ActiveFMGC_->FM.set_cost_index(-999, 1);
+            ActiveFMGC_->FM.set_fpln_fltNbr("", 1);
+        }
+        //If input is correct and valid - input into fmgc
+        ActiveFMGC_->FM.set_fpln_origin(tempOrigin, 1);
+        ActiveFMGC_->FM.set_fpln_dest(tempDest, 1);
+        ActiveFMGC_->FM.set_fpln_altn("NONE", 1);
+        ActiveFMGC_->FM.set_fpln_coRte("NONE", 1);
+
+        pad_.EmptyScratchPad();
+
+        p_act_ = 5; //Go to route selection page
+        return;
+        
+    } else if(lsk_ == 8)
+    {
+        return;
+    } else if(lsk_ == 9)
+    {
+        return;
+    } else if(lsk_ == 11)
+    {
+        return;
+    } else if(lsk_ == 12)
+    {
+        if(pad_.GetState() == 1)
+        {
+            if(ActiveFMGC_->FM.get_tropo(1) != -999)
+            {
+                ActiveFMGC_->FM.set_tropo(-999, 1);
+                pad_.setState(0);
+                pad_.EmptyScratchPad();
+                return;
+            } else {
+                pad_.setState(0);
+                pad_.EmptyScratchPad();
+                pad_.AddMSG(0);
+                return;
+            }
+            return;
+        }
+
+        std::string tempTropoStr;
+        int tempTropo;
+
+        pad_.GetScratchPad(tempTropoStr);
+
+        try
+        {
+            tempTropo = stoi(tempTropoStr);
+        } catch (...)
+        {
+            pad_.AddMSG(1);
+            return;
+        }
+        
+        //Check if input is correct format
+        if(tempTropo >= 0 && tempTropo <= 99999 )
+        {
+            ActiveFMGC_->FM.set_tropo(tempTropo, 1);
+            pad_.EmptyScratchPad();
+            return;
+    
+        } else
+        {
+            pad_.AddMSG(1);
+            return;
+        }
+        return;
+
+    } else {
+        pad_.AddMSG(0);
+        return;
+    }
+}
+
+std::vector<Element> Init_A::getElements(FMGC* ActiveFMGC_)
+{
+    pageElements.clear();
+
+    pageElements.push_back(Element("INIT", 0, 10, 0, 1));
+    pageElements.push_back(Element("<>", 0, 22, 0, 1));
+    pageElements.push_back(Element("CO RTE", 1, 1, 0, 0));
+    pageElements.push_back(Element("FROM/TO", 1, 15, 0, 0));
+    pageElements.push_back(Element("ALTN/CO RTE", 3, 0, 0, 0));
+    pageElements.push_back(Element("FLT NBR", 5, 0, 0, 0));
+    pageElements.push_back(Element("COST INDEX", 9, 0, 0, 0));
+    pageElements.push_back(Element("CRZ FL/TEMP", 11, 0, 0, 0));
+    pageElements.push_back(Element("TROPO", 11, 19, 0, 0));
+    
+    //Dynamic values
+    std::string tempString;
+    int tempRow, tempOffset, tempColor, tempSize, tempNum;
+
+    //CoRoute
+    tempString = ActiveFMGC_->FM.get_fpln_coRte(1);
+    if(tempString == "")
+    {
+        tempString = "##########";
+        tempRow = 2;
+        tempOffset = 0;
+        tempColor = 5;
+        tempSize = 1;
+    } else {
+        tempString = ActiveFMGC_->FM.get_fpln_coRte(1);
+        tempRow = 2;
+        tempOffset = 0;
+        tempColor = 2;
+        tempSize = 1;
+    }
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //AltnCorte
+    tempString = ActiveFMGC_->FM.get_fpln_altn(1);
+    if(tempString != "")
+    {
+        tempString = ActiveFMGC_->FM.get_fpln_altn(1) + "/" + ActiveFMGC_->FM.get_fpln_altnCoRte(1);
+        tempColor = 2;
+    } else if(ActiveFMGC_->FM.get_fpln_altn(1) != "") {
+        tempString = ActiveFMGC_->FM.get_fpln_altn(1);
+        tempColor = 2;
+    } else {
+        tempString = "----/----------";
+        tempColor = 0;
+    }
+
+    tempRow = 4;
+    tempOffset = 0;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //Flight number
+    tempString = ActiveFMGC_->FM.get_fpln_fltNbr(1);
+    if(tempString != "")
+    {
+        tempColor = 2;
+    } else {
+        tempString = "##########";
+        tempColor = 5;
+    }
+
+    tempRow = 6;
+    tempOffset = 0;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //CostIndex
+    tempNum = ActiveFMGC_->FM.get_cost_index(1);
+    if(tempNum != -999)
+    {
+        tempString = std::to_string(ActiveFMGC_->FM.get_cost_index(1));
+        tempColor = 2;
+    } else {
+        if(ActiveFMGC_->FM.is_fpln_init(1))
+        {
+            tempString = "###";
+            tempColor = 5;
+        } else {
+            tempString = "---";
+            tempColor = 0;
+        }
+    }
+
+    tempRow = 10;
+    tempOffset = 0;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //CrzFLTemp
+    if(ActiveFMGC_->FM.get_crz_fl(1) != -999)
+    {
+        int tempFL = ActiveFMGC_->FM.get_crz_fl(1);
+
+        if(tempFL < 10)
+        {
+            tempString = "FL00" + std::to_string(tempFL);
+        } else if(tempFL < 100)
+        {
+            tempString = "FL0" + std::to_string(tempFL);
+        } else {
+            tempString = "FL" + std::to_string(tempFL);
+        }
+
+         //" /" + std::to_string(ActiveFMGC_->FM.get_crz_temp(1));
+        tempColor = 2;
+        tempRow = 12;
+        tempOffset = 0;
+        tempSize = 1;
+
+        pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+        if(ActiveFMGC_->FM.get_crz_temp(1) == -999)
+        {
+            tempString = " /" + std::to_string(ActiveFMGC_->FM.get_isa(tempFL));
+            tempSize = 0;
+        } else {
+            tempString = " /" + std::to_string(ActiveFMGC_->FM.get_crz_temp(1));
+            tempSize = 1;
+        }
+
+        tempOffset = 5;
+        pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    } else {
+        if(ActiveFMGC_->FM.is_fpln_init(1))
+        {
+            tempString = "##### /###.";
+            tempColor = 5;
+        } else {
+            tempString = "----- /---.";
+            tempColor = 0;
+        }
+
+        tempRow = 12;
+        tempOffset = 0;
+        tempSize = 1;
+
+        pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+    }
+
+    //FromTo
+    if(ActiveFMGC_->FM.get_fpln_origin(1) != "" && ActiveFMGC_->FM.get_fpln_dest(1) != "")
+    {
+        tempString = ActiveFMGC_->FM.get_fpln_origin(1) + "/" + ActiveFMGC_->FM.get_fpln_dest(1);
+        tempColor = 2;
+    } else {
+        tempString = "####/####";
+        tempColor = 5;
+    }
+
+    tempRow = 2;
+    tempOffset = 15;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //Tropo
+    if(ActiveFMGC_->FM.get_tropo(1) != -999)
+    {
+        tempString = std::to_string(ActiveFMGC_->FM.get_tropo(1));
+        tempSize = 1;
+    } else {
+        tempString = std::to_string(ActiveFMGC_->FM.get_db_tropo());
+        tempSize = 0;
+    }
+
+    tempRow = 12;
+    tempOffset = 19;
+    tempColor = 2;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    return pageElements;
+}
+
 
 Init_B::Init_B()
 {
     pageID = 4;
     leftPageID = 3;
     rightPageID = 0;
+}
 
-    pageElements.push_back(new Element("INIT", 0, 10, 0, 1));
-    pageElements.push_back(new Element("<>", 0, 22, 0, 1));
-    pageElements.push_back(new Element("TAXI", 1, 0, 0, 0));
-    pageElements.push_back(new Element("ZFW/ZFWCG", 1, 15, 0, 0));
-    pageElements.push_back(new Element("#.#", 2, 0, 5, 1));
-    pageElements.push_back(new Element("###.#/##.#", 2, 13, 5, 1));
+void Init_B::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
+{
     
+}
 
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
+std::vector<Element> Init_B::getElements(FMGC* ActiveFMGC_)
+{
+    pageElements.clear();
+
+    pageElements.push_back(Element("INIT", 0, 10, 0, 1));
+    pageElements.push_back(Element("<>", 0, 22, 0, 1));
+    pageElements.push_back(Element("TAXI", 1, 0, 0, 0));
+    pageElements.push_back(Element("ZFW/ZFWCG", 1, 15, 0, 0));
+    pageElements.push_back(Element("#.#", 2, 0, 5, 1));
+    pageElements.push_back(Element("###.#/##.#", 2, 13, 5, 1));
+
+    //Dynamic values
+    std::string tempString;
+    int tempRow, tempOffset, tempColor, tempSize, tempNum;
+
+    return pageElements;
 }
 
 Route_Sel::Route_Sel()
@@ -193,22 +812,30 @@ Route_Sel::Route_Sel()
     pageID = 5;
     leftPageID = 0;
     rightPageID = 0;
+}
 
-    pageElements.push_back(new FromTo(0, 6));
-    pageElements.push_back(new Element("<>", 0, 22, 0, 1));
+void Route_Sel::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
+{
+    p_act_ = this->pageID;
 
-    
+    if(lsk_ == 6)
+    {
+        p_act_ = 3;
+        return;
+    }
+    return;
+}
 
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(new Link("<RETURN", 12, 0, 0, 1, 3));
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
-    lskElements.push_back(nullptr);
+std::vector<Element> Route_Sel::getElements(FMGC* ActiveFMGC_)
+{
+    pageElements.clear();
+
+    pageElements.push_back(Element("<>", 0, 22, 0, 1));
+    pageElements.push_back(Element("<RETURN", 12, 0, 0, 1));
+
+    //Dynamic values
+    std::string tempString;
+    int tempRow, tempOffset, tempColor, tempSize, tempNum;
+
+    return pageElements;
 }
