@@ -25,6 +25,8 @@ class ParamSim
 
         void setSats(int sats_){sats = sats_;};
 
+        void Update();
+
 
     private:
         //Aircraft position
@@ -39,6 +41,8 @@ class ParamSim
 
         //Available satellites
         int sats;
+
+        int count;
 
 
 };

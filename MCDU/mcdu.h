@@ -4,6 +4,7 @@
 #include "gui_elements.h"
 #include "fmgc.h"
 #include <SFML/Graphics.hpp>
+#include "../SENSORS/sensors.h"
 
 #ifndef MCDU_H
 #define MCDU_H
@@ -12,7 +13,7 @@
 class MCDU
 {
     public:
-        MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_);
+        MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_, SensorManager* Sensors_);
         ~MCDU();
 
         void selectLsk(int lsk);
@@ -64,6 +65,8 @@ class MCDU
 
         //Pointer to the linked FMGC
         FMGC* ActiveFMGC;
+        //Pointer to aircraft sensors
+        SensorManager* Sensors;
         //Pointer to the active page
         Page* ActivePage;
         int p_Act;;

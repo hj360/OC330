@@ -2,11 +2,14 @@
 
 #include "fmgc.h"
 
-FMGC::FMGC(int id_)
+FMGC::FMGC(int id_, SensorManager* Sensors_)
 {
     //Initialize class vars with constructor vars
     id = id_;
     avail = 1;
+
+    //Init sensors
+    Sensors = Sensors_;
 
     //Create fmgc datasets
     navDB = new NavDB();

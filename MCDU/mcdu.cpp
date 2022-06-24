@@ -2,7 +2,7 @@
 
 #include "mcdu.h"
 
-MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_)
+MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_, SensorManager* Sensors_)
 {
     //Initialize class vars with constructor vars
     id = id_;
@@ -56,6 +56,8 @@ MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_)
 
     //Set active FMGC
     ActiveFMGC = ActiveFMGC_;
+    //Set sensors
+    Sensors = Sensors_;
 
     InitPages();
 

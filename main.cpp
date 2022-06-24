@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     SensorManager* Sensors = new SensorManager(SIM);
 
     //Initialize FMGS
-    FMGS* A330_FMGS = new FMGS();
+    FMGS* A330_FMGS = new FMGS(Sensors);
 
     //Create a display
     Display* debugDisplay = new Display(A330_FMGS);
@@ -32,6 +32,10 @@ int main(int argc, char* argv[])
     sf::Clock deltaClock;
     while (debugDisplay->sfWindow->isOpen())
     {
+        //Update SIM
+        SIM->Update();
+        //Update systems
+        Sensors->Update();
         //Update UI
         debugDisplay->handleEvents();
         debugDisplay->Display_CLEAR();

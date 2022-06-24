@@ -4,13 +4,15 @@
 #include "fmgc_fe.h"
 #include "fmgc_db.h"
 
+#include "../SENSORS/sensors.h"
+
 #ifndef FMGC_H
 #define FMGC_H
 
 class FMGC
 {
     public:
-        FMGC(int id_);
+        FMGC(int id_, SensorManager* Sensors_);
         ~FMGC();
 
         bool LoadAirlineConfig();
@@ -20,6 +22,9 @@ class FMGC
         FMGC_FM FM;
         FMGC_FG FG;
         FMGC_FE FE;
+
+        //Aircraft sensors
+        SensorManager* Sensors;
 
 
         std::string getAircraftType(){return perfDB->aircraft_desig;};
@@ -35,6 +40,8 @@ class FMGC
         AirlineConfigDB* airlineConfigDB;
         PerfDB* perfDB;
         MagVarDB* magVarDB;
+
+        
 
 };
 

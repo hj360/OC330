@@ -13,6 +13,16 @@ class MMR
 
         void Update();
         void setPwr(bool pwr);
+        bool getGPSStatus(){return gps;};
+
+        double long getGPSLat(){return GPS_lat;};
+        double long getGPSLong(){return GPS_long;};
+        float getGPSAlt(){return GPS_alt;};
+        float getGPSHdg(){return GPS_hdg;};
+        float getGPSGs(){return GPS_gs;};
+        int getMMRStatus(){return state;};
+        int getSats(){return SIM->getSats();};
+
 
     private:
         void setDefaults();
@@ -23,6 +33,9 @@ class MMR
         int state;
         //Values for the MMR to read
         ParamSim* SIM;
+
+        //Is GPS functional?
+        bool gps;
         //GPS Values GPS1 is MMR1, GPS2 is MMR2
         double long GPS_lat;
         double long GPS_long;

@@ -1,5 +1,6 @@
 #include "FMGC/fmgc.h"
 #include "MCDU/mcdu.h"
+#include "SENSORS/sensors.h"
 
 #ifndef FMGS_H
 #define FMGS_H
@@ -7,7 +8,8 @@
 class FMGS
 {
     public:
-        FMGS();
+        FMGS(SensorManager* Sensors_);
+        FMGS(){};
         ~FMGS();
 
         //Flight management guidance computers
@@ -18,9 +20,9 @@ class FMGS
         MCDU* MCDU2;
         MCDU* MCDU3;
 
-
-    
     private:
+        SensorManager* Sensors;
+
 
 };
 

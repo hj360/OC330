@@ -1,5 +1,27 @@
 #include "mcdu_pages.h"
 
+//Returns a DD coordinate in DDM format
+std::string getDDM(long double DD)
+{
+    std::string tempString;
+
+    int degrees = DD;
+    long double minutes = (DD - degrees)*60;
+    if(minutes < 0)
+    {
+        minutes = -minutes;
+    }
+
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(0) << degrees;
+    tempString = ss.str() + "c";
+    ss.str(std::string());
+    ss << std::fixed << std::setprecision(1) << minutes;
+    tempString += ss.str();
+
+    return tempString;
+}
+
 Page::Page()
 {
     pageID = 0;
@@ -980,6 +1002,152 @@ std::vector<Element> Gps_Monitor::getElements(FMGC* ActiveFMGC_)
     std::string tempString;
     int tempRow, tempOffset, tempColor, tempSize;
 
+    //GPS1 Position
+
+    if(ActiveFMGC_->Sensors->MMR1->getGPSStatus())
+    {
+
+        long double tempLat = ActiveFMGC_->Sensors->MMR1->getGPSLat();
+        long double tempLong = ActiveFMGC_->Sensors->MMR1->getGPSLong();
+
+        if(tempLat > 0)
+        {
+            tempString = getDDM(tempLat) + "N/";
+        } else {
+            tempString = getDDM(-tempLat) + "S/";
+        }
+
+        if(tempLong > 0)
+        {
+            tempString += getDDM(tempLong) + "E";
+        } else {
+            tempString += getDDM(-tempLong) + "W";
+        }
+
+        tempSize = 0;
+        tempColor = 1;
+
+    } else {
+        tempString = "--c--.--/---c--.--";
+        tempColor = 0;
+    }
+
+    tempRow = 2;
+    tempOffset = 0;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //GPS1 Mode
+    int status = ActiveFMGC_->Sensors->MMR1->getMMRStatus();
+    if(status == 0)
+    {
+        tempString = "---/--";
+        tempOffset = 17;
+        tempColor = 0;
+    } else if (status == 1)
+    {
+        tempString = "INIT/" + std::to_string(ActiveFMGC_->Sensors->MMR1->getSats());
+        tempColor = 1;
+        tempOffset = 16;
+    } else if (status == 2)
+    {
+        tempString = "ACQ/" + std::to_string(ActiveFMGC_->Sensors->MMR1->getSats());
+        tempColor = 1;
+        tempOffset = 17;
+    } else if (status == 3)
+    {
+        tempString = "NAV/" + std::to_string(ActiveFMGC_->Sensors->MMR1->getSats());
+        tempColor = 1;
+        tempOffset = 17;
+    } else if (status == 4)
+    {
+        tempString = "ALTAID/" + std::to_string(ActiveFMGC_->Sensors->MMR1->getSats());
+        tempColor = 1;
+        tempOffset = 14;
+    } else {
+        tempString = "---/--";
+        tempOffset = 17;
+        tempColor = 0;
+    }
+
+    tempRow = 6;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //GPS2 Position
+
+    if(ActiveFMGC_->Sensors->MMR2->getGPSStatus())
+    {
+
+        long double tempLat = ActiveFMGC_->Sensors->MMR2->getGPSLat();
+        long double tempLong = ActiveFMGC_->Sensors->MMR2->getGPSLong();
+
+        if(tempLat > 0)
+        {
+            tempString = getDDM(tempLat) + "N/";
+        } else {
+            tempString = getDDM(-tempLat) + "S/";
+        }
+
+        if(tempLong > 0)
+        {
+            tempString += getDDM(tempLong) + "E";
+        } else {
+            tempString += getDDM(-tempLong) + "W";
+        }
+
+        tempSize = 0;
+        tempColor = 1;
+
+    } else {
+        tempString = "--c--.--/---c--.--";
+        tempColor = 0;
+    }
+
+    tempRow = 8;
+    tempOffset = 0;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //GPS2 Mode
+    status = ActiveFMGC_->Sensors->MMR2->getMMRStatus();
+    if(status == 0)
+    {
+        tempString = "---/--";
+        tempOffset = 17;
+        tempColor = 0;
+    } else if (status == 1)
+    {
+        tempString = "INIT/" + std::to_string(ActiveFMGC_->Sensors->MMR2->getSats());
+        tempColor = 1;
+        tempOffset = 16;
+    } else if (status == 2)
+    {
+        tempString = "ACQ/" + std::to_string(ActiveFMGC_->Sensors->MMR2->getSats());
+        tempColor = 1;
+        tempOffset = 17;
+    } else if (status == 3)
+    {
+        tempString = "NAV/" + std::to_string(ActiveFMGC_->Sensors->MMR2->getSats());
+        tempColor = 1;
+        tempOffset = 17;
+    } else if (status == 4)
+    {
+        tempString = "ALTAID/" + std::to_string(ActiveFMGC_->Sensors->MMR2->getSats());
+        tempColor = 1;
+        tempOffset = 14;
+    } else {
+        tempString = "---/--";
+        tempOffset = 17;
+        tempColor = 0;
+    }
+
+    tempRow = 12;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
 
     return pageElements;
 }
@@ -1049,3 +1217,4 @@ std::vector<Element> Position_Monitor::getElements(FMGC* ActiveFMGC_)
 
     return pageElements;
 }
+

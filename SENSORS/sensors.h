@@ -13,12 +13,14 @@ class SensorManager
 
         void Update();
 
+        MMR* MMR1;
+        MMR* MMR2;
+
     private:
         //Sim parameters
         ParamSim* SIM;
 
-        MMR* MMR1;
-        MMR* MMR2;
+        
 
 
 };
