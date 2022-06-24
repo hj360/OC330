@@ -7,7 +7,9 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/FMGC/**",
                 "${workspaceFolder}/GUI/**",
-                "${workspaceFolder}/MCDU/**"
+                "${workspaceFolder}/MCDU/**",
+                "${workspaceFolder}/SIMDATA/**",
+                "${workspaceFolder}/SENSORS/**"
             ],
             "defines": [
                 "_DEBUG",
