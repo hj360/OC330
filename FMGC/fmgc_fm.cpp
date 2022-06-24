@@ -9,6 +9,11 @@ FMGC_FM::FMGC_FM(AirlineConfigDB* airlineConfigDB_, NavDB* navDB_)
 
 const double FMGC_FM::temp_ISA[] = {15,13,11,9.1,7.1,5.1,3.1,1.1,-0.8,-2.8,-4.8,-6.8,-8.8,-10.8,-12.7,-14.7,-16.7,-18.7,-20.7,-22.6,-24.6,-26.6,-28.6,-30.6,-32.5,-34.5,-36.5,-38.5,-40.5,-42.5,-44.4,-46.4,-48.4,-50.4,-52.4,-54.3,-56.3,-56.5,-56.5,-56.5,-56.5, -56.5};
 
+float FMGC_FM::get_db_taxi()
+{
+    return airlineConfigDB->taxi_fuel;
+}
+
 int FMGC_FM::get_isa(int fl_)
 {
     fl_ = fl_/10;
@@ -267,6 +272,17 @@ int FMGC_FM::get_crz_temp(int fpln_)
 
         return fpln_sec.crzTemp;
     }
+}
+
+void FMGC_FM::set_taxi_fuel(float fuel_)
+{
+    weights.taxi = fuel_;
+
+}
+
+float FMGC_FM::get_taxi_fuel()
+{
+    return weights.taxi;
 }
 
 

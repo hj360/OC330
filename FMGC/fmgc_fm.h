@@ -24,7 +24,7 @@ struct FlightPlan
 
 struct InitWeights
 {
-    int taxi = -999;
+    float taxi = -999;
     int tripFuel = -999;
     int tripTime = -999;
     int rsv = -999;
@@ -59,6 +59,8 @@ class FMGC_FM
         void set_crz_fl(int crzFl_, int fpln_);
         void set_crz_temp(int crzTemp_, int fpln_);
 
+        void set_taxi_fuel(float fuel_);
+
         //Getters
         std::string get_fpln_origin(int fpln_);
         std::string get_fpln_dest(int fpln_);
@@ -71,9 +73,16 @@ class FMGC_FM
         int get_crz_fl(int fpln_);
         int get_crz_temp(int fpln_);
 
+        float get_taxi_fuel();
+
+
 
 
         int get_db_tropo();
+        float get_db_taxi();
+
+
+
         bool is_fpln_init(int fpln_);
         bool arpt_in_database(std::string ICAO);
         int get_isa(int fl_);

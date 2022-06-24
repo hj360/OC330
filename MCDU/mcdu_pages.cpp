@@ -187,7 +187,7 @@ std::vector<Element> Ac_Status::getElements(FMGC* ActiveFMGC_)
 Init_A::Init_A()
 {
     pageID = 3;
-    leftPageID = 0;
+    leftPageID = 4;
     rightPageID = 4;
 }
 
@@ -773,11 +773,57 @@ Init_B::Init_B()
 {
     pageID = 4;
     leftPageID = 3;
-    rightPageID = 0;
+    rightPageID = 3;
 }
 
 void Init_B::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
 {
+    p_act_ = this->pageID;
+
+    if(lsk_ == 1)
+    {
+        if(pad_.GetState() == 1)
+        {
+            if(ActiveFMGC_->FM.get_taxi_fuel() != -999)
+            {
+                ActiveFMGC_->FM.set_taxi_fuel(-999);
+                pad_.setState(0);
+                pad_.EmptyScratchPad();
+                return;
+            } else {
+                pad_.setState(0);
+                pad_.EmptyScratchPad();
+                pad_.AddMSG(0);
+                return;
+            }
+            return;
+        }
+
+        std::string tempString;
+        float tempFloat;
+        pad_.GetScratchPad(tempString);
+
+        try
+        {
+            tempFloat = stof(tempString)*1000;
+        } catch (...)
+        {
+            pad_.AddMSG(1);
+            return;
+        }
+
+        if(tempFloat < 10000 && tempFloat >= 0)
+        {
+            ActiveFMGC_->FM.set_taxi_fuel(tempFloat);
+            pad_.EmptyScratchPad();
+        } else {
+            pad_.AddMSG(2);
+        }        
+        return;
+    } else {
+        pad_.AddMSG(0);
+        return;
+    }
     
 }
 
@@ -789,12 +835,39 @@ std::vector<Element> Init_B::getElements(FMGC* ActiveFMGC_)
     pageElements.push_back(Element("<>", 0, 22, 0, 1));
     pageElements.push_back(Element("TAXI", 1, 0, 0, 0));
     pageElements.push_back(Element("ZFW/ZFWCG", 1, 15, 0, 0));
-    pageElements.push_back(Element("#.#", 2, 0, 5, 1));
-    pageElements.push_back(Element("###.#/##.#", 2, 13, 5, 1));
+    pageElements.push_back(Element("TRIP/TIME", 3, 0, 0, 0));
+    pageElements.push_back(Element("BLOCK", 3, 19, 0, 0));
+    pageElements.push_back(Element("RTE RSV//", 5, 0, 0, 0));
+    pageElements.push_back(Element("ALTN/TIME", 7, 0, 0, 0));
+    pageElements.push_back(Element("FINAL/TIME", 9, 0, 0, 0));
+    pageElements.push_back(Element("EXTRA/TIME", 11, 0, 0, 0));
+
+    pageElements.push_back(Element("TOW/   LW", 7, 15, 0, 0));
+    pageElements.push_back(Element("MIN DEST FOB", 9, 12, 0, 0));
+    pageElements.push_back(Element("TRIP WIND", 11, 15, 0, 0));
 
     //Dynamic values
     std::string tempString;
     int tempRow, tempOffset, tempColor, tempSize, tempNum;
+
+    if(ActiveFMGC_->FM.get_taxi_fuel() != -999)
+    {
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision(1) << ActiveFMGC_->FM.get_taxi_fuel()/1000;
+        tempString = ss.str();
+        tempSize = 1;
+    } else {
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision(1) << ActiveFMGC_->FM.get_db_taxi()/1000;
+        tempString = ss.str();
+        tempSize = 0;
+    }
+
+    tempColor = 2;
+    tempRow = 2;
+    tempOffset = 0;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
 
     return pageElements;
 }

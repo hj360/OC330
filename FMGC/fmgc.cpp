@@ -101,22 +101,22 @@ bool FMGC::LoadAirlineConfig()
 
         if(param == "idle")
         {
-            airlineConfigDB->idle = stoi(value);
+            airlineConfigDB->idle = stof(value);
         } else if (param == "perf")
         {
-            airlineConfigDB->perf = stoi(value);
+            airlineConfigDB->perf = stof(value);
         } else if (param == "acc_alt")
         {
-            airlineConfigDB->acc_alt = stoi(value);
+            airlineConfigDB->acc_alt = stof(value);
         } else if (param == "eoc_alt")
         {
-            airlineConfigDB->eoc_alt = stoi(value);
+            airlineConfigDB->eoc_alt = stof(value);
         } else if (param == "tropo_default")
         {
-            airlineConfigDB->tropo_default = stoi(value);
+            airlineConfigDB->tropo_default = stof(value);
         } else if (param == "taxi_fuel")
         {
-            airlineConfigDB->taxi_fuel = stoi(value);
+            airlineConfigDB->taxi_fuel = stof(value);
         }
     }
 

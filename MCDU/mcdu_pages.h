@@ -2,6 +2,8 @@
 #include <vector>
 #include "mcdu_scratchpad.h"
 #include "fmgc.h"
+#include <sstream>
+#include <iomanip>
 
 #ifndef MCDU_PAGES_H
 #define MCDU_PAGES_H
