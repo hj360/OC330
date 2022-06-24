@@ -58,6 +58,9 @@ void Scratchpad::AddMSG(int msgCode_)
         case 2:
             msg.push_back("ENTRY OUT OF RANGE");
             break;
+        case 3:
+            msg.push_back("NOT IN DATABASE");
+            break;
 
         default:
             break;

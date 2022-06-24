@@ -15,7 +15,7 @@ FMGC::FMGC(int id_)
     magVarDB = new MagVarDB();
 
     //Create each FMGC Part
-    FM = FMGC_FM(airlineConfigDB);
+    FM = FMGC_FM(airlineConfigDB, navDB);
     FG = FMGC_FG();
     FE = FMGC_FE();
 

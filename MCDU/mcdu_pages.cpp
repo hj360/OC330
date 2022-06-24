@@ -473,6 +473,7 @@ void Init_A::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad
 
         pad_.GetScratchPad(scratchpad);
         //Check if input is correct format
+        //Check if airports exist in the database
         if(scratchpad.length() != 9)
         {
             pad_.AddMSG(1);
@@ -481,14 +482,15 @@ void Init_A::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad
         {
             pad_.AddMSG(1);
             return;
+        } else if(!ActiveFMGC_->FM.arpt_in_database(scratchpad.substr(0, 4)))
+        {
+            pad_.AddMSG(3);
+            return;
+        } else if(!ActiveFMGC_->FM.arpt_in_database(scratchpad.substr(5, 4)))
+        {
+            pad_.AddMSG(3);
+            return;
         }
-        /*else if(scratchpad.substr(0, 4))
-        {
-
-        } else if(scratchpad.substr(5, 4))
-        {
-
-        }*/
 
         tempOrigin = scratchpad.substr(0, 4);
         tempDest = scratchpad.substr(5, 4);
@@ -560,7 +562,7 @@ void Init_A::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad
         }
         
         //Check if input is correct format
-        if(tempTropo >= 0 && tempTropo <= 99999 )
+        if(tempTropo >= 0 && tempTropo <= 60000 )
         {
             ActiveFMGC_->FM.set_tropo(tempTropo, 1);
             pad_.EmptyScratchPad();
@@ -620,7 +622,11 @@ std::vector<Element> Init_A::getElements(FMGC* ActiveFMGC_)
     tempString = ActiveFMGC_->FM.get_fpln_altn(1);
     if(tempString != "")
     {
-        tempString = ActiveFMGC_->FM.get_fpln_altn(1) + "/" + ActiveFMGC_->FM.get_fpln_altnCoRte(1);
+        tempString = ActiveFMGC_->FM.get_fpln_altn(1);
+        if(ActiveFMGC_->FM.get_fpln_altnCoRte(1) != "")
+        {
+            tempString += "/" + ActiveFMGC_->FM.get_fpln_altnCoRte(1);
+        }
         tempColor = 2;
     } else if(ActiveFMGC_->FM.get_fpln_altn(1) != "") {
         tempString = ActiveFMGC_->FM.get_fpln_altn(1);
@@ -682,12 +688,12 @@ std::vector<Element> Init_A::getElements(FMGC* ActiveFMGC_)
 
         if(tempFL < 10)
         {
-            tempString = "FL00" + std::to_string(tempFL);
+            tempString = "FL00" + std::to_string(tempFL) + " /";
         } else if(tempFL < 100)
         {
-            tempString = "FL0" + std::to_string(tempFL);
+            tempString = "FL0" + std::to_string(tempFL) + " /";
         } else {
-            tempString = "FL" + std::to_string(tempFL);
+            tempString = "FL" + std::to_string(tempFL) + " /";
         }
 
          //" /" + std::to_string(ActiveFMGC_->FM.get_crz_temp(1));
@@ -700,23 +706,23 @@ std::vector<Element> Init_A::getElements(FMGC* ActiveFMGC_)
 
         if(ActiveFMGC_->FM.get_crz_temp(1) == -999)
         {
-            tempString = " /" + std::to_string(ActiveFMGC_->FM.get_isa(tempFL));
+            tempString = std::to_string(ActiveFMGC_->FM.get_isa(tempFL)) + "c";
             tempSize = 0;
         } else {
-            tempString = " /" + std::to_string(ActiveFMGC_->FM.get_crz_temp(1));
+            tempString = std::to_string(ActiveFMGC_->FM.get_crz_temp(1)) + "c";
             tempSize = 1;
         }
 
-        tempOffset = 5;
+        tempOffset = 7;
         pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
 
     } else {
         if(ActiveFMGC_->FM.is_fpln_init(1))
         {
-            tempString = "##### /###.";
+            tempString = "##### /###c";
             tempColor = 5;
         } else {
-            tempString = "----- /---.";
+            tempString = "----- /---c";
             tempColor = 0;
         }
 
@@ -822,6 +828,20 @@ std::vector<Element> Route_Sel::getElements(FMGC* ActiveFMGC_)
     //Dynamic values
     std::string tempString;
     int tempRow, tempOffset, tempColor, tempSize, tempNum;
+
+    if(ActiveFMGC_->FM.get_fpln_origin(1) != "" && ActiveFMGC_->FM.get_fpln_dest(1) != "")
+    {
+        tempString = ActiveFMGC_->FM.get_fpln_origin(1) + "/" + ActiveFMGC_->FM.get_fpln_dest(1);
+    } else {
+        tempString = "----/----";
+    }
+
+    tempRow = 0;
+    tempOffset = 6;
+    tempColor = 0;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
 
     return pageElements;
 }

@@ -44,7 +44,7 @@ class FMGC_FM
 {
     public:
         FMGC_FM(){};
-        FMGC_FM(AirlineConfigDB* airlineConfigDB_);
+        FMGC_FM(AirlineConfigDB* airlineConfigDB_, NavDB* navDB_);
         ~FMGC_FM(){};
 
         //Setters
@@ -75,12 +75,14 @@ class FMGC_FM
 
         int get_db_tropo();
         bool is_fpln_init(int fpln_);
+        bool arpt_in_database(std::string ICAO);
         int get_isa(int fl_);
 
     private:
         //Navigation
         //Performance
         AirlineConfigDB* airlineConfigDB;
+        NavDB* navDB;
         InitWeights weights;
         //F-PLN Management
         FlightPlan fpln_prim;

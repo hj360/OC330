@@ -1,8 +1,9 @@
 #include "fmgc_fm.h"
 
-FMGC_FM::FMGC_FM(AirlineConfigDB* airlineConfigDB_)
+FMGC_FM::FMGC_FM(AirlineConfigDB* airlineConfigDB_, NavDB* navDB_)
 {
     airlineConfigDB = airlineConfigDB_;
+    navDB = navDB_;
 
 }
 
@@ -12,6 +13,16 @@ int FMGC_FM::get_isa(int fl_)
 {
     fl_ = fl_/10;
     return temp_ISA[fl_];
+}
+
+bool FMGC_FM::arpt_in_database(std::string ICAO)
+{
+    if(navDB->arpts.find(ICAO) != navDB->arpts.end())
+    {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool FMGC_FM::is_fpln_init(int fpln_)
