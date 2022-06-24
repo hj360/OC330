@@ -17,6 +17,7 @@ void MMR::setDefaults()
     GPS_alt = -999;
     GPS_hdg = -999;
     GPS_gs = -999;
+    GPS_merit = -999;
 }
 
 void MMR::Update()
@@ -50,7 +51,6 @@ void MMR::Update()
 
         setDefaults();
         gps = false;
-
         return;
 
     } else if(state == 3 && power == true) 
@@ -74,6 +74,8 @@ void MMR::Update()
         GPS_alt = SIM->getAltAsl();
         GPS_hdg = SIM->getHdg();
         GPS_gs = SIM->getSpeedGround();
+        GPS_merit = 100;
+        
         return;
 
     } else if(state == 4 && power == true)

@@ -22,6 +22,7 @@ class MMR
         float getGPSGs(){return GPS_gs;};
         int getMMRStatus(){return state;};
         int getSats(){return SIM->getSats();};
+        int getGPSMerit(){return GPS_merit;};
 
 
     private:
@@ -42,6 +43,7 @@ class MMR
         float GPS_alt;
         float GPS_hdg;
         float GPS_gs;
+        int GPS_merit;
 
         //ILS Values
 };

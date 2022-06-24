@@ -952,36 +952,7 @@ void Gps_Monitor::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad
 {
     p_act_ = this->pageID;
 
-    switch(lsk_)
-    {
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        case 4:
-            break;
-        case 5:
-            break;
-        case 6:
-            break;
-        case 7:
-            break;
-        case 8:
-            break;
-        case 9:
-            break;
-        case 10:
-            break;
-        case 11:
-            break;
-        case 12:
-            break;
-        default:
-            break;
-
-    }
+    pad_.AddMSG(0);
 
 }
 
@@ -1033,6 +1004,80 @@ std::vector<Element> Gps_Monitor::getElements(FMGC* ActiveFMGC_)
     }
 
     tempRow = 2;
+    tempOffset = 0;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //GPS1 TTRK
+    if(ActiveFMGC_->Sensors->MMR1->getGPSStatus())
+    {
+        std::stringstream ss;
+        ss << std::fixed << std::setw(5) << std::setfill('0') << std::setprecision(1) << ActiveFMGC_->Sensors->MMR1->getGPSHdg();
+        tempString = ss.str();
+        tempColor = 1;
+
+    } else {
+        tempString = "-----";
+        tempColor = 0;
+    }
+
+    tempRow = 4;
+    tempOffset = 0;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //GPS1 ALT
+    if(ActiveFMGC_->Sensors->MMR1->getGPSAlt() != -999)
+    {
+        std::stringstream ss;
+        ss << std::fixed << std::setw(5) << std::setfill('0') << std::setprecision(0) << ActiveFMGC_->Sensors->MMR1->getGPSAlt();
+        tempString = ss.str();
+        tempColor = 1;
+
+    } else {
+        tempString = "-----";
+        tempColor = 0;
+    }
+
+    tempRow = 4;
+    tempOffset = 9;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //GPS1 GS
+    if(ActiveFMGC_->Sensors->MMR1->getGPSStatus())
+    {
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision(0) << ActiveFMGC_->Sensors->MMR1->getGPSGs();
+        tempString = ss.str();
+        tempColor = 1;
+    } else {
+        tempString = "---";
+        tempColor = 0;
+    }
+
+    tempRow = 4;
+    tempOffset = 21;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //GPS1 Merit
+    if(ActiveFMGC_->Sensors->MMR1->getGPSStatus())
+    {
+        std::stringstream ss;
+        ss << std::fixed << ActiveFMGC_->Sensors->MMR1->getGPSMerit();
+        tempString = ss.str() + "M";
+        tempColor = 1;
+    } else {
+        tempString = "-----";
+        tempColor = 0;
+    }
+
+    tempRow = 6;
     tempOffset = 0;
     tempSize = 1;
 
@@ -1106,6 +1151,81 @@ std::vector<Element> Gps_Monitor::getElements(FMGC* ActiveFMGC_)
     }
 
     tempRow = 8;
+    tempOffset = 0;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    
+    //GPS2 TTRK
+    if(ActiveFMGC_->Sensors->MMR2->getGPSStatus())
+    {
+        std::stringstream ss;
+        ss << std::fixed << std::setw(5) << std::setfill('0') << std::setprecision(1) << ActiveFMGC_->Sensors->MMR2->getGPSHdg();
+        tempString = ss.str();
+        tempColor = 1;
+
+    } else {
+        tempString = "-----";
+        tempColor = 0;
+    }
+
+    tempRow = 10;
+    tempOffset = 0;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //GPS2 ALT
+    if(ActiveFMGC_->Sensors->MMR2->getGPSAlt() != -999)
+    {
+        std::stringstream ss;
+        ss << std::fixed << std::setw(5) << std::setfill('0') << std::setprecision(0) << ActiveFMGC_->Sensors->MMR2->getGPSAlt();
+        tempString = ss.str();
+        tempColor = 1;
+
+    } else {
+        tempString = "-----";
+        tempColor = 0;
+    }
+
+    tempRow = 10;
+    tempOffset = 9;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //GPS2 GS
+    if(ActiveFMGC_->Sensors->MMR2->getGPSStatus())
+    {
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision(0) << ActiveFMGC_->Sensors->MMR2->getGPSGs();
+        tempString = ss.str();
+        tempColor = 1;
+    } else {
+        tempString = "---";
+        tempColor = 0;
+    }
+
+    tempRow = 10;
+    tempOffset = 21;
+    tempSize = 1;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //GPS2 Merit
+    if(ActiveFMGC_->Sensors->MMR2->getGPSStatus())
+    {
+        std::stringstream ss;
+        ss << std::fixed << ActiveFMGC_->Sensors->MMR2->getGPSMerit();
+        tempString = ss.str() + "M";
+        tempColor = 1;
+    } else {
+        tempString = "-----";
+        tempColor = 0;
+    }
+
+    tempRow = 12;
     tempOffset = 0;
     tempSize = 1;
 

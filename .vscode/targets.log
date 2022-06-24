@@ -7,7 +7,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Thu Jun 23 21:47:47 2022
+# Make data base, printed on Sat Jun 25 01:48:03 2022
 
 # Variables
 
@@ -22,11 +22,12 @@ USERPROFILE = C:\Users\henri
 # environment
 LOCALAPPDATA = C:\Users\henri\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-ef5b29c0-44d1-4a4b-8a52-81fff24f2744-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-f6f45bf9-2d9e-4227-9b9e-693945e7636b-sock
 # environment
 VSCODE_CWD = C:\Users\henri\AppData\Local\Programs\Microsoft VS Code
 # environment
-CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
+CHOCOLATEYINSTALL = C: 
+\ProgramData\chocolatey
 # environment
 SYSTEMROOT = C:\WINDOWS
 # environment
@@ -38,11 +39,10 @@ MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_17700_ZJVAFFXZYAKJTHID
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_19228_IILCZKJGFFCHLODL
 # environment
 FPS_BROWSER_USER_PROFILE_STRING = Default
-# env 
-ironment
+# environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
 .VARIABLES := 
@@ -95,7 +95,7 @@ MAKEFILE_LIST := makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 17700
+VSCODE_PID = 19228
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -218,9 +218,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 10, GenuineIntel
 
 # Directories
 
-# . (key c:/dev/OC330, mtime 1655919307): 44 files, no impossibilities.
+# . (key c:/dev/OC330, mtime 1656073344): 52 files, no impossibilities.
 
-# 44 files, no impossibilities in 1 directories.
+# 52 files, no impossibilities in 1 directories.
 
 # Implicit Rul 
 es
@@ -254,7 +254,7 @@ compile:
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/11=9%
 #  recipe to execute (from 'makefile', line 4):
-	g++ -Isrc/include -IMCDU -IFMGC -IGUI -ICONFIG -c *.cpp FMGC/*.cpp MCDU/*.cpp GUI/*.cpp
+	g++ -Isrc/include -IMCDU -IFMGC -IGUI -ICONFIG -ISIMDATA -ISENSORS -IADIRS -c *.cpp FMGC/*.cpp MCDU/*.cpp GUI/*.cpp SIMDATA/*.cpp SENSORS/*.cpp ADIRS/*.cpp
 
 # Not a target:
 .DEFAULT:
@@ -281,7 +281,7 @@ link:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-23 01:33:54
+#  Last modified 2022-06-24 21:52:03
 #  File has been updated.
 #  Successfully updated.
 
@@ -299,12 +299,12 @@ makefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 49 / storage = 517 B / avg = 10 B
-# current buf: size = 8174 B / used = 517 B / count = 49 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 57 / storage = 581 B / avg = 10 B
+# current buf: size = 8174 B / used = 581 B / count = 57 / avg = 10 B
 
-# strcache performance: lookups = 60 / hit rate = 18%
+# strcache performance: lookups = 68 / hit rate = 16%
 # hash-table stats:
-# Load=49/8192=1%, Rehash=0, Collisions=0/60=0%
-# Finished Make data base on Thu Jun 23 21:47:47 2022
+# Load=57/8192=1%, Rehash=0, Collisions=0/68=0%
+# Finished Make data base on Sat Jun 25 01:48:03 2022
 
  
