@@ -1413,17 +1413,19 @@ std::vector<Element> Mcdu_Menu::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
     if(fmState == 1) // Selected waiting for system response
     {
         tempColor = 2;
-        tempString = "<FM1 (SEL)";
+        tempString = "<FM1  SEL ";
         fmState = 2;
     } else if(fmState == 2)
     {
         tempString = "<FM1";
         tempColor = 1;
+        pageElements.push_back(Element("SELECT DESIRED SYSTEM", 13, 0, 0, 1));
     } else
     {
         tempColor = 0;
         tempString = "<FM1";
         fmState = 0;
+        pageElements.push_back(Element("SELECT DESIRED SYSTEM", 13, 0, 0, 1));
     }
 
     tempRow = 2;
@@ -1435,6 +1437,7 @@ std::vector<Element> Mcdu_Menu::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
     pageElements.push_back(Element("<ACARS", 4, 0, 0, 1));
     pageElements.push_back(Element("<ACMS", 6, 0, 0, 1));
     //Permanent scratchpad message
+    
     
 
 
