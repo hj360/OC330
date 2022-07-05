@@ -43,6 +43,9 @@ class MCDU
         int h;
         int refreshRate;
 
+        //Buffer lsk select
+        int lskBuffer;
+
         //Texture for display
         sf::RenderTexture mcduDisplay;
         sf::Sprite mcduSprite;
@@ -69,7 +72,8 @@ class MCDU
         SensorManager* Sensors;
         //Pointer to the active page
         Page* ActivePage;
-        int p_Act;;
+        int p_Act;
+        int p_Buff;
         //MCDU Pages
         Page* P_DATA_INDEX_1;
         Page* P_AC_STATUS;
@@ -78,6 +82,7 @@ class MCDU
         Page* P_RTE_SEL;
         Page* P_GPS_MONITOR;
         Page* P_POSITION_MONITOR;
+        Page* P_MCDU_MENU;
 
         sf::Font mcduFont_s;
         sf::Font mcduFont_l;

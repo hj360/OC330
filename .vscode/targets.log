@@ -7,7 +7,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Sat Jun 25 01:48:03 2022
+# Make data base, printed on Tue Jul 05 08:54:26 2022
 
 # Variables
 
@@ -22,12 +22,11 @@ USERPROFILE = C:\Users\henri
 # environment
 LOCALAPPDATA = C:\Users\henri\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-f6f45bf9-2d9e-4227-9b9e-693945e7636b-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-7a130c61-c8b8-43a8-9084-bbab10585fdd-sock
 # environment
 VSCODE_CWD = C:\Users\henri\AppData\Local\Programs\Microsoft VS Code
 # environment
-CHOCOLATEYINSTALL = C: 
-\ProgramData\chocolatey
+CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
 SYSTEMROOT = C:\WINDOWS
 # environment
@@ -39,7 +38,7 @@ MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_19228_IILCZKJGFFCHLODL
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5672_IOYEYLISAKOKFXCZ
 # environment
 FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
@@ -95,7 +94,7 @@ MAKEFILE_LIST := makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 19228
+VSCODE_PID = 5672
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -203,8 +202,7 @@ ALLUSERSPROFILE = C:\ProgramData
 # environment
 SESSIONNAME = Console
 # default
-.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomm 
-ent grouped-target extra-prereqs archives jobserver output-sync load
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync load
 # environment
 PROCESSOR_REVISION = 8e0a
 # environment
@@ -218,12 +216,11 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 10, GenuineIntel
 
 # Directories
 
-# . (key c:/dev/OC330, mtime 1656073344): 52 files, no impossibilities.
+# . (key c:/dev/OC330, mtime 1656094346): 52 files, no impossibilities.
 
 # 52 files, no impossibilities in 1 directories.
 
-# Implicit Rul 
-es
+# Implicit Rules
 
 # No implicit rules.
 
@@ -254,7 +251,8 @@ compile:
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/11=9%
 #  recipe to execute (from 'makefile', line 4):
-	g++ -Isrc/include -IMCDU -IFMGC -IGUI -ICONFIG -ISIMDATA -ISENSORS -IADIRS -c *.cpp FMGC/*.cpp MCDU/*.cpp GUI/*.cpp SIMDATA/*.cpp SENSORS/*.cpp ADIRS/*.cpp
+	g++ -Isrc/ 
+include -IMCDU -IFMGC -IGUI -ICONFIG -ISIMDATA -ISENSORS -IADIRS -c *.cpp FMGC/*.cpp MCDU/*.cpp GUI/*.cpp SIMDATA/*.cpp SENSORS/*.cpp ADIRS/*.cpp
 
 # Not a target:
 .DEFAULT:
@@ -305,6 +303,6 @@ makefile:
 # strcache performance: lookups = 68 / hit rate = 16%
 # hash-table stats:
 # Load=57/8192=1%, Rehash=0, Collisions=0/68=0%
-# Finished Make data base on Sat Jun 25 01:48:03 2022
+# Finished Make data base on Tue Jul 05 08:54:26 2022
 
  

@@ -14,7 +14,7 @@ class Page
         Page();
         ~Page(){};
 
-        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_);
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_, Scratchpad &pad_);
         int getPageId();
         int getLeftPageId();
         int getRightPageId();
@@ -37,7 +37,7 @@ class Data_Index_1 : public Page
         Data_Index_1();
         ~Data_Index_1(){};
 
-        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_);
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_, Scratchpad &pad_);
         virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
 
 };
@@ -48,7 +48,7 @@ class Ac_Status : public Page
         Ac_Status();
         ~Ac_Status(){};
 
-        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_);
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_, Scratchpad &pad_);
         virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
 
 };
@@ -59,7 +59,7 @@ class Init_A : public Page
         Init_A();
         ~Init_A(){};
 
-        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_);
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_, Scratchpad &pad_);
         virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
 };
 
@@ -69,7 +69,7 @@ class Init_B : public Page
         Init_B();
         ~Init_B(){};
 
-        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_);
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_, Scratchpad &pad_);
         virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
 };
 
@@ -79,7 +79,7 @@ class Route_Sel : public Page
         Route_Sel();
         ~Route_Sel(){};
 
-        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_);
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_, Scratchpad &pad_);
         virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
 };
 
@@ -89,7 +89,7 @@ class Gps_Monitor : public Page
         Gps_Monitor();
         ~Gps_Monitor(){};
 
-        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_);
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_, Scratchpad &pad_);
         virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
 };
 
@@ -99,8 +99,23 @@ class Position_Monitor : public Page
         Position_Monitor();
         ~Position_Monitor(){};
 
-        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_);
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_, Scratchpad &pad_);
         virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
 };
+
+class Mcdu_Menu : public Page
+{
+    public:
+        Mcdu_Menu();
+        ~Mcdu_Menu(){};
+
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_, Scratchpad &pad_);
+        virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
+
+    private:
+        int fmState;
+        int acarsState;
+};
+
 
 #endif

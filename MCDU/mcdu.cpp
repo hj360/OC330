@@ -45,6 +45,8 @@ MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_, SensorManager* Sensors_)
 
     //MCDU is online
     avail = 1;
+
+    lskBuffer = 0;//No lsk has been selected yet
     
     //Error checking
     if(avail)
@@ -61,9 +63,10 @@ MCDU::MCDU(int id_, int w_, int h_, FMGC* ActiveFMGC_, SensorManager* Sensors_)
 
     InitPages();
 
-    p_Act = 2;
+    p_Act = 8;
+    p_Buff = 8;
 
-    SetActivePage(P_DATA_INDEX_1);
+    SetActivePage(P_MCDU_MENU);
 
     outline = new GUI_Window(w, h);
 
@@ -114,6 +117,7 @@ void MCDU::InitPages()
     P_RTE_SEL = new Route_Sel();
     P_GPS_MONITOR = new Gps_Monitor();
     P_POSITION_MONITOR = new Position_Monitor();
+    P_MCDU_MENU = new Mcdu_Menu();
 }
 
 void MCDU::SetActivePage(Page* page_)
@@ -126,7 +130,7 @@ void MCDU::SetActivePage(Page* page_)
     ActivePage = page_;
 
     //Get all lsk elements from the page
-    pageElements = ActivePage->getElements(ActiveFMGC);
+    pageElements = ActivePage->getElements(ActiveFMGC, *pad);
 
     sfClock.restart();
     mcduDisplay.clear();
@@ -135,16 +139,7 @@ void MCDU::SetActivePage(Page* page_)
 void MCDU::selectLsk(int lsk)
 {
     //Check lsk has valid element
-    ActivePage->selectLSK(lsk, ActiveFMGC, p_Act, *pad);
-
-    if(p_Act != ActivePage->getPageId())
-    {
-        
-        updateActivePage();
-        std::cout << ActivePage->getPageId() << std::endl;
-    }
-    
-
+    ActivePage->selectLSK(lsk, ActiveFMGC, p_Act, *pad); 
 }
 
 void MCDU::goLeft()
@@ -200,6 +195,9 @@ void MCDU::updateActivePage()
         case 7:
             SetActivePage(P_POSITION_MONITOR);
             break;
+        case 8:
+            SetActivePage(P_MCDU_MENU);
+            break;
         default:
             break;
     }
@@ -232,7 +230,7 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
         int tempSize;
         sf::Color elementColor;
 
-        pageElements = ActivePage->getElements(ActiveFMGC);
+        pageElements = ActivePage->getElements(ActiveFMGC, *pad);
 
         //Render all page elements on current page
         for(int i = 0; i < pageElements.size(); ++i)
@@ -282,6 +280,23 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
         mcduDisplay.display();
 
         sfClock.restart();
+
+        //Only update active page after screen draw
+        if(p_Act != ActivePage->getPageId())
+        {
+            //Skip once
+            //Means that any changes that need to be seen before page changes can be seen for a frame
+            if(p_Act != p_Buff && p_Buff == 8)
+            {
+                p_Buff = p_Act;
+
+            } else {
+                updateActivePage();
+                p_Buff = p_Act;
+            }
+        }
+
+        std::cout << "P_BUFF: " << p_Buff << " P_ACT: " << p_Act << std::endl;
     }
 
     //Draw bounding box
@@ -365,11 +380,11 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
     }
     if(INIT->Draw(x+charW*12, y + 15*charH, sfWindow, mouse_))
     {
-        SetActivePage(P_INIT_A);
+        p_Act = 3;
     }
     if(DATA->Draw(x+charW*16, y + 15*charH, sfWindow, mouse_))
     {
-        SetActivePage(P_DATA_INDEX_1);
+        p_Act = 1;
     }
  
 
@@ -395,7 +410,7 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
     }
     if(MCDU_MENU->Draw(x+charW*20, y + 17*charH, sfWindow, mouse_))
     {
-        
+        p_Act = 8;
     }
 }
 

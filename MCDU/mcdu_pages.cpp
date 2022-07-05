@@ -27,7 +27,7 @@ Page::Page()
     pageID = 0;
 }
 
-std::vector<Element> Page::getElements(FMGC* ActiveFMGC_)
+std::vector<Element> Page::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
 {
     pageElements.clear();
     return pageElements;
@@ -84,7 +84,7 @@ void Data_Index_1::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpa
 
 }
 
-std::vector<Element> Data_Index_1::getElements(FMGC* ActiveFMGC_)
+std::vector<Element> Data_Index_1::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
 {
     pageElements.clear();
     //Elements for Data index 1
@@ -156,7 +156,7 @@ void Ac_Status::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &
 }
 
 
-std::vector<Element> Ac_Status::getElements(FMGC* ActiveFMGC_)
+std::vector<Element> Ac_Status::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
 {
     pageElements.clear();
 
@@ -603,7 +603,7 @@ void Init_A::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad
     }
 }
 
-std::vector<Element> Init_A::getElements(FMGC* ActiveFMGC_)
+std::vector<Element> Init_A::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
 {
     pageElements.clear();
 
@@ -718,7 +718,6 @@ std::vector<Element> Init_A::getElements(FMGC* ActiveFMGC_)
             tempString = "FL" + std::to_string(tempFL) + " /";
         }
 
-         //" /" + std::to_string(ActiveFMGC_->FM.get_crz_temp(1));
         tempColor = 2;
         tempRow = 12;
         tempOffset = 0;
@@ -849,7 +848,7 @@ void Init_B::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad
     
 }
 
-std::vector<Element> Init_B::getElements(FMGC* ActiveFMGC_)
+std::vector<Element> Init_B::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
 {
     pageElements.clear();
 
@@ -913,7 +912,7 @@ void Route_Sel::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &
     return;
 }
 
-std::vector<Element> Route_Sel::getElements(FMGC* ActiveFMGC_)
+std::vector<Element> Route_Sel::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
 {
     pageElements.clear();
 
@@ -957,7 +956,7 @@ void Gps_Monitor::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad
 }
 
 
-std::vector<Element> Gps_Monitor::getElements(FMGC* ActiveFMGC_)
+std::vector<Element> Gps_Monitor::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
 {
     pageElements.clear();
 
@@ -1317,7 +1316,7 @@ void Position_Monitor::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scrat
 }
 
 
-std::vector<Element> Position_Monitor::getElements(FMGC* ActiveFMGC_)
+std::vector<Element> Position_Monitor::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
 {
     pageElements.clear();
 
@@ -1333,6 +1332,110 @@ std::vector<Element> Position_Monitor::getElements(FMGC* ActiveFMGC_)
     //Dynamic values
     std::string tempString;
     int tempRow, tempOffset, tempColor, tempSize;
+
+
+    return pageElements;
+}
+
+Mcdu_Menu::Mcdu_Menu()
+{
+    pageID = 8;
+    leftPageID = 0;
+    rightPageID = 0;
+}
+
+void Mcdu_Menu::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
+{
+    p_act_ = this->pageID;
+
+    switch(lsk_)
+    {
+        case 1:
+            if(fmState < 3)
+            {
+                if(fmState == 0)//select fm
+                {
+                    p_act_ = 2;//Go to ac status is this correct?
+                    pad_.EmptyScratchPad();
+                    pad_.setState(0);
+                    fmState = 1;
+                    break;
+                } else if(fmState == 2)
+                {
+                    pad_.EmptyScratchPad();
+                    pad_.setState(0);
+                }
+                ++fmState;
+                break;
+            }
+            fmState = 0;
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        case 8:
+            break;
+        case 9:
+            break;
+        case 10:
+            break;
+        case 11:
+            break;
+        case 12:
+            break;
+        default:
+            break;
+
+    }
+
+}
+
+
+std::vector<Element> Mcdu_Menu::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
+{
+    pageElements.clear();
+
+    pageElements.push_back(Element("MCDU MENU", 0, 7, 0, 1));
+
+    //Dynamic values
+    std::string tempString;
+    int tempRow, tempOffset, tempColor, tempSize;
+
+    if(fmState == 1) // Selected waiting for system response
+    {
+        tempColor = 2;
+        tempString = "<FM1 (SEL)";
+        fmState = 2;
+    } else if(fmState == 2)
+    {
+        tempString = "<FM1";
+        tempColor = 1;
+    } else
+    {
+        tempColor = 0;
+        tempString = "<FM1";
+        fmState = 0;
+    }
+
+    tempRow = 2;
+    tempSize = 1;
+    tempOffset = 0;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+    
+    pageElements.push_back(Element("<ACARS", 4, 0, 0, 1));
+    pageElements.push_back(Element("<ACMS", 6, 0, 0, 1));
+    //Permanent scratchpad message
+    
 
 
     return pageElements;

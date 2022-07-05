@@ -92,7 +92,15 @@ void Scratchpad::GetScratchPad(std::string &pad_)
     {
         //Set scratchpad to the first message
         pad_ = msg[0];
+    } else if(state == 3)
+    {
+        pad_ = pad;
     }
+}
+
+void Scratchpad::SetScratchPad(std::string pad_)
+{
+    pad = pad_;
 }
 
 void Scratchpad::EmptyScratchPad()

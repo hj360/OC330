@@ -16,6 +16,7 @@ class Scratchpad
         void CLRScratchpad();
         void GetScratchPad(std::string &pad_);
         void EmptyScratchPad();
+        void SetScratchPad(std::string pad_);
         int GetState();
 
     private:
