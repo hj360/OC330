@@ -113,8 +113,10 @@ class Mcdu_Menu : public Page
         virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
 
     private:
-        int fmState;
-        int acarsState;
+        int fmState = 2; //fm is selected by default
+        int acarsState = 0;//Acars is not selected by default
+
+        bool selected = false;//Is a system being selected
 };
 
 

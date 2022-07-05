@@ -1351,26 +1351,42 @@ void Mcdu_Menu::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &
     switch(lsk_)
     {
         case 1:
-            if(fmState < 3)
+            selected = true;
+            if(fmState == 0)//select fm
             {
-                if(fmState == 0)//select fm
-                {
-                    p_act_ = 2;//Go to ac status is this correct?
-                    pad_.EmptyScratchPad();
-                    pad_.setState(0);
-                    fmState = 1;
-                    break;
-                } else if(fmState == 2)
-                {
-                    pad_.EmptyScratchPad();
-                    pad_.setState(0);
-                }
-                ++fmState;
+                acarsState = 0;
+                p_act_ = 1;
+                pad_.EmptyScratchPad();
+                pad_.setState(0);
+                fmState = 1;
+                break;
+            } else if(fmState == 2)
+            {
+                p_act_ = 1;
+                pad_.EmptyScratchPad();
+                pad_.setState(0);
+                fmState = 1;
                 break;
             }
-            fmState = 0;
             break;
         case 2:
+            selected = true;
+            if(acarsState == 0)//select fm
+            {
+                fmState = 0;
+                p_act_ = 1;
+                pad_.EmptyScratchPad();
+                pad_.setState(0);
+                acarsState = 1;
+                break;
+            } else if(acarsState == 2)
+            {
+                p_act_ = 1;
+                pad_.EmptyScratchPad();
+                pad_.setState(0);
+                acarsState = 1;
+                break;
+            }
             break;
         case 3:
             break;
@@ -1402,9 +1418,13 @@ void Mcdu_Menu::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &
 
 std::vector<Element> Mcdu_Menu::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
 {
+    pad_.setState(3); //Lock scratchpad
+    pad_.EmptyScratchPad();
     pageElements.clear();
 
     pageElements.push_back(Element("MCDU MENU", 0, 7, 0, 1));
+    pageElements.push_back(Element("SELECT", 1, 17, 0, 0));
+    pageElements.push_back(Element("NAV B/UP>", 2, 15, 0, 1));
 
     //Dynamic values
     std::string tempString;
@@ -1413,19 +1433,18 @@ std::vector<Element> Mcdu_Menu::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
     if(fmState == 1) // Selected waiting for system response
     {
         tempColor = 2;
-        tempString = "<FM1  SEL ";
+        tempString = "<FM1 (SEL)";
         fmState = 2;
     } else if(fmState == 2)
     {
-        tempString = "<FM1";
+        tempString = "<FM1 (REQ)";
         tempColor = 1;
-        pageElements.push_back(Element("SELECT DESIRED SYSTEM", 13, 0, 0, 1));
+        acarsState = 0;
     } else
     {
         tempColor = 0;
-        tempString = "<FM1";
+        tempString = "<FM1 (REQ)";
         fmState = 0;
-        pageElements.push_back(Element("SELECT DESIRED SYSTEM", 13, 0, 0, 1));
     }
 
     tempRow = 2;
@@ -1433,10 +1452,42 @@ std::vector<Element> Mcdu_Menu::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
     tempOffset = 0;
 
     pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    if(acarsState == 1) // Selected waiting for system response
+    {
+        tempColor = 2;
+        tempString = "<ACARS (SEL)";
+        acarsState = 2;
+    } else if(acarsState == 2)
+    {
+        tempString = "<ACARS";
+        tempColor = 1;
+        fmState = 0;
+    } else
+    {
+        tempColor = 0;
+        tempString = "<ACARS";
+        acarsState = 0;
+    }
+
+    tempRow = 4;
+    tempSize = 1;
+    tempOffset = 0;
+
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //Scratchpad message logic
+    if(selected)
+    {
+        pageElements.push_back(Element("WAIT FOR SYSTEM RESPONSE", 13, 0, 0, 1));
+        selected = false;
+        
+    } else {
+        pageElements.push_back(Element("SELECT DESIRED SYSTEM", 13, 0, 0, 1));
+    }
+
     
-    pageElements.push_back(Element("<ACARS", 4, 0, 0, 1));
     pageElements.push_back(Element("<ACMS", 6, 0, 0, 1));
-    //Permanent scratchpad message
     
     
 

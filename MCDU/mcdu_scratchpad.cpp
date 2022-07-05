@@ -19,7 +19,7 @@ void Scratchpad::setState(int state_)
 void Scratchpad::AddToScratchpad(std::string str_)
 {
     //Check if scratchpad has room and if mode is correct
-    if(pad.length() < maxLength)
+    if(pad.length() < maxLength && state == 0)
     {
         pad += str_;
     }

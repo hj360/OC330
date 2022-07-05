@@ -169,6 +169,7 @@ void MCDU::goRight()
 
 void MCDU::updateActivePage()
 {
+    pad->setState(0);
         //Update any page changes
     switch(p_Act)
     {
