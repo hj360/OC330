@@ -279,6 +279,9 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
         //Draw MCDU Display
         mcduDisplay.display();
 
+        //Testing saving to a texture
+        //mcduDisplay.getTexture().copyToImage().saveToFile("mcdu.tga");
+
         sfClock.restart();
 
         //Only update active page after screen draw
@@ -313,6 +316,8 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
     mcduSprite.setTexture(mcduDisplay.getTexture());
     mcduSprite.setPosition(sf::Vector2f(x, y));
     sfWindow->draw(mcduSprite);
+
+    
 
 
     //test buttons
