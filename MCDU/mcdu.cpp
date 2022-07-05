@@ -298,8 +298,6 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
                 p_Buff = p_Act;
             }
         }
-
-        std::cout << "P_BUFF: " << p_Buff << " P_ACT: " << p_Act << std::endl;
     }
 
     //Draw bounding box
