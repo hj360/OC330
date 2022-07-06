@@ -111,6 +111,7 @@ MCDU::~MCDU()
 void MCDU::InitPages()
 {
     P_DATA_INDEX_1 = new Data_Index_1();
+    P_DATA_INDEX_2 = new Data_Index_2();
     P_AC_STATUS = new Ac_Status();
     P_INIT_A = new Init_A();
     P_INIT_B = new Init_B();
@@ -118,6 +119,7 @@ void MCDU::InitPages()
     P_GPS_MONITOR = new Gps_Monitor();
     P_POSITION_MONITOR = new Position_Monitor();
     P_MCDU_MENU = new Mcdu_Menu();
+    P_PERF_TAKEOFF = new Perf_Takeoff();
 }
 
 void MCDU::SetActivePage(Page* page_)
@@ -198,6 +200,12 @@ void MCDU::updateActivePage()
             break;
         case 8:
             SetActivePage(P_MCDU_MENU);
+            break;
+        case 9:
+            SetActivePage(P_DATA_INDEX_2);
+            break;
+        case 10:
+            SetActivePage(P_PERF_TAKEOFF);
             break;
         default:
             break;
@@ -380,15 +388,19 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
     }
     if(PERF->Draw(x+charW*8, y + 15*charH, sfWindow, mouse_))
     {
+        p_Act = 10;
+        P_MCDU_MENU->setSystem(1);
         
     }
     if(INIT->Draw(x+charW*12, y + 15*charH, sfWindow, mouse_))
     {
         p_Act = 3;
+        P_MCDU_MENU->setSystem(1);
     }
     if(DATA->Draw(x+charW*16, y + 15*charH, sfWindow, mouse_))
     {
         p_Act = 1;
+        P_MCDU_MENU->setSystem(1);
     }
  
 

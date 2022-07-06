@@ -53,11 +53,28 @@ int Page::getRightPageId()
     return rightPageID;
 }
 
+void Page::setSystem(int system_)
+{
+    if(system_ == 0)
+    {
+        fmState = 0;
+        acarsState = 0;
+    } else if(system_ == 1)
+    {
+        fmState = 1;
+        acarsState = 0;
+    } else if(system_ == 2)
+    {
+        fmState = 0;
+        acarsState = 1;
+    }
+}
+
 Data_Index_1::Data_Index_1()
 {
     pageID = 1;
-    leftPageID = 0;
-    rightPageID = 0;
+    leftPageID = 9;
+    rightPageID = 9;
 }
 
 void Data_Index_1::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
@@ -109,6 +126,40 @@ std::vector<Element> Data_Index_1::getElements(FMGC* ActiveFMGC_, Scratchpad &pa
 }
 
 
+Data_Index_2::Data_Index_2()
+{
+    pageID = 9;
+    leftPageID = 1;
+    rightPageID = 1;
+}
+
+void Data_Index_2::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
+{
+    p_act_ = this->pageID;
+}
+
+std::vector<Element> Data_Index_2::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
+{
+    pageElements.clear();
+    //Elements for Data index 2
+    pageElements.push_back(Element("DATA INDEX    2/2 <>", 0, 4, 0, 1));
+    pageElements.push_back(Element("<WAYPOINTS", 2, 0, 0, 1));
+    pageElements.push_back(Element("<NAVAIDS", 4, 0, 0, 1));
+    pageElements.push_back(Element("<RUNWAYS", 6, 0, 0, 1));
+    pageElements.push_back(Element("<ROUTES", 8, 0, 0, 1));
+    pageElements.push_back(Element("STORED", 1, 17, 0, 0));
+    pageElements.push_back(Element("WAYPOINTS>", 2, 14, 0, 1));
+    pageElements.push_back(Element("STORED", 3, 17, 0, 0));
+    pageElements.push_back(Element("NAVAIDS>", 4, 16, 0, 1));
+    pageElements.push_back(Element("STORED", 5, 17, 0, 0));
+    pageElements.push_back(Element("RUNWAYS>", 6, 16, 0, 1));
+    pageElements.push_back(Element("STORED", 7, 17, 0, 0));
+    pageElements.push_back(Element("ROUTES>", 8, 17, 0, 1));
+
+
+    return pageElements;
+}
+
 
 
 Ac_Status::Ac_Status()
@@ -122,6 +173,9 @@ void Ac_Status::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &
 {
     p_act_ = this->pageID;
 
+    std::string tempString;
+    pad_.GetScratchPad(tempString);
+
     switch(lsk_)
     {
         case 1:
@@ -133,6 +187,20 @@ void Ac_Status::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &
         case 4:
             break;
         case 5:
+            
+            if(tempString == "ARM" && !perfIdleArm)
+            {
+                perfIdleArm = true;
+                pad_.EmptyScratchPad();
+                pad_.setState(0);
+            } else if(pad_.GetState() == 1 && perfIdleArm)
+            {
+                perfIdleArm = false;
+                pad_.EmptyScratchPad();
+                pad_.setState(0);                
+            } else{
+                pad_.AddMSG(1);
+            }
             break;
         case 6:
             break;
@@ -167,7 +235,6 @@ std::vector<Element> Ac_Status::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
     pageElements.push_back(Element("SECOND NAV DATA BASE", 5, 1, 0, 0));
     pageElements.push_back(Element("<28MAY-24JUN", 6, 0, 2, 0));
     pageElements.push_back(Element("CHG CODE", 9, 0, 0, 0));
-    pageElements.push_back(Element("[ ]", 10, 0, 2, 1));
     pageElements.push_back(Element("IDLE/PERF", 11, 0, 0, 0));
     pageElements.push_back(Element("SOFTWARE", 11, 15, 0, 0));
     pageElements.push_back(Element("+0.0/+4.4", 12, 0, 1, 1));
@@ -201,6 +268,20 @@ std::vector<Element> Ac_Status::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
     tempColor = 1;
     tempSize = 1;
     
+    pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
+
+    //Arm code
+    if(perfIdleArm)
+    {
+        tempString = "ARM";
+    } else {
+        tempString = "[ ]";
+    }
+    tempRow = 10;
+    tempOffset = 0;
+    tempColor = 2;
+    tempSize = 1;
+
     pageElements.push_back(Element(tempString, tempRow, tempOffset, tempColor, tempSize));
 
     return pageElements;
@@ -1354,18 +1435,17 @@ void Mcdu_Menu::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &
             selected = true;
             if(fmState == 0)//select fm
             {
-                acarsState = 0;
+                setSystem(1);
                 p_act_ = 1;
                 pad_.EmptyScratchPad();
                 pad_.setState(0);
-                fmState = 1;
                 break;
             } else if(fmState == 2)
             {
                 p_act_ = 1;
                 pad_.EmptyScratchPad();
                 pad_.setState(0);
-                fmState = 1;
+                setSystem(1);
                 break;
             }
             break;
@@ -1373,7 +1453,7 @@ void Mcdu_Menu::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &
             selected = true;
             if(acarsState == 0)//select fm
             {
-                fmState = 0;
+                setSystem(2);
                 p_act_ = 1;
                 pad_.EmptyScratchPad();
                 pad_.setState(0);
@@ -1384,7 +1464,7 @@ void Mcdu_Menu::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &
                 p_act_ = 1;
                 pad_.EmptyScratchPad();
                 pad_.setState(0);
-                acarsState = 1;
+                setSystem(2);
                 break;
             }
             break;
@@ -1495,3 +1575,72 @@ std::vector<Element> Mcdu_Menu::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
     return pageElements;
 }
 
+Perf_Takeoff::Perf_Takeoff()
+{
+    pageID = 10;
+    leftPageID = 0;
+    rightPageID = 0;
+}
+
+void Perf_Takeoff::selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_)
+{
+    p_act_ = this->pageID;
+
+    switch(lsk_)
+    {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        case 8:
+            break;
+        case 9:
+            break;
+        case 10:
+            break;
+        case 11:
+            break;
+        case 12:
+            break;
+        default:
+            break;
+
+    }
+
+}
+
+
+std::vector<Element> Perf_Takeoff::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
+{
+    pageElements.clear();
+
+    pageElements.push_back(Element("TAKE OFF", 0, 9, 0, 1));
+    pageElements.push_back(Element("V1", 1, 1, 0, 0));
+    pageElements.push_back(Element("FLP RETR", 1, 5, 0, 0));
+    pageElements.push_back(Element("RWY", 1, 20, 0, 0));
+
+    pageElements.push_back(Element("VR", 3, 1, 0, 0));
+    pageElements.push_back(Element("SLT RETR", 3, 5, 0, 0));
+    pageElements.push_back(Element("TO SHIFT", 3, 15, 0, 0));
+
+    pageElements.push_back(Element("V2", 5, 1, 0, 0));
+    pageElements.push_back(Element("CLEAN", 5, 8, 0, 0));
+    pageElements.push_back(Element("FLAPS/THS", 5, 15, 0, 0));
+
+    //Dynamic values
+    std::string tempString;
+    int tempRow, tempOffset, tempColor, tempSize;
+
+
+    return pageElements;
+}

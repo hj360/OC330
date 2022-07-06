@@ -76,6 +76,7 @@ class MCDU
         int p_Buff;
         //MCDU Pages
         Page* P_DATA_INDEX_1;
+        Page* P_DATA_INDEX_2;
         Page* P_AC_STATUS;
         Page* P_INIT_A;
         Page* P_INIT_B;
@@ -83,6 +84,9 @@ class MCDU
         Page* P_GPS_MONITOR;
         Page* P_POSITION_MONITOR;
         Page* P_MCDU_MENU;
+        //Performance
+        Page* P_PERF_TAKEOFF;
+        
 
         sf::Font mcduFont_s;
         sf::Font mcduFont_l;

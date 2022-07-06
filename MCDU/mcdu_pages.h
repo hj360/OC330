@@ -20,13 +20,16 @@ class Page
         int getRightPageId();
 
         virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
-        
 
+        virtual void setSystem(int system_); // 0 is nothing // 1 is fm 2 is acars etc.
 
     protected:
         int pageID;
         int leftPageID;
         int rightPageID;
+
+        int fmState = 2; //fm is selected by default
+        int acarsState = 0;//Acars is not selected by default
 
         std::vector<Element> pageElements;
 };
@@ -42,6 +45,17 @@ class Data_Index_1 : public Page
 
 };
 
+class Data_Index_2 : public Page
+{
+    public:
+        Data_Index_2();
+        ~Data_Index_2(){};
+
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_, Scratchpad &pad_);
+        virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
+
+};
+
 class Ac_Status : public Page
 {
     public:
@@ -50,6 +64,9 @@ class Ac_Status : public Page
 
         virtual std::vector<Element> getElements(FMGC* ActiveFMGC_, Scratchpad &pad_);
         virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
+
+    private:
+        bool perfIdleArm = false;
 
 };
 
@@ -113,10 +130,17 @@ class Mcdu_Menu : public Page
         virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
 
     private:
-        int fmState = 2; //fm is selected by default
-        int acarsState = 0;//Acars is not selected by default
-
         bool selected = false;//Is a system being selected
+};
+
+class Perf_Takeoff : public Page
+{
+    public:
+        Perf_Takeoff();
+        ~Perf_Takeoff(){};
+
+        virtual std::vector<Element> getElements(FMGC* ActiveFMGC_, Scratchpad &pad_);
+        virtual void selectLSK(int lsk_, FMGC* ActiveFMGC_, int &p_act_, Scratchpad &pad_);
 };
 
 
