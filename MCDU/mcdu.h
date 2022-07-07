@@ -20,6 +20,7 @@ class MCDU
         void InitPages();
         void DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_);
         void SetActivePage(Page* page_);
+        void UpdateMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_);
 
         void updateActivePage();
 

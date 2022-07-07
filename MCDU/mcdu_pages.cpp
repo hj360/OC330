@@ -1629,13 +1629,31 @@ std::vector<Element> Perf_Takeoff::getElements(FMGC* ActiveFMGC_, Scratchpad &pa
     pageElements.push_back(Element("FLP RETR", 1, 5, 0, 0));
     pageElements.push_back(Element("RWY", 1, 20, 0, 0));
 
+    pageElements.push_back(Element("###", 2, 0, 5, 1));
+    pageElements.push_back(Element("F=", 2, 8, 0, 1));
+
     pageElements.push_back(Element("VR", 3, 1, 0, 0));
     pageElements.push_back(Element("SLT RETR", 3, 5, 0, 0));
     pageElements.push_back(Element("TO SHIFT", 3, 15, 0, 0));
 
+    pageElements.push_back(Element("###", 4, 0, 5, 1));
+    pageElements.push_back(Element("S=", 4, 8, 0, 1));
+
     pageElements.push_back(Element("V2", 5, 1, 0, 0));
     pageElements.push_back(Element("CLEAN", 5, 8, 0, 0));
     pageElements.push_back(Element("FLAPS/THS", 5, 15, 0, 0));
+
+    pageElements.push_back(Element("###", 6, 0, 5, 1));
+    pageElements.push_back(Element("O=", 6, 8, 0, 1));
+
+    pageElements.push_back(Element("TRANS ALT", 7, 0, 0, 0));
+    pageElements.push_back(Element("DRT TO-FLX TO", 7, 11, 0, 0));
+
+    pageElements.push_back(Element("THR RED/ACC", 9, 0, 0, 0));
+    pageElements.push_back(Element("ENG OUT ACC", 9, 13, 0, 0));
+
+    pageElements.push_back(Element("NEXT", 11, 19, 0, 0));
+    pageElements.push_back(Element("PHASE>", 12, 18, 0, 1));
 
     //Dynamic values
     std::string tempString;

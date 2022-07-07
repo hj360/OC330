@@ -46,14 +46,17 @@ void Display::Display_RENDER()
 
     if(systemGUI->drawMCDU1)
     {
+        A330_FMGS->MCDU1->UpdateMCDU(sfWindow, mouse);
         A330_FMGS->MCDU1->DrawMCDU(sfWindow, mouse);
     }
     if(systemGUI->drawMCDU2)
     {
+        A330_FMGS->MCDU2->UpdateMCDU(sfWindow, mouse);
         A330_FMGS->MCDU2->DrawMCDU(sfWindow, mouse);
     }
     if(systemGUI->drawMCDU3)
     {
+        A330_FMGS->MCDU3->UpdateMCDU(sfWindow, mouse);
         A330_FMGS->MCDU3->DrawMCDU(sfWindow, mouse);
     }
 

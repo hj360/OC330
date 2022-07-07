@@ -135,13 +135,15 @@ void MCDU::SetActivePage(Page* page_)
     pageElements = ActivePage->getElements(ActiveFMGC, *pad);
 
     sfClock.restart();
-    mcduDisplay.clear();
+    //mcduDisplay.clear(); For blank page between pages
 }
 
 void MCDU::selectLsk(int lsk)
 {
     //Check lsk has valid element
-    ActivePage->selectLSK(lsk, ActiveFMGC, p_Act, *pad); 
+    ActivePage->selectLSK(lsk, ActiveFMGC, p_Act, *pad);
+    //Delay when selecting
+    sfClock.restart(); 
 }
 
 void MCDU::goLeft()
@@ -215,8 +217,22 @@ void MCDU::updateActivePage()
 void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
 {
     //Only render every 500ms
-    if(sfClock.getElapsedTime() > sf::milliseconds(300))
+    if(sfClock.getElapsedTime() > sf::milliseconds(500))
     {
+        //Update active page
+        if(p_Act != ActivePage->getPageId())
+        {
+            //Skip once
+            //Means that any changes that need to be seen before page changes can be seen for a frame
+            if(p_Act != p_Buff && p_Buff == 8)
+            {
+                p_Buff = p_Act;
+
+            } else {
+                updateActivePage();
+                p_Buff = p_Act;
+            }
+        }
         //Clear mcdu texture
         mcduDisplay.clear();
         //Render scratchpad
@@ -281,7 +297,6 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
 
             text.setFillColor(elementColor);
             text.setString(tempString);
-            //text.setPosition(charW * tempOffset + x, charH * tempRow + y);
             text.setPosition(charW * tempOffset, charH * tempRow);
             mcduDisplay.draw(text);
         }
@@ -292,21 +307,6 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
         //mcduDisplay.getTexture().copyToImage().saveToFile("mcdu.tga");
 
         sfClock.restart();
-
-        //Only update active page after screen draw
-        if(p_Act != ActivePage->getPageId())
-        {
-            //Skip once
-            //Means that any changes that need to be seen before page changes can be seen for a frame
-            if(p_Act != p_Buff && p_Buff == 8)
-            {
-                p_Buff = p_Act;
-
-            } else {
-                updateActivePage();
-                p_Buff = p_Act;
-            }
-        }
     }
 
     //Draw bounding box
@@ -323,10 +323,10 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
     mcduSprite.setTexture(mcduDisplay.getTexture());
     mcduSprite.setPosition(sf::Vector2f(x, y));
     sfWindow->draw(mcduSprite);
+}
 
-    
-
-
+void MCDU::UpdateMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
+{
     //test buttons
     if(LSK1L->Draw(x-charW*4, y + 2*charH, sfWindow, mouse_))
     {
