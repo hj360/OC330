@@ -21,6 +21,9 @@ struct AirlineConfigDB
     int tropo_default;
     int taxi_fuel;
 
+    //Company routes
+    std::vector<std::string> coroutes;
+
 };
 
 struct PerfDB

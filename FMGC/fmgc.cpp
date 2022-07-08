@@ -153,7 +153,26 @@ bool FMGC::LoadAirports()
         navDB->arpts.insert(std::pair<std::string, std::vector<long double>> (arpt, latLong));
     }
 
-    std::cout << navDB->arpts.find("YPAD")->second[0] << std::endl;
+    in.close();
+
+    return true;
+}
+
+bool FMGC::LoadCoRoutes()
+{
+    std::fstream in("./DATA/routes.dat");
+    if(!in.is_open())
+    {
+        std::cout << "Error! Cannot load FMGS CoRotues file" << std::endl;
+        return false;
+    }
+
+    std::vector<std::string> route;
+
+    while(!in.eof())
+    {
+        //Read coroutes
+    }
 
     in.close();
 

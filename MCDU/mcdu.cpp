@@ -217,7 +217,7 @@ void MCDU::updateActivePage()
 void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
 {
     //Only render every 500ms
-    if(sfClock.getElapsedTime() > sf::milliseconds(500))
+    if(sfClock.getElapsedTime() > sf::milliseconds(200))
     {
         //Update active page
         if(p_Act != ActivePage->getPageId())

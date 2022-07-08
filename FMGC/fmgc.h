@@ -18,6 +18,7 @@ class FMGC
         bool LoadAirlineConfig();
         bool LoadPerfConfig();
         bool LoadAirports();
+        bool LoadCoRoutes();
         //Separate FMGC components
         FMGC_FM FM;
         FMGC_FG FG;

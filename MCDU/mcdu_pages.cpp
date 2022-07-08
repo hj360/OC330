@@ -694,8 +694,10 @@ std::vector<Element> Init_A::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
     pageElements.push_back(Element("FROM/TO", 1, 15, 0, 0));
     pageElements.push_back(Element("ALTN/CO RTE", 3, 0, 0, 0));
     pageElements.push_back(Element("FLT NBR", 5, 0, 0, 0));
+    pageElements.push_back(Element("IRS INIT>", 6, 15, 0, 1));
     pageElements.push_back(Element("COST INDEX", 9, 0, 0, 0));
     pageElements.push_back(Element("CRZ FL/TEMP", 11, 0, 0, 0));
+    pageElements.push_back(Element("WIND>", 10, 19, 0, 1));
     pageElements.push_back(Element("TROPO", 11, 19, 0, 0));
     
     //Dynamic values
