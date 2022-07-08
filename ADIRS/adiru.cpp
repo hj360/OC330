@@ -26,12 +26,14 @@ void Adiru::Update()
         GPS_hdg = ActiveMMR->getGPSHdg();
         GPS_gs = ActiveMMR->getGPSGs();
 
-    } else 
+    } else if(AltMMR->getGPSStatus())
     {
         GPS_lat = AltMMR->getGPSLat();
         GPS_long = AltMMR->getGPSLong();
         GPS_alt = AltMMR->getGPSAlt();
         GPS_hdg = AltMMR->getGPSHdg();
         GPS_gs = AltMMR->getGPSGs();
+    } else {
+        
     }
 }

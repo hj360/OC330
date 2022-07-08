@@ -61,6 +61,12 @@ void Scratchpad::AddMSG(int msgCode_)
         case 3:
             msg.push_back("NOT IN DATABASE");
             break;
+        case 4:
+            msg.push_back("GPS PRIMARY LOST");
+            break;
+        case 5:
+            msg.push_back("GPS PRIMARY");
+            break;
 
         default:
             break;
@@ -77,7 +83,7 @@ void Scratchpad::AddMSG(int msgCode_)
 void Scratchpad::GetScratchPad(std::string &pad_)
 {
     //Check for scratchpad messages
-    if(msg.size() > 0)
+    if(msg.size() > 0 && state != -1)
     {
         state = 2;
     }

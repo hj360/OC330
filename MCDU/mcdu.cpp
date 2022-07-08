@@ -246,7 +246,10 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
         text.setString(scratchpad_buff);
         text.setPosition(0, (charH * 13));
         //draw to texture
-        mcduDisplay.draw(text);
+        if(pad->GetState() != -1)
+        {
+            mcduDisplay.draw(text);
+        }
 
         std::string tempString;
         int tempRow;
@@ -323,6 +326,8 @@ void MCDU::DrawMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
     mcduSprite.setTexture(mcduDisplay.getTexture());
     mcduSprite.setPosition(sf::Vector2f(x, y));
     sfWindow->draw(mcduSprite);
+
+    updateWarnings();
 }
 
 void MCDU::UpdateMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
@@ -427,6 +432,19 @@ void MCDU::UpdateMCDU(sf::RenderWindow* sfWindow, sf::Mouse* mouse_)
     if(MCDU_MENU->Draw(x+charW*20, y + 17*charH, sfWindow, mouse_))
     {
         p_Act = 8;
+    }
+}
+
+void MCDU::updateWarnings()
+{
+    if(Sensors->MMR1->getGPSStatus() == false && Sensors->MMR2->getGPSStatus() == false && gps_primary == true)
+    {
+        pad->AddMSG(4);
+        gps_primary = false;
+    } else if(Sensors->MMR1->getGPSStatus() == true && Sensors->MMR2->getGPSStatus() == true && gps_primary == false)
+    {
+        pad->AddMSG(5);
+        gps_primary = true;
     }
 }
 

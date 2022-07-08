@@ -22,12 +22,14 @@ class Scratchpad
     private:
         //Usually 24 for length of MCDU screen in chars
         int maxLength;
-        //Determines what state scratchpad is in. 0 - text, 1 - CLR, 2 - MSG
+        //Determines what state scratchpad is in. 0 - text, 1 - CLR, 2 - MSG - -1 is inhibit
         int state;
         //The synamic scratchpad
         std::string pad;
         //Scratchpad messages maximum 5
         std::vector<std::string> msg;
+
+        bool inhibit;
 
 
 };

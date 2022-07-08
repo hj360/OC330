@@ -5,14 +5,11 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Tue Jul 05 08:54:26 2022
+# Make data base, printed on Sat Jul 09 00:52:40 2022
 
 # Variables
 
-# environment
-FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
 # environment
@@ -21,8 +18,6 @@ LC_ALL = C
 USERPROFILE = C:\Users\henri
 # environment
 LOCALAPPDATA = C:\Users\henri\AppData\Local
-# environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-7a130c61-c8b8-43a8-9084-bbab10585fdd-sock
 # environment
 VSCODE_CWD = C:\Users\henri\AppData\Local\Programs\Microsoft VS Code
 # environment
@@ -38,9 +33,7 @@ MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5672_IOYEYLISAKOKFXCZ
-# environment
-FPS_BROWSER_USER_PROFILE_STRING = Default
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_1800_DQCXCTDEGTPCIOEP
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -49,12 +42,11 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 %D = $(patsubst %/,%,$(patsubst %\,%,$(dir $%)))
 # automatic
 ^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
-# environment
-VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
+ 
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\henri\AppData\Roaming\Code\CachedData\30d9c6cd9483b2cc586687151bcbcd635f373630
+VSCODE_CODE_CACHE_PATH = C:\Users\henri\AppData\Roaming\Code\CachedData\92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9
 # environment
 LANG = C
 # default
@@ -71,8 +63,6 @@ MAKEFLAGS = pqrR
 ONEDRIVE = C:\Users\henri\OneDrive
 # makefile
 CURDIR := c:/dev/OC330
-# environment
-VSCODE_PIPE_LOGGING = true
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # automatic
@@ -92,9 +82,7 @@ MAKEFILE_LIST := makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_VERBOSE_LOGGING = true
-# environment
-VSCODE_PID = 5672
+VSCODE_PID = 1800
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -142,8 +130,6 @@ CHOCOLATEYLASTPATHUPDATE = 132768500502382572
 # environment
 LOGONSERVER = \\LAPTOP-UBFE3EV7
 # environment
-VSCODE_LOG_NATIVE = false
-# environment
 USERNAME = henri
 # environment
 COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
@@ -163,6 +149,8 @@ USERDOMAIN = LAPTOP-UBFE3EV7
 GNUMAKEFLAGS := 
 # environment
 OS = Windows_NT
+# environment
+__COMPAT_LAYER = DetectorsAppHealth
 # makefile
 .DEFAULT_GOAL := all
 # default
@@ -190,7 +178,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = C:\Users\henri\AppData\Local\Temp
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\4f624dc5b82751e980695e64eaa7d9a3-1.68.1-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\4f624dc5b82751e980695e64eaa7d9a3-1.69.0-main-sock
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -208,7 +196,7 @@ PROCESSOR_REVISION = 8e0a
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 10, GenuineIntel
 # variable set hash-table stats:
-# Load=98/1024=10%, Rehash=0, Collisions=10/128=8%
+# Load=92/1024=9%, Rehash=0, Collisions=8/122=7%
 
 # Pattern-specific Variable Values
 
@@ -216,9 +204,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 10, GenuineIntel
 
 # Directories
 
-# . (key c:/dev/OC330, mtime 1656094346): 52 files, no impossibilities.
+# . (key c:/dev/OC330, mtime 1657292588): 54 files, no impossibilities.
 
-# 52 files, no impossibilities in 1 directories.
+# 54 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -251,8 +239,7 @@ compile:
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/11=9%
 #  recipe to execute (from 'makefile', line 4):
-	g++ -Isrc/ 
-include -IMCDU -IFMGC -IGUI -ICONFIG -ISIMDATA -ISENSORS -IADIRS -c *.cpp FMGC/*.cpp MCDU/*.cpp GUI/*.cpp SIMDATA/*.cpp SENSORS/*.cpp ADIRS/*.cpp
+	g++ -Isrc/include -IMCDU -IFMGC -IGUI -ICONFIG -ISIMDATA -ISENSORS -IADIRS -c *.cpp FMGC/*.cpp MCDU/*.cpp GUI/*.cpp SIMDATA/*.cpp SENSORS/*.cpp ADIRS/*.cpp
 
 # Not a target:
 .DEFAULT:
@@ -278,7 +265,8 @@ link:
 
 # Not a target:
 makefile:
-#  Implicit rule search has been done.
+#  Implicit rule search has been do 
+ne.
 #  Last modified 2022-06-24 21:52:03
 #  File has been updated.
 #  Successfully updated.
@@ -297,12 +285,12 @@ makefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 57 / storage = 581 B / avg = 10 B
-# current buf: size = 8174 B / used = 581 B / count = 57 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 59 / storage = 599 B / avg = 10 B
+# current buf: size = 8174 B / used = 599 B / count = 59 / avg = 10 B
 
-# strcache performance: lookups = 68 / hit rate = 16%
+# strcache performance: lookups = 70 / hit rate = 15%
 # hash-table stats:
-# Load=57/8192=1%, Rehash=0, Collisions=0/68=0%
-# Finished Make data base on Tue Jul 05 08:54:26 2022
+# Load=59/8192=1%, Rehash=0, Collisions=0/70=0%
+# Finished Make data base on Sat Jul 09 00:52:40 2022
 
  

@@ -1562,10 +1562,12 @@ std::vector<Element> Mcdu_Menu::getElements(FMGC* ActiveFMGC_, Scratchpad &pad_)
     if(selected)
     {
         pageElements.push_back(Element("WAIT FOR SYSTEM RESPONSE", 13, 0, 0, 1));
+        pad_.setState(-1);
         selected = false;
         
     } else {
         pageElements.push_back(Element("SELECT DESIRED SYSTEM", 13, 0, 0, 1));
+        pad_.setState(-1);
     }
 
     

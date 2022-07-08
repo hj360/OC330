@@ -24,6 +24,8 @@ class MCDU
 
         void updateActivePage();
 
+        void updateWarnings();
+
         void goRight();
         void goLeft();
 
@@ -102,6 +104,9 @@ class MCDU
         sf::Color mcdu_magenta;
         sf::Color mcdu_yellow;
         sf::Color mcdu_orange;
+
+
+        bool gps_primary;
 
         //Mcdu outlines
         GUI_Window* outline;
